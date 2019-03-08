@@ -1,0 +1,13 @@
+Algorithm for numberical approximation of flight time.
+
+This document outlines a numerical approach for calculating the flight time of a constantly thrusting spacecraft on a hyperbolic orbit. The algorithm will be implemented in flight_time.py and used to calculate the time it takes for Einstein to reach the sun's focal point. This will be incorporated into the third scientific appendix.
+
+There are two steps to the approach, each of which is outlined in greater detail. The continuous thrust of the engine is modeled as a chain of discrete, instantaneous increases in velocity interceded with coasting periods.
+
+Step 1 - burn phase
+
+The spacecraft's velocity changes instantaneously. The new orbit AND the state of the spacecraft along the orbit are calculated.
+
+Step 2 - coast phase
+
+The spacecraft coasts for a period of time. The spacecraft's orbit does not change but the state (position and velocity) change and are calculated.
