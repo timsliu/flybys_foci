@@ -18,8 +18,40 @@ Below is additional detail on the two steps.
 
 Step 1 - burn phase
 
+The spacecraft has a known orbit (a and e) position (r and theta) and velocity (v)
+
 1. The spacecraft's velocity instantaneously increases a certain amount. The fuel on the
    craft is decremented. The velocity change and fuel change account for the reduction in mass.
 
 2. The spacecraft's r and v are known. R has not changed during the instantaneous burn. 
    The semi-major axis is recalculated from the vis-viva equation
+
+3. The eccentricity and true anomaly are simultaneously calculated by solving the radial form of the
+   spacecraft's hyperbolic trajectory and the equation for flight path angle. The flight path
+   angle is assumed to remain constant from the last time step.
+
+4. The angle of flight is updated based on the new true anomaly and eccentrcity. The frame of reference
+   is effectively rotated so that the 0 degree axis runs through the vertex of the hyperbola
+
+The burn phase results in a new orbit (a and e) position (r and theta) and velocity (v and phi) 
+
+Step 2 - coast phase
+
+The spacecraft's orbit (a and e) remain the same and the position (r and theta) and velocity (v and phi)
+are updated
+
+1. Time is incremented a set amount and the spacecraft's step length is calculated based on the starting
+   velocity
+
+2. The angle of flight and the original r a new r is calculated by linear approximation - 
+   treating the hyperbola as a curve of line segments 
+
+3. The true anomaly theta is updated using the equation of the orbit
+
+4. The velocity is updated based on the orbit and new r
+
+5. The angle of flight (phi) is updated using the true anomaly and the eccentricity
+
+The spacecraft's orbit (a and e) is unchanged while the position and velocity have been updated
+
+
