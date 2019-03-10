@@ -95,26 +95,66 @@ $$ = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
 For \textit{Einstein} the higher the specific orbital energy the faster it will reach the suns focal point. A more tangible measure is $v_{\infty}$, which is the spacecraft's velocity when it is so far away from the sun that its potential energy is negligible. As a spacecraft climbs out of the sun's gravity well it sheds velocity and the potential energy goes to 0 (in orbital mechanics potential energy is 0 at infinity and increasingly negative closer to the sun).
 
 $$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
-$$v_{\infty} = \sqrt{v^2-\frac{MG}{2r}}$$
+$$v_{\infty} = \sqrt{v^2-\frac{2MG}{r}}$$
 
 Where:
 
 $r$ = spacecraft distance to the sun\\
 $v$ = velocity at the given $r$\\
 
+We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its trajectory that took it close to the sun.
+
 We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its actual trajectory that took it close to the sun.
 
 \textbf{Scenario 1: Direct escape burn}
 
-Assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. In the story \textbf{Einstein} must first escape from Jupiter's gravity well but for simplicity we'll assume this doesn't require much \delta v.
+Assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. In the story \textbf{Einstein} must first escape from Jupiter's gravity well but for simplicity we'll assume this doesn't require much $\Delta$ v.
 
-$$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} (v_0 + \delta v)^2 - \frac{MG}{r_0}$$
-$$v_{\infty} = \sqrt{(v_0 + \delta v)^2-\frac{MG}{2r_0}}$$
+$$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} (v_0 + \Delta v)^2 - \frac{MG}{r_0}$$
+$$v_{\infty} = \sqrt{(v_0 + \Delta v)^2-\frac{2MG}{r_0}}$$
 
 Where:
-
+$v_0$: starting velocity\\
+$\Delta v$: change in velocity supplied by \textit{Sheridan} drive\\
+$r_0$: starting distance from the sun - Jupiter's orbit
 
 
 \textbf{Scenario 2: Oberth effect}
+
+Again we assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. \textit{Einstein} then performs two burns - one retrograde (opposite the direction of orbit) to bring down the perihelion (the point in the orbit nearest the sun) and a second burn near the sun to escape the solar system. In the story the first burn is combined with the maneuver to escape Jupiter, again is taking advantage of the Oberth effect!
+
+The hyperbolic excess velocity ($\Delta v_{\infty}$) following the second burn is:
+
+$$v_{\infty} = \sqrt{(v_p + \Delta v_2)^2-\frac{2MG}{r_p}}$$
+
+Where:
+
+$v_p$: velocity at perhelion prior to the burn\\
+$r_p$: perihelion distance\\
+$\Delta v_2$: change in velocity from the second burn\\
+
+The velocity and perihelion of \textit{Einstein} depends on the first burn. To solve for the perihelion:
+
+$$r_p + r_0 = 2a$$
+$$a = \bigg(\frac{2}{r_0} - \frac{(v_0-\Delta v_1)^2}{GM}\bigg)^{-1}$$
+
+Where:
+$r_p$: perihelion distance\\
+$r_0$: starting distance from the sun - Jupiter's orbit\\
+$\Delta v_1$: change in velocity of the first burn\\
+$a$: semi-major axis\\
+
+Note that $\Delta v_1$ subtracts from $v_0$ because the burn is opposite the direction of orbit to lower the perihelion. The second equation is a rearrangement of the equation for specific orbital energy. This equation gives us the perihelion distance. The velocity at the perihelion $v_p$ can be calculated from conservation of angular momentum:
+
+$$r_p \times v_p = r_0 \times v_0$$
+
+To summarize, $v_{\infty}$ depends on two factors: 
+
+\begin{enumerate}
+\item The burn at perihelion
+\item How low the perihelion is, which in turn determined by the first burn. 
+\end{enumerate}
+
+Note that there is a limit to how low the perihelion can be - \textit{Einstein} can only fly so close to the sun. Figure 1 plots the hyperbolic excess velocity as a function of these two burns.
 
 \end{document}
