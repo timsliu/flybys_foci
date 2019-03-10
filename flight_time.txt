@@ -11,3 +11,15 @@ The spacecraft's velocity changes instantaneously. The new orbit AND the state o
 Step 2 - coast phase
 
 The spacecraft coasts for a period of time. The spacecraft's orbit does not change but the state (position and velocity) change and are calculated.
+
+
+Below is additional detail on the two steps.
+
+
+Step 1 - burn phase
+
+1. The spacecraft's velocity instantaneously increases a certain amount. The fuel on the
+   craft is decremented. The velocity change and fuel change account for the reduction in mass.
+
+2. The spacecraft's r and v are known. R has not changed during the instantaneous burn. 
+   The semi-major axis is recalculated from the vis-viva equation
