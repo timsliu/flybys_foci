@@ -54,4 +54,10 @@ are updated
 
 The spacecraft's orbit (a and e) is unchanged while the position and velocity have been updated
 
+The algorithm iterates between step 1 and step 2 until the burn is complete. After the burn is complete
+the algorithm continues on step 2 for several more iterations with a progressively larger time step until
+the flight angle falls close to zero. The algorithm then proceeds to step 3, which treats the spacecraft's 
+orbit like a straight line with a center at the sun. In step 3 the time to reach a certain distance is 
+solved analytically.
+
 

@@ -1,0 +1,107 @@
+\documentclass[12pt]{article} % use larger type; default would be 10pt
+
+%packages
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{ulem}
+\usepackage{soul}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{enumerate} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[compact]{titlesec}
+
+
+ %put box around figure captions
+\makeatletter
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{\fbox{#1: #2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    \fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{#1: #2}}\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother
+
+%reduce space between sections
+\titlespacing{\section}{0pt}{*1}{*0}
+\titlespacing{\subsection}{0pt}{*1}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+
+%no indent and modify distance between paragraphs
+\setlength\parindent{0pt}
+\setlength\parskip{12pt}
+
+%set margins and line spacing
+\geometry{margin=1in}
+\linespread{1.2}
+\geometry{letterpaper}
+
+%math operators
+\DeclareMathOperator{\E}{\mathbb{E}}
+
+%set up header and page numbering
+\pagestyle{fancy}
+\lhead{Scientific Appendix}
+\rhead{Timothy Liu}
+\pagenumbering{arabic}
+
+
+
+\title{Flybys and Foci Scientific Appendix}
+\author{Timothy Liu}
+
+\begin{document}
+
+\maketitle
+
+\section{Appendix}
+Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This section gives a more thorough explanation of some parts of the story that the reader may find interesting. The appendix is written assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
+
+\subsection{Appendix A: Diving Towards the Sun}
+
+
+In Chapter 8, \textit{Einstein} is put on a trajectory that passes close to the sun before performing its main burn to exit the solar system. This may seem unintuitive - the spacecraft first heads towards the sun to make it to a point very distant to the sun. \textit{Einstein} is taking advantage of the Oberth Effect, where the most efficient place to perform an engine burn is deep in a gravity well.
+
+The total energy of a body in orbit is the sum of the kinetic and potential energy:
+
+$$ E = \frac{1}{2} mv^2 - \frac{mMG}{r} = -\frac{mMG}{2a}$$
+
+Where:
+
+$m$ = spacecraft mass \\
+$v$ = velocity \\
+$M$ = solar mass\\
+$G$ = universal gravitational constant\\
+$r$ = distance to the sun\\
+$a$ = semi-major axis\\
+
+This expression is commonly divided by mass to get the \textit{specific orbital energy}:
+
+$$ = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
+
+For \textit{Einstein} the higher the specific orbital energy the faster it will reach the suns focal point. A more tangible measure is $v_{\infty}$, which is the spacecraft's velocity when it is so far away from the sun that its potential energy is negligible. As a spacecraft climbs out of the sun's gravity well it sheds velocity and the potential energy goes to 0 (in orbital mechanics potential energy is 0 at infinity and increasingly negative closer to the sun).
+
+$$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
+$$v_{\infty} = \sqrt{v^2-\frac{MG}{2r}}$$
+
+Where:
+
+$r$ = spacecraft distance to the sun\\
+$v$ = velocity at the given $r$\\
+
+We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its trajectory that took it close to the sun.
+
+\end{document}
