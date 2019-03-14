@@ -1,14 +1,24 @@
 # oberth.py
 # program for calculating hyperbolic excess velocity under
 # different mission profiles and plotting Einstein's trajectory
+#
+# Note - consider splitting several files into helper 
+# "orbit.py" library
 
 # Revision History
 # 03/10/19    Tim Liu    started file; wrote main and skeleton functions
-# 03/11/19
+# 03/12/19    Tim Liu    wrote main_two_burns and several helper functions
+# 03/13/19    Tim Liu    wrote calc_dv and table of contents
 
 
 # Table of Contents
-#
+# one_burn - main function to calculate v_infinity from one burn
+# two_burns - main function to calculate v_infinity from two burns
+# calc_vi - calculates v_infinity for a two burn manuever
+# calc_peri - calculates the perihelion after one retrograde burn
+# calc_dv - calcuates the delta v of a retrograde burn that will result
+#           in a given perihelion
+# plot_vi - plots v_infinities for a two burn manuever
 
 
 
@@ -24,19 +34,18 @@ MIN_R = 0.1 * AU                      # closest approach to sun allowed
 DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
 
 
-def main_one_burn(max_dv):
-	'''calculates the hyperbolic escape velocity of one '''
+def one_burn(max_dv):
+	'''calculates the hyperbolic escape velocity from single
+	prograde burn '''
 
 
-def main_two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
+def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
 	'''main function that calls other functions to calculate and plot the
 	hyperbolic escape velocity
 	inputs: maximum delta_v budget'''
 
-    # TODO
     # calculate maximum delta_v for first burn - required to meet MIN_R
-    # r0*(v0-max_dv1) = MIN_R
-    max_dv1 = r0*v0
+    max_dv1 = calc_dv(MIN_R, JUPITER_R, v0)
 
     # array of possible DV1 values
     v1_values = np.arange(0.0, max_dv1, step = DV_STEP)
@@ -60,8 +69,8 @@ def main_two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
 
 	# plot plotting function 
 	plot_vi(v_infinities)
-
-
+	# plot curve for single given velocity repeatedly
+	plot_single_dv(v_infinites, 4000)
 	return
 
 def calc_vi(dv1, dv2, r0, v0):
@@ -95,12 +104,26 @@ def calc_perihelion(dv1, r0, v0):
 	return rp, vp                           # return perihelion and velocity
 
 def calc_dv(rp, r0, v0):
-	'''calculate '''
+	'''calculate delta v to reach a given perihelion
+	inputs: rp - desired perihelion
+	        r0 - starting radius
+	        v0 - starting velocity'''
+
+     # calculate semi-major axis
+	 a = (rp + r0)/2   
+	 # calculate dv; rearrangement of vis-viva equation
+	 dv = v0 - math.sqrt(-1* (1/a - 2/r0) * G * M_S)
+
+	 return dv
 
 def plot_vi(data):
 	'''plots v_infinity as a function of dv1 and dv2
 	inputs: data - data to plot. List of lists with each
 	               sublist made of triples (dv1, dv2, v_infinity)
 	               Each sublist has the same total delta v'''
+
+def plot_single_dv(data, dv):
+	'''plots v_infinity for a single constant dv
+	inputs: data - array with all v_i data given all dv combinations'''
 
 	return
