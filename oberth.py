@@ -28,7 +28,7 @@ import numpy as np
 
 G = 6.674e-11                         # universal gravity constant in MKS
 M_S = 1.99e30                         # mass of the sun in kilogram
-AU = 1.486e11                         # astronomical unit in meters
+AU = 1.496e11                         # astronomical unit in meters
 JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun in meters (5AU)
 JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
@@ -56,8 +56,8 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
     # display parameters
     print("Begin two burn calculation")
     print("Maximum Delta v of burn 2: ", max_dv2, " m/s")
-    print("Starting radial distance: %.2f" %(r0/10e11), " hundred million km")
-    print("Starting radial velocity: %.2f" %(v0/10e3), " km/s\n")
+    print("Starting radial distance: %.2f" %(r0/1e9), "  million km")
+    print("Starting radial velocity: %.2f" %(v0/1e3), " km/s\n")
 
     # calculate maximum delta_v for first burn - required to meet MIN_R
     max_dv1 = calc_dv(MIN_R, JUPITER_R, v0)
