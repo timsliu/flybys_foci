@@ -56,13 +56,14 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
     # display parameters
     print("Begin two burn calculation")
     print("Maximum Delta v of burn 2: ", max_dv2, " m/s")
-    print("Starting radial distance: %.2f" %(r0/10e11), " hundred million km")
-    print("Starting radial velocity: %.2f" %(v0/10e3), " km/s\n")
+    print("Starting radial distance: %.2f" %(r0/1e9), " million km")
+    print("Starting radial velocity: %.2f" %(v0/1e3), " km/s\n")
 
     # calculate maximum delta_v for first burn - required to meet MIN_R
     max_dv1 = calc_dv(MIN_R, JUPITER_R, v0)
+
     # display calculated maximum delta_v
-    print("maximum delta_v for first burn: %.2f" %(max_dv1/10e3), " km/s\n")
+    print("maximum delta_v for first burn: %.2f" %(max_dv1/1e3), " km/s\n")
 
     # array of possible DV1 values
     v1_values = np.arange(0.0, max_dv1, step = DV_STEP)
@@ -86,6 +87,8 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
         # call function to calculate v_infinity
         v_infinities[dv_i][2] = calc_vi(dv1, dv2, r0, v0)
 
+    print(v_infinities)
+
     print("Delta_v calculations complete!")
 
     print(v_infinities[3])
@@ -107,9 +110,13 @@ def calc_vi(dv1, dv2, r0, v0):
     outputs: v_infinity - hyperbolic excess velocity'''
 
     # calculate perihelion and velocity at perihelion
-    rp, vp = calc_perihelion(dv1, r0, r0)
+    rp, vp = calc_perihelion(dv1, r0, v0)
 
-    v_infinity = ((vp + dv2)**2 - 2*M_S*G/rp) ** 0.5
+    v_infinity = ((vp + dv2)**2 - 2*M_S*G/rp)**0.5
+
+    print("rp: %.2f" %(rp/1e9), " million km")
+    print("vp: %.2f" %(vp/1e3), " km/s")
+    print("vi: %.2f" %(v_infinity/1e3), " km/s")
 
     return v_infinity
 
@@ -123,6 +130,7 @@ def calc_perihelion(dv1, r0, v0):
     a = (2/r0 - ((v0-dv1) ** 2)/G/M_S) ** -1  # calculate semi-major axis
     rp = 2*a - r0                           # calculate perihelion distance
     vp = r0*v0/rp                           # calculate velocity at perihelion
+
 
 
     return rp, vp                           # return perihelion and velocity
