@@ -22,6 +22,9 @@
 
 import math
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import pandas as pd
 
 
 # constants
@@ -33,7 +36,19 @@ JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun 
 JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
                                       # Parker Solar Probe MIN_R ~0.05 AU
-DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
+DV_STEP = 50                         # delta_v increment between calculated combinations in m/s
+
+
+def compare(max_dv):
+    '''calculates v_infinity from a single burn and from two burns.
+       plots chart comparing v_infinities
+       inputs: max_dv - maximum delta_v available'''
+
+    # calculates delta_v from single burn
+    one_burn_dv = one_burn(max_dv)
+
+    # calculate delta_v from two burns
+
 
 
 def one_burn(max_dv):
@@ -57,7 +72,6 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
     print("Begin two burn calculation")
     print("Maximum Delta v of burn 2: ", max_dv2, " m/s")
     print("Starting radial distance: %.2f" %(r0/1e9), "  million km")
-    print("Starting radial distance: %.2f" %(r0/1e9), " million km")
     print("Starting radial velocity: %.2f" %(v0/1e3), " km/s\n")
 
     # calculate maximum delta_v for first burn - required to meet MIN_R
@@ -88,16 +102,12 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
         # call function to calculate v_infinity
         v_infinities[dv_i][2] = calc_vi(dv1, dv2, r0, v0)
 
-    print(v_infinities)
-
     print("Delta_v calculations complete!")
 
-    print(v_infinities[3])
-
     # plot plotting function 
-    plot_vi(v_infinities)
-    # plot curve for single given velocity repeatedly
-    plot_single_dv(v_infinities, 4000)
+    dv_budgets = [5, 10, 20]   # delta_v budgets (km/s) lines to plot
+    plot_vi(v_infinities, dv_budgets)   # call function to plot vi combos
+    
     return
 
 def calc_vi(dv1, dv2, r0, v0):
@@ -113,11 +123,12 @@ def calc_vi(dv1, dv2, r0, v0):
     # calculate perihelion and velocity at perihelion
     rp, vp = calc_perihelion(dv1, r0, v0)
 
-    v_infinity = ((vp + dv2)**2 - 2*M_S*G/rp)**0.5
-
-    print("rp: %.2f" %(rp/1e9), " million km")
-    print("vp: %.2f" %(vp/1e3), " km/s")
-    print("vi: %.2f" %(v_infinity/1e3), " km/s")
+    if (vp + dv2)**2 < 2*M_S*G/rp:
+        # heliocentric escape velocity not attained
+        v_infinity = -1
+    else:
+        # attained escape velocity
+        v_infinity = ((vp + dv2)**2 - 2*M_S*G/rp)**0.5
 
     return v_infinity
 
@@ -149,13 +160,66 @@ def calc_dv(rp, r0, v0):
 
     return dv
 
-def plot_vi(data):
+def plot_vi(data, dv_budgets):
     '''plots v_infinity as a function of dv1 and dv2
     inputs: data - data to plot. List of lists with each
                    sublist made of triples (dv1, dv2, v_infinity)
-                   Each sublist has the same total delta v'''
+                   Each sublist has the same total delta v
+            dv_budgets - list of delta_v budget lines to plot (km/s)'''
 
-    print("plot_vi does nothing! XD")
+    data = data/1000 # convert m/s to km/s
+
+    # array for burn combinations resulting in escape
+    dv_1 = []
+    dv_2 = []
+    v_in = []
+
+    # array for burn combinations that do not escape the sun
+    dv_1_trapped = []
+    dv_2_trapped = []
+    v_in_trapped = []
+
+    for i in range(len(data)):
+        # fill in each variable from the data array
+        if data[i][2] > 0:
+            # fill in array for combos that escape the sun
+            dv_1.append(data[i][0])
+            dv_2.append(data[i][1])
+            v_in.append(data[i][2])
+        else:
+            # fill in array for combos that do not escape the sun
+            dv_1_trapped.append(data[i][0])
+            dv_2_trapped.append(data[i][1])
+            v_in_trapped.append(data[i][2])
+
+    
+    # set up the graph
+    plt.xlim(0, max(dv_1))                          # set limit of x axis
+    plt.ylim(0, max(dv_2))                          # set limit of y axis
+    cm = plt.cm.get_cmap('Blues')                   # color scale for v_infinity
+    plt.xlabel("Delta_v first burn (km/s)")         # xlabel
+    plt.ylabel("Delta_v second burn(km/s)")         # ylabel
+    plt.title("V infinity from burn combos (km/s)") # plot title
+    plt.grid(True)                                  # draw gridlines
+
+    # plot the combos that escape with different colors
+    sc = plt.scatter(dv_1, dv_2, c=v_in, vmin=0, 
+        vmax=(math.ceil(max(v_in)/100)) * 100, cmap=cm)
+    # plot the combos that do not escape, all in gray
+    plt.scatter(dv_1_trapped, dv_2_trapped, c = "dimgray")
+    # plot the color bar
+    colorbar = plt.colorbar(sc)
+    colorbar.set_label("v_infinity (km/s)")
+
+    # draw lines for each delta_v budget
+    for dv_b in dv_budgets:
+        # plot a line representing a possible delta-v budget
+        plt.plot([0, dv_b], [dv_b, 0])
+        # label the line
+        plt.text(max(dv_1)/40, dv_b + max(dv_2)/40, 
+            "Delta_v = %d km/s" %(dv_b))
+    plt.savefig("v_infinity.png", format="png", dpi = 800)
+
     return
 
 def plot_single_dv(data, dv):
