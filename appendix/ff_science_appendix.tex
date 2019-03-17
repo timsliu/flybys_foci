@@ -67,10 +67,9 @@
 
 \maketitle
 
-\section{Appendix}
 Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This section gives a more thorough explanation of some parts of the story that the reader may find interesting. The appendix is written assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
 
-\subsection{Appendix A: Diving Towards the Sun}
+\section{Appendix A: Diving Towards the Sun}
 
 
 In Chapter 8, \textit{Einstein} is put on a trajectory that passes close to the sun before performing its main burn to exit the solar system. This may seem unintuitive - the spacecraft first heads towards the sun to make it to a point very distant to the sun. \textit{Einstein} is taking advantage of the Oberth Effect, where the most efficient place to perform an engine burn is deep in a gravity well.
@@ -106,7 +105,7 @@ We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned
 
 We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its actual trajectory that took it close to the sun.
 
-\textbf{Scenario 1: Direct escape burn}
+\subsection{Scenario 1: Direct escape burn}
 
 Assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. In the story \textbf{Einstein} must first escape from Jupiter's gravity well but for simplicity we'll assume this doesn't require much $\Delta$ v.
 
@@ -119,7 +118,7 @@ $\Delta v$: change in velocity supplied by \textit{Sheridan} drive\\
 $r_0$: starting distance from the sun - Jupiter's orbit
 
 
-\textbf{Scenario 2: Oberth effect}
+\subsection{Scenario 2: Oberth effect}
 
 Again we assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. \textit{Einstein} then performs two burns - one retrograde (opposite the direction of orbit) to bring down the perihelion (the point in the orbit nearest the sun) and a second burn near the sun to escape the solar system. In the story the first burn is combined with the maneuver to escape Jupiter, again is taking advantage of the Oberth effect!
 
@@ -156,5 +155,56 @@ To summarize, $v_{\infty}$ depends on two factors:
 \end{enumerate}
 
 Note that there is a limit to how low the perihelion can be - \textit{Einstein} can only fly so close to the sun. Figure 1 plots the hyperbolic excess velocity as a function of these two burns.
+
+\begin{figure}
+\caption{This plot illustrates v-infinity as a function of the delta-v of the two burns. The first burn is performed while in a circular orbit around the sun near Jupiter and is retrograde, which lowers the perihelion. The second burn is performed at perihelion and puts \textit{Einstein} on an escape trajectory from the solar system. Each straight line represents a constant total delta-v.}
+\end{figure}
+
+\subsection{Comparing the two scenarios}
+
+For lower delta-v budgets it is advantageous to perform only one burn out of the solar system. Figure 2 illustrates an example of v-infinity for a single burn and for two burns.
+
+\begin{figure}
+
+\caption{V-infinity for the single burn and two burn scenarios. Performing two burns results in a lower v-infinity because the energy used to lower the orbit is not made up for by the Oberth effect.}
+\end{figure}
+
+However for larger delta-v budgets performing two burns is advantageous. Lowering the perihelion and burning at perihelion - and using the Oberth effect - can significantly increase v-infinity.
+
+\begin{figure}
+\caption{V-infinity for the single burn and two burn scenarios where the total delta-v budget is X. Performing two burns significantly increases v-infinity}.
+\end{figure}
+
+In later sections we will see that the delta-v budget provided by the \textit{Sheridan} drive justifies performing two burns.
+
+
+\section{Gravitational lensing focal distance}
+One of the most challenging aspects of \textit{Einstein} is that it must travel nearly 600 AU (astronomical units - the average distance between the earth and sun) to exploit the gravitational lensing effect. Gravitational lensing was predicted by \textit{Einstein's} theory of general relativity. When light passes by a large object gravity warps its path. This is similar to how a comet will change trajectory as it passes near the sun. Light from a distant star - in the story Trappist 1 - is bent by the sun's gravity and concentrates at a focal point. Figure 5 below illustrates this.
+
+\begin{figure}
+\caption{Illustration of gravitational lensing effect. Light passing by the sun is bent to a focal point. Light that passes further from the sun is bent to a further focal point, creating a focal line extending past the sun.}
+\end{figure}
+
+The equation for the deflection angle caused by the lens is:
+
+$$\theta = \frac{4GM}{c^2r}$$
+
+where:
+
+$\theta$ is the angle of deflection\\
+$G$ is the universal gravitational constant\\
+$M$ is the mass of the lensing object (the sun)\\
+$c$ is the speed of light\\
+$r$ is the closest approach light takes the sun\\
+
+The derivation of the equation is beyond the scope of this appendix.
+
+The focal distance $f_d$ can be written as:
+
+$$f_d = $$
+
+\section{Efficiency of \textit{Sheridan} drive}
+
+\section{\textit{Einstein} flight time}
 
 \end{document}
