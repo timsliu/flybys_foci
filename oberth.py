@@ -36,29 +36,47 @@ JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun 
 JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
                                       # Parker Solar Probe MIN_R ~0.05 AU
-DV_STEP = 50                         # delta_v increment between calculated combinations in m/s
+DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
 
 
-def compare(max_dv):
+def compare(max_dv, r0 = JUPITER_R, v0 = JUPITER_V):
     '''calculates v_infinity from a single burn and from two burns.
        plots chart comparing v_infinities
        inputs: max_dv - maximum delta_v available'''
 
-    # calculates delta_v from single burn
-    one_burn_dv = one_burn(max_dv)
+    # calculates vi from a single burn; perihelion drop first burn
+    # is set to 0
+    one_burn_vi = calc_vi(0, max_dv, r0, v0)
 
     # calculate delta_v from two burns
 
+    # calculate maximum allowed delta_v for first burn - required to meet MIN_R
+    max_dv1 = calc_dv(MIN_R, JUPITER_R, v0)
+    # array of v1_values (first burn, dropping perihelion)
+    v1_values = np.arange(0.0, min(max_dv1, max_dv), step = DV_STEP)
+    # array of v2_values (second burn, heliocentric escape)
+    v2_values = np.array([max_dv - x for x in list(v1_values)])
+    # array holding [v1, v2, v_infinity]
+    v_infinities = np.zeros((len(v1_values), 3))
+    # print number of delta v combinations to calculate
+    print("Number of delta_v combinations: ", len(v_infinities))
 
+    # compute v_infinity for each combination of burns; note that every combination
+    # has the same total delta_v
+    for dv_i in range(len(v_infinities)):
+        # fill in v1 values
+        v_infinities[dv_i][0] = v1_values[dv_i]
+        # fill in v2_values
+        v_infinities[dv_i][1] = v2_values[dv_i]
+        # call function to calculate v_infinity
+        v_infinities[dv_i][2] = calc_vi(v1_values[dv_i], v2_values[dv_i], r0, v0)
 
-def one_burn(max_dv):
-    '''calculates the hyperbolic escape velocity from single
-    prograde burn '''
+    # call function to plot v_infinity from the two options
+    plot_single_dv(v_infinities, one_burn_vi, max_dv)
 
-
-    # TODO
 
     return
+
 
 
 def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
@@ -123,6 +141,7 @@ def calc_vi(dv1, dv2, r0, v0):
     # calculate perihelion and velocity at perihelion
     rp, vp = calc_perihelion(dv1, r0, v0)
 
+
     if (vp + dv2)**2 < 2*M_S*G/rp:
         # heliocentric escape velocity not attained
         v_infinity = -1
@@ -140,10 +159,8 @@ def calc_perihelion(dv1, r0, v0):
             r0 - starting distance from the sun
             v0 - starting velocity'''
     a = (2/r0 - ((v0-dv1) ** 2)/G/M_S) ** -1  # calculate semi-major axis
-    rp = 2*a - r0                           # calculate perihelion distance
-    vp = r0*v0/rp                           # calculate velocity at perihelion
-
-
+    rp = 2*a - r0                             # calculate perihelion distance
+    vp = r0 *(v0 - dv1)/rp                    # calculate velocity at perihelion
 
     return rp, vp                           # return perihelion and velocity
 
@@ -222,10 +239,38 @@ def plot_vi(data, dv_budgets):
 
     return
 
-def plot_single_dv(data, dv):
+def plot_single_dv(v_infinities, one_burn_vi, max_dv):
     '''plots v_infinity for a single constant dv
     inputs: data - array with all v_i data given all dv combinations'''
 
-    print("plot_single_dv does nothing!! XD")
+    # create list of just dv1 (km/s)
+    dv_1 = [x[0]/1000 for x in list(v_infinities)]
+    # create list of just dv2 (km/s)          
+    dv_2 = [x[1]/1000 for x in list(v_infinities)]
+    # create list of just v_infinities (km/s)       
+    v_in = [max(x[2], 0)/1000 for x in list(v_infinities)]    
+
+    # TODO set y_limits correctly
+    # set up the graph
+    plt.xlim(0, max(dv_1))                             # set limit of x axis
+    #plt.ylim(0, max(v_in))                             # set limit of y axis            
+    plt.xlabel("Delta_v first burn (km/s)")            # x label
+    plt.ylabel("v-infinity (km/s)")                    # y label
+    plt.title("v-infinity for %d km/s delta-v budget"
+     %(max_dv/1000))                                   # plot title
+    plt.grid(True)
+
+    print(one_burn_vi)
+
+    # plot the v-infinity combinations
+    # plot v_infinity for two burns
+    plt.plot(dv_1, v_in, label = "Two burns")                                 
+    # plot v_infinity for one burn - if the burn is insufficent for escape
+    # plot a zero
+    plt.plot([0, max(dv_1)], [max(0, one_burn_vi/1000), max(0, one_burn_vi/1000)], label = "Single burn")  
+    # save figure
+    plt.legend()
+    plt.savefig("compare_%d_kms.png" %(max_dv/1000), format="png", dpi = 800)
+
 
     return
