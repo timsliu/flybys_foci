@@ -243,7 +243,7 @@ def plot_vi(data, dv_budgets):
 
     # format plot save name
     currentDT = dt.datetime.now()
-    timestamp = currentDT.strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = currentDT.strftime("%Y-%m-%d %H_%M_%S")
 
     # go to graph directory and save
     os.chdir(HOME + "/graphs")
