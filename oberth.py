@@ -25,6 +25,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import pandas as pd
+import datetime as dt
+import os
+
+HOME = os.getcwd()
 
 
 # constants
@@ -123,7 +127,7 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
     print("Delta_v calculations complete!")
 
     # plot plotting function 
-    dv_budgets = [5, 10, 20]   # delta_v budgets (km/s) lines to plot
+    dv_budgets = [10, 20, 40, 80]   # delta_v budgets (km/s) lines to plot
     plot_vi(v_infinities, dv_budgets)   # call function to plot vi combos
     
     return
@@ -183,6 +187,7 @@ def plot_vi(data, dv_budgets):
                    sublist made of triples (dv1, dv2, v_infinity)
                    Each sublist has the same total delta v
             dv_budgets - list of delta_v budget lines to plot (km/s)'''
+    print("\nBeginning to plot...")
 
     data = data/1000 # convert m/s to km/s
 
@@ -235,7 +240,17 @@ def plot_vi(data, dv_budgets):
         # label the line
         plt.text(max(dv_1)/40, dv_b + max(dv_2)/40, 
             "Delta_v = %d km/s" %(dv_b))
-    plt.savefig("v_infinity.png", format="png", dpi = 800)
+
+    # format plot save name
+    currentDT = dt.datetime.now()
+    timestamp = currentDT.strftime("%Y-%m-%d %H:%M:%S")
+
+    # go to graph directory and save
+    os.chdir(HOME + "/graphs")
+    plt.savefig("v_infinity_" + timestamp + "_.png", format="png", dpi = 800)
+    os.chdir(HOME)
+
+    plt.close()
 
     return
 
@@ -250,10 +265,9 @@ def plot_single_dv(v_infinities, one_burn_vi, max_dv):
     # create list of just v_infinities (km/s)       
     v_in = [max(x[2], 0)/1000 for x in list(v_infinities)]    
 
-    # TODO set y_limits correctly
     # set up the graph
     plt.xlim(0, max(dv_1))                             # set limit of x axis
-    #plt.ylim(0, max(v_in))                             # set limit of y axis            
+    plt.ylim(0, math.ceil(max(max(v_in), one_burn_vi/1000) + 1))            # set limit of y axis            
     plt.xlabel("Delta_v first burn (km/s)")            # x label
     plt.ylabel("v-infinity (km/s)")                    # y label
     plt.title("v-infinity for %d km/s delta-v budget"
@@ -270,7 +284,13 @@ def plot_single_dv(v_infinities, one_burn_vi, max_dv):
     plt.plot([0, max(dv_1)], [max(0, one_burn_vi/1000), max(0, one_burn_vi/1000)], label = "Single burn")  
     # save figure
     plt.legend()
+
+    # go to graph directory and save
+    os.chdir(HOME + "/graphs")
     plt.savefig("compare_%d_kms.png" %(max_dv/1000), format="png", dpi = 800)
+    os.chdir(HOME)
+
+    plt.close()
 
 
     return
