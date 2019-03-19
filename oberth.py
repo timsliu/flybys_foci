@@ -9,6 +9,7 @@
 # 03/10/19    Tim Liu    started file; wrote main and skeleton functions
 # 03/12/19    Tim Liu    wrote main_two_burns and several helper functions
 # 03/13/19    Tim Liu    wrote calc_dv and table of contents
+# 03/18/19    Tim Liu    moved astronomical constants to separate file
 
 
 # Table of Contents
@@ -20,6 +21,8 @@
 #           in a given perihelion
 # plot_vi - plots v_infinities for a two burn manuever
 
+
+# import libraries
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,16 +31,13 @@ import pandas as pd
 import datetime as dt
 import os
 
+# file containing astronomical constants
+from astro_constants import *
+
 HOME = os.getcwd()
 
 
 # constants
-
-G = 6.674e-11                         # universal gravity constant in MKS
-M_S = 1.99e30                         # mass of the sun in kilogram
-AU = 1.496e11                         # astronomical unit in meters
-JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun in meters (5AU)
-JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
                                       # Parker Solar Probe MIN_R ~0.05 AU
 DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
