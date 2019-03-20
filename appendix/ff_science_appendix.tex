@@ -58,6 +58,13 @@
 \rhead{Timothy Liu}
 \pagenumbering{arabic}
 
+\hypersetup{  %set up url
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
 
 
 \title{Flybys and Foci Scientific Appendix}
@@ -69,10 +76,13 @@
 
 Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This section gives a more thorough explanation of some parts of the story that the reader may find interesting. The appendix is written assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
 
-\section{Appendix A: Diving Towards the Sun}
+\tableofcontents
 
+\section{Diving Towards the Sun}
 
 In Chapter 8, \textit{Einstein} is put on a trajectory that passes close to the sun before performing its main burn to exit the solar system. This may seem unintuitive - the spacecraft first heads towards the sun to make it to a point very distant to the sun. \textit{Einstein} is taking advantage of the Oberth Effect, where the most efficient place to perform an engine burn is deep in a gravity well.
+
+In rocketry a common unit for describing the effort needed to travel between points in space is delta v, also expressed as $\Delta v$. Delta v is the change in velocity needed to modify a spacecraft's orbit. For example, to go from low earth orbit to a trajectory that escapes from earth's gravity takes a change in velocity (or delta v) of 3.2 km/s. The total velocity change that a spacecraft can perform is called the delta v budget. This section explains how \textit{Einstein}'s trajectory in the story maximizes its delta v budget to reach the focal point as quickly as possible.
 
 The total energy of a body in orbit is the sum of the kinetic and potential energy:
 
@@ -230,6 +240,8 @@ However, light passing so close to the sun would be difficult to separate from t
 
 \hspace{2cm} \textit{a long sought after holy grail, a practical nuclear fusion engine}
 
+This section will give some approximate specifications of the \textit{Sheridan} drive. Compared to other sections this section is lighter on detail and more speculative. Rather than attempt to sketch out the design of an actual nuclear fusion engine this section gives a general comparison between the \textit{Sheridan} drive and existing engines.
+
 There are several choices of fuels for a nuclear fusion engine. The most likely are a deuterium tritium mix:
 $$^2_1D^+ + ^3_1T^+ \rightarrow ^4_2He^{2+} (3.5 MeV) + n^0 (14.1 MeV)$$
 
@@ -249,9 +261,129 @@ $$v = \sqrt{\frac{2 E \frac{joules}{eV}}{m}}$$
 
 for the helium-3 deuterim reaction this yields an exhaust velocity of:
 
-$^4_2He^{2+}: $
-$p^{+}: 
+$^4_2He^{2+}: 13,176 km/s$ or 0.044 c\\
+$p^{+}: 53,059 km/s$ or 0.177 c\\
+
+The exhuast of the \textit{Sheridan} drive is composed of two streams of particles with different exhaust velocities. The proton has an exhaust veloity of nearly 18\% the speed of light while the heavier alpha particle has a velocity of over 4\% the speed of light. The momentum change from the two exhaust streams is equivalent to the same mass being uniformly ejected at a velocity of:
+
+$$p_{total} = 0.2mv_{p} + 0.8mv_{He} = mv_{combined}$$
+$$v_{combined} = 0.2v_{p} + 0.8v_{He}$$
+$$v_{combined} =  21,153km/s$$
+
+which is equivalent to 7\% the speed of light. A common descriptor for the efficiency of an engine is its specific impulse, defined as the change in momentum per unit of fuel consumed.  When fuel is expressed by mass specific impulse is equivalent to exhaust velocity with units of meters per second. If weight is used then the units are expressed in seconds. The higher the exhaust velocity the greater the efficiency, and as we will see in the following section the faster a spacecraft can travel.
+
+Since the \textit{Sheridan} drive is a first generation nuclear fusion engine we assume that its specific impulse is much less than the theoretical maximum. If we assume the specific impulse (and exhaust velocity) is an order of magnitude lower, then the specific impulse of the Sheridan drive is:
+
+$$I_{sp} \approx 2,100 km/s \approx 214,000 seconds$$
+
+Going forward we will round the \textit{Sheridan} drive's specific impulse to \textbf{200,000 seconds} and the exhaust velocity to \textbf{2,000} km/s.
+
+The table below gives a comparison of the specific impulse of existing engines.
+
+\begin{center}
+\begin{tabular}{|m{5 cm}| m{5 cm}|} \hline
+\textbf{Engine} & \textbf{Specific impulse (s)}\\ \hline
+Falcon 9 Merlin-1D &  311 \\ \hline
+Space shuttle main engine &  453 \\ \hline
+Dawn ion engine   &  3100\\ \hline
+\textit{Sheridan} drive & 200,000\\ \hline
+\end{tabular}
+\end{center}
+
+The specific impulse of the \textit{Sheridan} drive is nearly two orders of magnitude greater than that of the \textit{Dawn} ion engines. We will see in the next section that the specific impulse is a strong driver of $\Delta v$, which in turn determines how long it takes \textit{Einstein} to reach the sun's focal point.
 
 \section{\textit{Einstein} flight time}
+In the story \textit{Einstein} takes ``decades" to reach the sun's focal point. This section  calculates how long the trip takes based on the specific impulse of the \textit{Sheridan} drive and the distance to the focal point.
+
+The $\Delta v$ budget of a spacecraft is determined by the Tsiolkovsky rocket equation:
+
+$$\Delta v = v_e ln \frac{m_0}{m_f}$$
+
+where:
+
+$v_e$ is exhaust velocity\\
+$m_0$ is the starting mass\\
+$m_f$ is the ending mass after all fuel is expended\\
+
+The $\Delta v$ strongly depends on the fraction of the spacecraft taken up by fuel. For \textit{Einstein} we assume that the exhaust velocity is 2,000 km/s and that the fraction of the starting mass taken up by fuel is 10\%. For comparison, NASA's \textit{Cassini-Huygens} probe was more than 50\% fuel at launch. Since \textit{Einstein} is a first generation nuclear fusion engine with a heavy reactor we assume it has a lower fuel ratio. Substituting into the rocket equation gives a $\Delta v$ of:
+
+$$\Delta v = 2,000,000\frac{m}{s} \times ln \frac{1}{0.9}$$
+$$\Delta v \approx 210 km/s$$ 
+
+The flight to the focal point can be broken into several phase:
+\begin{enumerate}
+\item Burn to Jupiter escape
+\item Coast to perihelion
+\item Burn at perihelion
+\item Coast to focal point
+\end{enumerate}
+
+\subsection{Burn to Jupiter escape}
+The first leg of the trip is to escape from Jupiter's gravity well. \textit{Einstein} is launched from Callisto and flies on an elliptical orbit that takes it near Jupiter. When the craft is near Jupiter the \textit{Sheridan} drive performs its first burn to escape from Jupiter's gravity well and put it on a trajectory close to the sun.
+
+The transit time from Callisto to Jupiter is on the order of several days to a few weeks. Leaving Jupiter's gravity well takes a similar amount of time. The time needed to escape from Jupiter will be ignored since it's relatively small compared to the flight time to the focal point.
+
+In section 1 of the appendix we calculated that a $\Delta v$ of about 10 km/s is needed to put \textit{Einstein} on a trajectory taking it close to the sun. The actual figure should be smaller since the burn to escape Jupiter and enter a sun diving orbit takes place near Jupiter, where the Oberth effect makes a burn more effective. For simplicity we will use the 10 km/s figure.
+
+$\Delta$ \textbf{v:} 10 km/s\\
+\textbf{Time:} 0
+
+\subsection{Coast to perihelion}
+The second leg of the trip is when \textit{Einstein} coasts from Jupiter inwards towards the sun. The spacecraft follows an elliptical orbit and does not expend any fuel. The period of an orbit is given by Kepler's second law:
+
+$$T^2 \propto a^3$$
+
+which states that the period of an orbit squared is proportional to the semi major axis cubed. The earth has a period of one year and a semi-major axis of almost exactly one AU. Using the units of years and AU the ratio between period squared and semi-major axis cubed is one.
+
+The elliptical orbit that \textit{Einstein} takes has a semi-major axis of:
+
+$$a = \frac{1}{2}(r_{perihelion} + r_{aphelion})$$
+
+where
+$r_{perihelion}$ = closest approach to the sun = 0.1 AU\\
+$r_{aphelion}$ = further distance to the sun = 5 AU\\
+
+The perihelion is limited by how close \textit{Einstein} can be to the sun without overheating. For comparison NASA's Parker Solar Probe, which has specially designed thermal protection, will fly within 0.046 AU of the sun. Substituting into Kepler's law gives a period of:
+
+$$1 = \frac{T^2}{a^3}$$
+$$2.05AU^{3} = T^2$$
+$$T = 4.1 years$$
+
+The period of \textit{Einstein}'s elliptical trajectory is about 4 years. The time it takes \textit{Einstein} to complete half an orbit (starting from the aphelion and ending at perihelion) is half that, or about 2 years.
+
+$\Delta$ \textbf{v:} 0 km/s\\
+\textbf{Time:} 2 years
+
+\subsection{Burn at perihelion}
+The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. For our calculations we will treat the burn as if it were much faster and the change in velocity was instantaneous. This is an idealized burn and gives us a higher v-infinity than a burn spread out over several days. But we'll stick with this approximation because it's not \textit{that} far off from a longer burn.
+
+Using equations for Section 1 the velocity at perihelion before the burn is 
+
+$$v_{p-} = $$
+
+where the $p-$ subscript denotes the velocity prior to the burn. \textit{Einstein} uses the majority of its fuel close to perihelion so the change in velocity is whatever is left of its delta-v budget:
+
+$$v_{p+} = $$
+
+After the burn \textit{Einstein} is 0.1AU from the sun and is traveling at xx m/s, or yy the speed of light. Solving the equation for v-infinity from section 1 gives:
+
+$$v_{\infty} = $$
+
+$\Delta$ \textbf{v:} 200 km/s\\
+\textbf{Time:} 0
+
+\subsection{Coast to focal point}
+After its final burn \textit{Einstein} coasts to the focal point. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total energy at perihelion:
+
+$$E_{p} = \frac{1}{2}v_p^2 - \frac{MG}{r_p} = \frac{1}{2}v^2-\frac{MG}{r}$$
+$$\frac{1}{2}v^2 = E_p+\frac{MG}{r}$$
+$$v = \sqrt{2\big(E_p + \frac{MG}{r}\big)}$$
+
+Figure X plots the velocity of \textit{Einstein} as a function of distance from the sun.
+
+To calculate \textit{Einstein}'s flight time we integrate one over the velocity:
+
+$$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
+
 
 \end{document}
