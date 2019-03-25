@@ -17,10 +17,15 @@ JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun 
 JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 
 # particle constants
-J_PER_EV = 1.602e-19                  # joules per electron volt
 MASS_HE4 = 6.644e-27                  # mass of He-4 in kg
 MASS_HE3 = 5.008e-27                  # mass of He-3 in kg
 MASS_D2 =  3.343e-27                  # mass of deuterium in kg
 MASS_T3 =  5.008e-27                  # mass of tritium in kg
 MASS_P1 =  1.673e-27                  # mass of proton in kg
 MASS_N1 =  1.675e-27                  # mass of neutron in kg
+
+EV_PER_MEV = 1e6                      # electron volts per mega electron volt
+J_PER_EV = 1.602e-19                  # joules per electron volt
+
+# time constants
+SEC_PER_YEAR = 3.154e7                # seconds per year
