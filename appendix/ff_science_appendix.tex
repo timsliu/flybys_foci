@@ -74,7 +74,9 @@
 
 \maketitle
 
-Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This section gives a more thorough explanation of some parts of the story that the reader may find interesting. The appendix is written assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
+Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This appendix gives a more thorough explanation of some parts of the story that the reader may find interesting. I have written the appendix assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
+
+The appendix is organized into four sections. Section 1 explains the flight path through space \textit{Einstein} takes and why it makes an unintuitive flyby of the sun to reach deep space. The second section details the gravitational lensing effect and calculates how far away the sun's focal point is. Section 3 gives a rough estimate of how efficient the \textit{Sheridan} drive is and how it stacks up against current engines. Section 4 is the culmination of the first three sections and calculates how long the flight to the sun's focal point is.
 
 \tableofcontents
 
@@ -293,7 +295,7 @@ Dawn ion engine   &  3100\\ \hline
 The specific impulse of the \textit{Sheridan} drive is nearly two orders of magnitude greater than that of the \textit{Dawn} ion engines. We will see in the next section that the specific impulse is a strong driver of $\Delta v$, which in turn determines how long it takes \textit{Einstein} to reach the sun's focal point.
 
 \section{\textit{Einstein} flight time}
-In the story \textit{Einstein} takes ``decades" to reach the sun's focal point. This section  calculates how long the trip takes based on the specific impulse of the \textit{Sheridan} drive and the distance to the focal point.
+In the story \textit{Einstein} takes ``decades" to reach the sun's focal point. This section calculates how long the trip takes based on the specific impulse of the \textit{Sheridan} drive and the distance to the focal point. Section 4 is more technically challenging than the first three sections and includes descriptions of several numerical approximations used to calculate \textit{Einstein}'s flight time.
 
 The $\Delta v$ budget of a spacecraft is determined by the Tsiolkovsky rocket equation:
 
@@ -355,22 +357,65 @@ $\Delta$ \textbf{v:} 0 km/s\\
 \textbf{Time:} 2 years
 
 \subsection{Burn at perihelion}
-The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. For our calculations we will treat the burn as if it were much faster and the change in velocity was instantaneous. This is an idealized burn and gives us a higher v-infinity than a burn spread out over several days. But we'll stick with this approximation because it's not \textit{that} far off from a longer burn.
+The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonable approximation:
+
+\begin{enumerate}
+\item \textit{Einstein}'s trajectory is a straight line that starts at the perihelion and continues perpendicular to a line connecting the perihelion to the sun
+\item The long, multi day burn is approximated as a series of discrete, instantaneous velocity changes separated by periods when \textit{Einstein} coasts. During the coast phases \textit{Einstein}'s velocity is governed only by the effect of gravity.
+\end{enumerate}
+
+In reality, \textit{Einstein} follows a hyperbolic path that constantly changes as the burn continues. The approximation underestimates the final v-infinity because the straight path moves away from the sun more quickly than a hyperbolic path that curves slightly inwards towards the sun. Leaving the sun's gravity well more quickly reduces the Oberth effect, and leads to a lower v-infinity. However, it is still a \textit{fairly} good approximation. Figure X below illustrates how the approximation compares to a more realistic calculation.
+
+\begin{figure}[H]
+
+\caption{Comparison of \textit{Einstein}'s actual velocity and the approximated trajectory.}
+
+\end{figure}
 
 Using equations for Section 1 the velocity at perihelion before the burn is 
 
 $$v_{p-} = $$
 
-where the $p-$ subscript denotes the velocity prior to the burn. \textit{Einstein} uses the majority of its fuel close to perihelion so the change in velocity is whatever is left of its delta-v budget:
+where the $p-$ subscript denotes the velocity prior to the burn. 
 
-$$v_{p+} = $$
+The cruise time is given by: 
 
-After the burn \textit{Einstein} is 0.1AU from the sun and is traveling at xx m/s, or yy the speed of light. Solving the equation for v-infinity from section 1 gives:
+$$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
+
+This integral cannot be solved in closed form.
+We will use the following steps to calculate \textit{Einstein}'s final velocity after its perihelion burn.
+
+\begin{enumerate}
+\item Calculate the average acceleration during the burn
+\item Instantaneously increase the velocity a small amount
+\item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the magnitude of the velocity change divided by the coast time is equal to the average acceleration.
+\item Use Simpson's rule to calculate how much time elapses when \textit{Einstein} coasts for the estimated time
+\item Update \textit{Einstein}'s position and velocity after the coast phase as it cruises on a straight line.
+\item Repeat steps 2-5 until the burn and the total velocity change is complete.
+\end{enumerate}
+
+The first two steps are straightforward - the total $\Delta v$ is divided by the number of steps that we're breaking the burn into. The result is the instantaneous velocity change at each step.
+
+ Instead, we use a Taylor series and approximate the velocity as a linear function. First we find an equation for the velocity as a function of r
+
+$$C_3 = \frac{1}{2}v_0^2-\frac{M_sG}{r_0}$$
+$$C_3 = \frac{1}{2}(v_r)^2 - \frac{M_sG}{r_0}$$
+$$v(r) = \sqrt{2  (C_3 + \frac{M_sG}{r})}$$
+$$v(r) = \sqrt{2  (\frac{1}{2}v_0^2-\frac{M_sG}{r_0} + \frac{M_sG}{r})}$$
+$$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r})}$$
+
+Next we take the derivative of the velocity at $r_0$, which is the distance from the sun right after the instantaneous burn:
+
+$$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bigg)^{-\frac{1}{2}}\frac{dv}{dr}\bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bigg)$$
+
+$$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bigg)^{-\frac{1}{2}}2M_sG\log{r}$$
+
+$$\frac{dv}{dr} = \frac{2M_sG \log{r}}{2 \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}}$$
 
 $$v_{\infty} = $$
 
 $\Delta$ \textbf{v:} 200 km/s\\
-\textbf{Time:} 0
+\textbf{Time:} 10 days\\
 
 \subsection{Coast to focal point}
 After its final burn \textit{Einstein} coasts to the focal point. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total energy at perihelion:

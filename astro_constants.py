@@ -29,3 +29,4 @@ J_PER_EV = 1.602e-19                  # joules per electron volt
 
 # time constants
 SEC_PER_YEAR = 3.154e7                # seconds per year
+SEC_PER_DAY = 86400                   # seconds in a day
