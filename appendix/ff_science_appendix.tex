@@ -360,7 +360,7 @@ $\Delta$ \textbf{v:} 0 km/s\\
 The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonable approximation:
 
 \begin{enumerate}
-\item \textit{Einstein}'s trajectory is a straight line that starts at the perihelion and continues perpendicular to a line connecting the perihelion to the sun
+\item \textit{Einstein}'s trajectory is a straight line that starts at the perihelion and continues perpendicular to a line connecting the perihelion to the sun.
 \item The long, multi day burn is approximated as a series of discrete, instantaneous velocity changes separated by periods when \textit{Einstein} coasts. During the coast phases \textit{Einstein}'s velocity is governed only by the effect of gravity.
 \end{enumerate}
 
@@ -372,31 +372,30 @@ In reality, \textit{Einstein} follows a hyperbolic path that constantly changes 
 
 \end{figure}
 
-Using equations for Section 1 the velocity at perihelion before the burn is 
 
-$$v_{p-} = $$
+Even with these approximations, it is difficult to directly solve for \textit{Einstein}'s final velocity. Instead, we will use the following steps to approximate the telescope's velocity after it's perihelion burn:
 
-where the $p-$ subscript denotes the velocity prior to the burn. 
+\begin{enumerate}
+\item Calculate the average acceleration of the entire burn
+\item Instantaneously increase the velocity a small amount
+\item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the magnitude of the velocity change in step 2 divided by the coast time is equal to the average acceleration.
+\item Use Simpson's rule to calculate how much time elapses when \textit{Einstein} coasts for the estimated distance
+\item Update \textit{Einstein}'s position and velocity after the coast phase as it cruises on a straight line.
+\item Repeat steps 2-5 until the burn and the total velocity change is complete. This breaks the continuous, multi-day burn into many small burns.
+\end{enumerate}
 
-The cruise time is given by: 
+The first two steps are straightforward - the total $\Delta v$ is divided by the number of steps that we breaking the burn into. The result is the instantaneous velocity change at each step. 
+
+\subsubsection{Step 3: Estimating coast time}
+The goal of steps 3-5 is to find what \textit{Einstein}'s new position and velocity are at the end of the cruise phase. After the each small burn (step 2), we let \textit{Einstein} cruise for a period of time. The time that it cruises between burns should give an average acceleration equal to what we calculated in step 1. 
+
+The relation between cruise time and cruise distance is given by: 
 
 $$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
 
-This integral cannot be solved in closed form.
-We will use the following steps to calculate \textit{Einstein}'s final velocity after its perihelion burn.
+If we can solve for this integral analytically, then we can rearrange it and get an explicit formula for the cruise distance as a function of time. Updating \textit{Einstein}'s position is then simply plugging in the desired cruise time between burns and calculating its new position. Unfortunately, it's more complicated.
 
-\begin{enumerate}
-\item Calculate the average acceleration during the burn
-\item Instantaneously increase the velocity a small amount
-\item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the magnitude of the velocity change divided by the coast time is equal to the average acceleration.
-\item Use Simpson's rule to calculate how much time elapses when \textit{Einstein} coasts for the estimated time
-\item Update \textit{Einstein}'s position and velocity after the coast phase as it cruises on a straight line.
-\item Repeat steps 2-5 until the burn and the total velocity change is complete.
-\end{enumerate}
-
-The first two steps are straightforward - the total $\Delta v$ is divided by the number of steps that we're breaking the burn into. The result is the instantaneous velocity change at each step.
-
- Instead, we use a Taylor series and approximate the velocity as a linear function. First we find an equation for the velocity as a function of r
+The equation for velocity as a function of distance from the sun $r$ comes from the equation for specific orbital energy. Since the telescope is coasting, the sum of its kinetic and potential energy is constant:
 
 $$C_3 = \frac{1}{2}v_0^2-\frac{M_sG}{r_0}$$
 $$C_3 = \frac{1}{2}(v_r)^2 - \frac{M_sG}{r_0}$$
@@ -404,7 +403,37 @@ $$v(r) = \sqrt{2  (C_3 + \frac{M_sG}{r})}$$
 $$v(r) = \sqrt{2  (\frac{1}{2}v_0^2-\frac{M_sG}{r_0} + \frac{M_sG}{r})}$$
 $$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r})}$$
 
-Next we take the derivative of the velocity at $r_0$, which is the distance from the sun right after the instantaneous burn:
+Substituting this equation into the equation for time gives an integral that cannot be solved analytically. Instead, we can use a linear approximation for the velocity as a function of distance. The linear form of the time integral is:
+
+$$\boxed{T = \int_{r_0}^{r_f} \frac{1}{v_0+v'(r_0)r} dr}$$
+
+where:\\
+$v_0$= velocity at the beginning of the cruise phase
+
+using $m$ for the derivative of velocity at $r_0$, we can solve for the integral using $u$ substitution:
+
+$$T = \int_{r_0}^{r_f} \frac{1}{v_0+mr} dr$$
+$$u = v_0+mr\hspace{10mm}du = mdr\hspace{10mm}dr = \frac{1}{m}du$$
+$$T = \int \frac{1}{u} \frac{1}{m}dr$$
+$$T = \frac{1}{m} \log{u}$$
+$$T = \frac{1}{m} \log{(v_0+mr)}\bigg]_{r_0}^{r_f}$$
+$$\boxed{T = \frac{1}{m} \bigg(\log{(v_0+mr_f)} - \log{(v_0+mr_0)}\bigg)}$$
+
+We want an expression for the final position for a given coast time so we rearrange the equation to get:
+
+$$mT = \log{(v_0+mr_f)} - \log{(v_0+mr_0)}$$
+
+$$\log{(v_0+mr_f)} = \log{(v_0+mr_0)} + mT$$
+$$v_0 + mr_f = e^{\log{(v_0+mr_0)}{mT}}$$
+$$v_0 + mr_f = e^{mT}(v_0+mr_0)$$
+$$\boxed{r_f = \frac{1}{m}\bigg(e^{mT}(v_0+mr_0) - v_0\bigg)}$$
+
+
+The only piece of this equation we're missing is an expression for $m$, the slope of the velocity as a function of distance traveled $d$. We can solve for this by taking the derivative of $v(r)$ and applying the chain rule:
+
+$$\frac{dv}{dd} = \frac{dv}{dr}\times\frac{dr}{dd}$$
+
+Solving for $\frac{dv}{dr}$:
 
 $$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bigg)^{-\frac{1}{2}}\frac{dv}{dr}\bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bigg)$$
 
@@ -412,7 +441,10 @@ $$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bi
 
 $$\frac{dv}{dr} = \frac{2M_sG \log{r}}{2 \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}}$$
 
-$$v_{\infty} = $$
+The expression for $\frac{dv}{dr}$ is complicated and we still need to use the chain rule. Instead of explicitly calculating the derivative, we can approximate the derivative by calculating the velocity at two points and solving for the slope:
+
+$$\frac{dv}{dd} \approx \frac{v(d_0 +\Delta) - v(d_0)}{\Delta}$$
+
 
 $\Delta$ \textbf{v:} 200 km/s\\
 \textbf{Time:} 10 days\\
