@@ -320,7 +320,7 @@ The flight to the focal point can be broken into several phase:
 \item Coast to focal point
 \end{enumerate}
 
-\subsection{Burn to Jupiter escape}
+\subsection{Jupiter escape burn}
 The first leg of the trip is to escape from Jupiter's gravity well. \textit{Einstein} is launched from Callisto and flies on an elliptical orbit that takes it near Jupiter. When the craft is near Jupiter the \textit{Sheridan} drive performs its first burn to escape from Jupiter's gravity well and put it on a trajectory close to the sun.
 
 The transit time from Callisto to Jupiter is on the order of several days to a few weeks. Leaving Jupiter's gravity well takes a similar amount of time. The time needed to escape from Jupiter will be ignored since it's relatively small compared to the flight time to the focal point.
@@ -356,7 +356,7 @@ The period of \textit{Einstein}'s elliptical trajectory is about 4 years. The ti
 $\Delta$ \textbf{v:} 0 km/s\\
 \textbf{Time:} 2 years
 
-\subsection{Burn at perihelion}
+\subsection{Perihelion burn}
 The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonable approximation:
 
 \begin{enumerate}
@@ -376,24 +376,34 @@ In reality, \textit{Einstein} follows a hyperbolic path that constantly changes 
 Even with these approximations, it is difficult to directly solve for \textit{Einstein}'s final velocity. Instead, we will use the following steps to approximate the telescope's velocity after it's perihelion burn:
 
 \begin{enumerate}
-\item Calculate the average acceleration of the entire burn
-\item Instantaneously increase the velocity a small amount
-\item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the magnitude of the velocity change in step 2 divided by the coast time is equal to the average acceleration.
-\item Use Simpson's rule to calculate how much time elapses when \textit{Einstein} coasts for the estimated distance
+\item Divide the $\Delta v$ of the perihelion burn by the number of steps to get the $\Delta v$ of each step burn.
+\item Divide the how long the perihelion burn is by the number of steps to get the step cruise time. 
+\item Instantaneously increase the velocity by the $\Delta v$ of the step burn.
+\item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the coast time is equal to the step cruise time.
 \item Update \textit{Einstein}'s position and velocity after the coast phase as it cruises on a straight line.
 \item Repeat steps 2-5 until the burn and the total velocity change is complete. This breaks the continuous, multi-day burn into many small burns.
 \end{enumerate}
 
-The first two steps are straightforward - the total $\Delta v$ is divided by the number of steps that we breaking the burn into. The result is the instantaneous velocity change at each step. 
+The first two steps are straightforward - we're calculating how large each step burn is and how long the cruise step time between each burn is.
 
-\subsubsection{Step 3: Estimating coast time}
-The goal of steps 3-5 is to find what \textit{Einstein}'s new position and velocity are at the end of the cruise phase. After the each small burn (step 2), we let \textit{Einstein} cruise for a period of time. The time that it cruises between burns should give an average acceleration equal to what we calculated in step 1. 
+Step 3 is the most sophisticated step. The sections below will derive in detail the linear approximation and how we solve for the coast distance.
+
+\subsubsection{Creating a linear approximation}
+The goal of steps 3 is to find what \textit{Einstein}'s new position and velocity are after it coasts for step cruise time following a step burn.
 
 The relation between cruise time and cruise distance is given by: 
 
-$$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
+$$T = \int_{x_0}^{x_f} \frac{1}{v(x)} dx$$
 
-If we can solve for this integral analytically, then we can rearrange it and get an explicit formula for the cruise distance as a function of time. Updating \textit{Einstein}'s position is then simply plugging in the desired cruise time between burns and calculating its new position. Unfortunately, it's more complicated.
+where:\\
+$x_0$: starting distance traveled from perihelion\\
+$x_f$: ending distance traveled from perihelion\\
+$v(x)$: velocity as a function of distance from perihelion\\
+$T$: time elapsed - cruise step time\\
+
+The cruise distance is equal to $x_f - x_0$.
+
+If we can solve for this integral analytically, we can rearrange it and get an explicit formula for the cruise distance as a function of time. Updating \textit{Einstein}'s position is then simply plugging in the desired cruise time between burns and calculating its new position. Unfortunately, it's more complicated.
 
 The equation for velocity as a function of distance from the sun $r$ comes from the equation for specific orbital energy. Since the telescope is coasting, the sum of its kinetic and potential energy is constant:
 
@@ -401,37 +411,58 @@ $$C_3 = \frac{1}{2}v_0^2-\frac{M_sG}{r_0}$$
 $$C_3 = \frac{1}{2}(v_r)^2 - \frac{M_sG}{r_0}$$
 $$v(r) = \sqrt{2  (C_3 + \frac{M_sG}{r})}$$
 $$v(r) = \sqrt{2  (\frac{1}{2}v_0^2-\frac{M_sG}{r_0} + \frac{M_sG}{r})}$$
-$$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r})}$$
+$$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}$$
 
-Substituting this equation into the equation for time gives an integral that cannot be solved analytically. Instead, we can use a linear approximation for the velocity as a function of distance. The linear form of the time integral is:
+This expression gives the velocity as a function of $r$ the distance from the sun. However, we need an expression for velocity as a function of $x$, the distance traveled from the perihelion. 
 
-$$\boxed{T = \int_{r_0}^{r_f} \frac{1}{v_0+v'(r_0)r} dr}$$
+Using the relation:
+
+$$r^2 = x^2 + r_p^2$$
+
+where $r_p$ is the perihelion distance gives us:
+
+$$v(x) = \sqrt{v_0^2-\frac{2M_sG}{\sqrt{x_0^2 + r_p^2}} + \frac{2M_sG}{\sqrt{x^2 + r_p^2}}}$$
+
+Substituting this equation into the equation for time gives an integral that cannot be solved analytically. Instead, we can use a linear approximation for the velocity as a function of distance:
+
+$$v(x) \approx v_0 + v'(x_0)x$$
+
+Substituting the linear approximation into the time integral gives:
+
+$$\boxed{T = \int_{x_0}^{x_f} \frac{1}{v_0+v'(x_0)x} dx}$$
 
 where:\\
 $v_0$= velocity at the beginning of the cruise phase
 
-using $m$ for the derivative of velocity at $r_0$, we can solve for the integral using $u$ substitution:
+\subsubsection{Solving for cruise distance as a function of time}
 
-$$T = \int_{r_0}^{r_f} \frac{1}{v_0+mr} dr$$
-$$u = v_0+mr\hspace{10mm}du = mdr\hspace{10mm}dr = \frac{1}{m}du$$
-$$T = \int \frac{1}{u} \frac{1}{m}dr$$
+Now that we have the form of a linear approximation for velocity, we need to create an expression for the cruise distance as a function of time.
+
+Using $m$ for the derivative of velocity at $x_0$, we can solve for the integral using $u$ substitution:
+
+$$T = \int_{x_0}^{x_f} \frac{1}{v_0+mx} dx$$
+$$u = v_0+mx\hspace{10mm}du = mdx\hspace{10mm}dr = \frac{1}{m}du$$
+$$T = \int \frac{1}{u} \frac{1}{m}dx$$
 $$T = \frac{1}{m} \log{u}$$
-$$T = \frac{1}{m} \log{(v_0+mr)}\bigg]_{r_0}^{r_f}$$
-$$\boxed{T = \frac{1}{m} \bigg(\log{(v_0+mr_f)} - \log{(v_0+mr_0)}\bigg)}$$
+$$T = \frac{1}{m} \log{(v_0+mx)}\bigg]_{x_0}^{x_f}$$
+$$T = \frac{1}{m} \bigg(\log{(v_0+mx_f)} - \log{(v_0+mx_0)}\bigg)$$
 
-We want an expression for the final position for a given coast time so we rearrange the equation to get:
+We want an expression for the final position for a given coast time so we rearrange the equation:
 
-$$mT = \log{(v_0+mr_f)} - \log{(v_0+mr_0)}$$
+$$mT = \log{(v_0+mx_f)} - \log{(v_0+mx_0)}$$
+$$\log{(v_0+mx_f)} = \log{(v_0+mx_0)} + mT$$
+$$v_0 + mx_f = e^{\log{(v_0+mx_0)}{mT}}$$
+$$v_0 + mx_f = e^{mT}(v_0+mx_0)$$
+$$\boxed{x_f = \frac{1}{m}\bigg(e^{mT}(v_0+mx_0) - v_0\bigg)}$$
 
-$$\log{(v_0+mr_f)} = \log{(v_0+mr_0)} + mT$$
-$$v_0 + mr_f = e^{\log{(v_0+mr_0)}{mT}}$$
-$$v_0 + mr_f = e^{mT}(v_0+mr_0)$$
-$$\boxed{r_f = \frac{1}{m}\bigg(e^{mT}(v_0+mr_0) - v_0\bigg)}$$
 
+The only piece of this equation we're missing is an expression for $m$, the slope of the velocity as a function of distance traveled $d$. 
 
-The only piece of this equation we're missing is an expression for $m$, the slope of the velocity as a function of distance traveled $d$. We can solve for this by taking the derivative of $v(r)$ and applying the chain rule:
+\subsubsection{Calculating $v'(x_0)$}
 
-$$\frac{dv}{dd} = \frac{dv}{dr}\times\frac{dr}{dd}$$
+For the equation in the above section wee need to solve for $m$, which we've defined as $v'(x_0)$. We can solve for this by taking the derivative of $v(r)$ with respect to $r$ and applying the chain rule:
+
+$$\frac{dv}{dx} = \frac{dv}{dr}\times\frac{dr}{dx}$$
 
 Solving for $\frac{dv}{dr}$:
 
@@ -441,10 +472,55 @@ $$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bi
 
 $$\frac{dv}{dr} = \frac{2M_sG \log{r}}{2 \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}}$$
 
-The expression for $\frac{dv}{dr}$ is complicated and we still need to use the chain rule. Instead of explicitly calculating the derivative, we can approximate the derivative by calculating the velocity at two points and solving for the slope:
+The expression for $\frac{dv}{dr}$ quickly becomes complicated and we still need to use the chain rule to reach $\frac{dv}{dx}$. Instead of explicitly calculating the derivative, we can approximate the derivative by calculating the velocity at two points and solving for the slope:
 
-$$\frac{dv}{dd} \approx \frac{v(d_0 +\Delta) - v(d_0)}{\Delta}$$
+$$\frac{dv}{dx} \approx \frac{v(x_0 +\Delta) - v(x_0)}{\Delta}$$
 
+Using this equation and plugging in a small $\Delta$ will give us a good estimate for the slope.
+
+
+\subsubsection{Calculating the result}
+To recap, the goal of creating a linear approximation was to estimate the how far \textit{Einstein} coasts for during the step cruise time. Knowing the cruise distance let's us update the spacecraft's position and velocity at the end of each coast phase. To solve for time we used two steps:
+\begin{enumerate}
+\item Calculate the slope of the velocity as a function of distance traveled immediately after the step burn
+\item Plug the time, the slope, the initial velocity, and the initial position into the expression for the final position. We arrived at this solution by rearranging the integral:
+$$\boxed{T = \int_{r_0}^{r_f} \frac{1}{v_0+v'(r_0)r} dr}$$
+\end{enumerate}
+
+We repeat this process until the sum of the step burns equals the $\Delta v$ of the total perihelion escape burn. A Python program was written to execute the calculation. To view the program used to perform this calculation, please visit:
+
+\url{github.com/timsliu/flybys_foci/flight_time.py}
+
+Using the following inputs:
+$n$: 1000 steps\\
+$\Delta v$: 200 km/s\\
+$r_p$: 0.1 AU\\
+$v_p$: 
+Total perihelion burn time: 10 days\\
+Step burn $\Delta v$: 200 m/s\\
+Step cruise time: 864 seconds\\
+
+\begin{center}
+\begin{tabular}{|m{5 cm}| m{5 cm}|} \hline
+\textbf{Engine} & \textbf{Specific impulse (s)}\\ \hline
+Falcon 9 Merlin-1D &  311 \\ \hline
+Space shuttle main engine &  453 \\ \hline
+Dawn ion engine   &  3100\\ \hline
+\textit{Sheridan} drive & 200,000\\ \hline
+\end{tabular}
+\end{center}
+
+yields the final orbital parameters for \textit{Einstein} after its perihelion burn:
+
+\begin{center}
+\begin{tabular}{|m{5 cm}| m{5 cm}|} \hline
+\textbf{Engine} & \textbf{Specific impulse (s)}\\ \hline
+Falcon 9 Merlin-1D &  311 \\ \hline
+Space shuttle main engine &  453 \\ \hline
+Dawn ion engine   &  3100\\ \hline
+\textit{Sheridan} drive & 200,000\\ \hline
+\end{tabular}
+\end{center}
 
 $\Delta$ \textbf{v:} 200 km/s\\
 \textbf{Time:} 10 days\\
