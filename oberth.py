@@ -2,23 +2,20 @@
 # program for calculating hyperbolic excess velocity under
 # different mission profiles and plotting Einstein's trajectory
 #
-# Note - consider splitting several files into helper 
-# "orbit.py" library
+
 
 # Revision History
 # 03/10/19    Tim Liu    started file; wrote main and skeleton functions
 # 03/12/19    Tim Liu    wrote main_two_burns and several helper functions
 # 03/13/19    Tim Liu    wrote calc_dv and table of contents
 # 03/18/19    Tim Liu    moved astronomical constants to separate file
+# 04/20/19    Tim Liu    moved calc_peri and calc_dv to orbital.py
 
 
 # Table of Contents
 # one_burn - main function to calculate v_infinity from one burn
 # two_burns - main function to calculate v_infinity from two burns
 # calc_vi - calculates v_infinity for a two burn manuever
-# calc_peri - calculates the perihelion after one retrograde burn
-# calc_dv - calcuates the delta v of a retrograde burn that will result
-#           in a given perihelion
 # plot_vi - plots v_infinities for a two burn manuever
 
 
@@ -33,6 +30,7 @@ import os
 
 # file containing astronomical constants
 from astro_constants import *
+from orbit import *
 
 HOME = os.getcwd()
 
@@ -155,31 +153,6 @@ def calc_vi(dv1, dv2, r0, v0):
 
     return v_infinity
 
-
-def calc_perihelion(dv1, r0, v0):
-    '''helper function for calc_vi. Calculates the perihelion
-    and velocity at perihelion
-    inputs: dv1 - delta v from first burn
-            r0 - starting distance from the sun
-            v0 - starting velocity'''
-    a = (2/r0 - ((v0-dv1) ** 2)/G/M_S) ** -1  # calculate semi-major axis
-    rp = 2*a - r0                             # calculate perihelion distance
-    vp = r0 *(v0 - dv1)/rp                    # calculate velocity at perihelion
-
-    return rp, vp                           # return perihelion and velocity
-
-def calc_dv(rp, r0, v0):
-    '''calculate delta v to reach a given perihelion
-    inputs: rp - desired perihelion
-            r0 - starting radius
-            v0 - starting velocity'''
-
-    # calculate semi-major axis
-    a = (rp + r0)/2   
-    # calculate dv; rearrangement of vis-viva equation
-    dv = v0 - math.sqrt(-1* (1/a - 2/r0) * G * M_S)
-
-    return dv
 
 def plot_vi(data, dv_budgets):
     '''plots v_infinity as a function of dv1 and dv2

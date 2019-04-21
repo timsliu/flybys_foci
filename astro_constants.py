@@ -9,11 +9,14 @@
 
 # orbital constants
 G = 6.674e-11                         # universal gravity constant in MKS
-M_S = 1.99e30                         # mass of the sun in kilogram
+M_S = 1.99e30                         # mass of the sun in kilograms
+M_J = 1.90e27                         # mass of Jupiter in kilograms
+M_E = 5.98e24                         # mass of Earth in kilograms
 R_S = 6.96e8                          # radius of the sun in meters
 C = 299792458                         # speed of light meters per second
 AU = 1.496e11                         # astronomical unit in meters
 JUPITER_R = 5 * AU                    # approximate Jupiter's distance from sun in meters (5AU)
+CALLISTO_R = 1.88e9                   # Callisto semi major axis
 JUPITER_V = (G*M_S/JUPITER_R) ** 0.5  # approximate orbital velocity of Jupiter
 
 # particle constants

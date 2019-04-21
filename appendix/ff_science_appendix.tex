@@ -124,7 +124,7 @@ Assume that \textit{Einstein} begins in a heliocentric, circular orbit the same 
 $$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} (v_0 + \Delta v)^2 - \frac{MG}{r_0}$$
 $$v_{\infty} = \sqrt{(v_0 + \Delta v)^2-\frac{2MG}{r_0}}$$
 
-Where:
+Where:\\
 $v_0$: starting velocity\\
 $\Delta v$: change in velocity supplied by \textit{Sheridan} drive\\
 $r_0$: starting distance from the sun - Jupiter's orbit
@@ -201,7 +201,7 @@ One of the most challenging aspects of \textit{Einstein} is that it must travel 
 As light is bent around the sun it converges ar the focal point in a ring shaped pattern called an \textit{Einstein} ring. Figure X below is a real image of an \textit{Einstein} ring. In this case the object that bends starlight is a distant galaxy bending the light of an even more distant galaxy. 
 
 \begin{figure}[H]
-\makebox[\textwidth][c]{\includegraphics[width=5in]{einstein_ring.jpg}}
+\makebox[\textwidth][c]{\includegraphics[width=5in]{image.png}}
 \caption{Image of an Einstein ring LRG 3-757. The light from a distant galaxy is bent into a circle by the gravity of a closer, redder galaxy (center).}
 \end{figure}
 
@@ -312,26 +312,76 @@ The $\Delta v$ strongly depends on the fraction of the spacecraft taken up by fu
 $$\Delta v = 2,000,000\frac{m}{s} \times ln \frac{1}{0.9}$$
 $$\Delta v \approx 210 km/s$$ 
 
-The flight to the focal point can be broken into several phase:
+During its flight to the focal point \textit{Einstein} can change its velocity by 210 km/s. Put another way, it has a $\Delta v$ budget of 210km/s.The flight to the focal point can be broken into several phases:
 \begin{enumerate}
-\item Burn to Jupiter escape
+\item Jupiter approach burn
+\item Jupiter escape burn
 \item Coast to perihelion
-\item Burn at perihelion
+\item Perihelion burn
 \item Coast to focal point
 \end{enumerate}
 
+Each burn requires a certain $\Delta v$ to execute. In the following subsections we will add up how much time each of the four phases takes and how much of the $\Delta v$ budget is expended.
+
+\subsection{Jupiter approach burn}
+In the story \textit{Einstein} is launched from Callisto first into a parking orbit around the moon. Afterwards, the telescope is launched on a trajectory that brings it close to Jupiter. Figure X illustrates the trajectory \textit{Einstein} takes.
+
+\begin{figure}[H]
+	\makebox[\textwidth][c]{\includegraphics[width=3.8in]{jupiter_approach.png}}
+	\caption{Illustration of \textit{Einstein}'s orbit around Jupiter after launching from Callisto. The launch vehicle puts the telescope on a trajectory that brings it close to Jupiter (figure not to scale).}
+\end{figure}
+
+For several reasons we will not include the $\Delta v$ of the Jupiter approach burn or the time it takes to reach Jupiter into our calculations.
+
+The transit time from Callisto to Jupiter is on the order of several days to a few weeks (for comparison Callisto's orbital period is 17 days). Since the time needed to escape from Jupiter is relatively small compared to the years \textit{Einstein} spends coasting to the sun we will ignore the time when calculating total flight time.
+
+In the story the rocket that launches \textit{Einstein} also sends it on a trajectory that takes it close to Jupiter. Since \textit{Einstein} isn't expending any fuel to make its dive toward Jupiter, we will not include the $\Delta v$ of the Jupiter approach burn in our calculations.
+
+$\Delta$ \textbf{v:} 0 km/s\\
+\textbf{Time:} 0
+
 \subsection{Jupiter escape burn}
-The first leg of the trip is to escape from Jupiter's gravity well. \textit{Einstein} is launched from Callisto and flies on an elliptical orbit that takes it near Jupiter. When the craft is near Jupiter the \textit{Sheridan} drive performs its first burn to escape from Jupiter's gravity well and put it on a trajectory close to the sun.
+The second leg of the trip is to escape from Jupiter's gravity well. After \textit{Einstein} is launched from Callisto it flies on an elliptical orbit that takes it near Jupiter. When the craft is near Jupiter the \textit{Sheridan} drive performs its first burn to escape from Jupiter's gravity well and put it on a trajectory close to the sun. Figure x illustrates \textit{Einstein}'s trajectory as it executes the Jupiter escape burn.
 
-The transit time from Callisto to Jupiter is on the order of several days to a few weeks. Leaving Jupiter's gravity well takes a similar amount of time. The time needed to escape from Jupiter will be ignored since it's relatively small compared to the flight time to the focal point.
+\begin{figure}[H]
+	\makebox[\textwidth][c]{\includegraphics[width=5in]{jupiter_escape.png}}
+	\caption{Illustration of \textit{Einstein}'s orbit around Jupiter. When the telescope is at its closest approach the \textit{Sheridan} performs the Jupiter escape burns to send the spacecraft on a trajectory leaving Jupiter and into a heliocentric orbit.}
+\end{figure}
 
-In section 1 of the appendix we calculated that a $\Delta v$ of about 10 km/s is needed to put \textit{Einstein} on a trajectory taking it close to the sun. The actual figure should be smaller since the burn to escape Jupiter and enter a sun diving orbit takes place near Jupiter, where the Oberth effect makes a burn more effective. For simplicity we will use the 10 km/s figure.
+In section 1 of the appendix we calculated that a $\Delta v$ of about 10 km/s is needed to put \textit{Einstein} on a trajectory taking it close to the sun. This is the velocity relative to Jupiter; it means that when \textit{Einstein} is performing the Jupiter escape burn it must have a v-infinity relative to Jupiter of 10km/s. From section 1 we know the expression for v-infinity is:
 
-$\Delta$ \textbf{v:} 10 km/s\\
+$$v_{\infty} = \sqrt{(v_p + \Delta v_2)^2-\frac{2MG}{r_p}}$$
+
+Where:
+$v_0$: starting velocity\\
+$\Delta v$: change in velocity supplied by \textit{Sheridan} drive\\
+$r_p$: starting distance from Jupiter
+
+We assume that $r_p$ is 75,600km, the same distance from the center of Jupiter that NASA's \textit{Juno} probe will reach on its closest approach. Knowing that \textit{Einstein} started at Callisto's orbit, we can calculate $v_p$ using the equation for specific orbital energy seen earlier:
+
+$$\frac{1}{2}v^2-\frac{MG}{r} = -\frac{MG}{2a}$$
+
+where:\\
+$a: r_p + r_a$
+$r = r_p: 7.56\times 10^7m$\\
+$r_a:$ orbital distance of Callisto $1.88 \times 10^9$m\\
+$M:$ mass of Jupiter $1.90\times10^27$\\
+
+
+substituting gives us \textbf{$v_p = 57.3 km/s$}
+
+Plugging the values for $v_p$, $v_{\infty}$, and $r_p$ into the equation for $v_{\infty}$ above gives us \textbf{$\Delta v = 1.5km/s$}.
+
+It only takes a small $\Delta v$ to escape from Jupiter because \textit{Einstein} starts from a highly eccentric orbit. Burning at perijove (the point closest to Jupiter) takes advantage of the Oberth effect and allows \textit{Einstein} to have a high v-infinity while using little fuel.
+
+Like in the previous section, we will ignore the time it takes \textit{Einstein} to escape from Jupiter's gravity well because the time is relatively short compared to the rest of the flight. 
+
+
+$\Delta$ \textbf{v:} 1.5 km/s\\
 \textbf{Time:} 0
 
 \subsection{Coast to perihelion}
-The second leg of the trip is when \textit{Einstein} coasts from Jupiter inwards towards the sun. The spacecraft follows an elliptical orbit and does not expend any fuel. The period of an orbit is given by Kepler's second law:
+The second leg of the trip is when \textit{Einstein} coasts from Jupiter inwards towards the sun. The spacecraft follows an elliptical orbit and does not expend any fuel. We will use Kepler's law to calculate how long it takes \textit{Einstein} to coast from Jupiter's orbit to its closest approach to the sun. The period of an orbit is given by Kepler's second law:
 
 $$T^2 \propto a^3$$
 
@@ -341,9 +391,9 @@ The elliptical orbit that \textit{Einstein} takes has a semi-major axis of:
 
 $$a = \frac{1}{2}(r_{perihelion} + r_{aphelion})$$
 
-where
-$r_{perihelion}$ = closest approach to the sun = 0.1 AU\\
-$r_{aphelion}$ = further distance to the sun = 5 AU\\
+where\\
+$r_{perihelion}:$ closest approach to the sun = 0.1 AU\\
+$r_{aphelion}:$ furthest distance to the sun = 5 AU\\
 
 The perihelion is limited by how close \textit{Einstein} can be to the sun without overheating. For comparison NASA's Parker Solar Probe, which has specially designed thermal protection, will fly within 0.046 AU of the sun. Substituting into Kepler's law gives a period of:
 
@@ -487,7 +537,7 @@ To recap, the goal of creating a linear approximation was to estimate the how fa
 $$\boxed{T = \int_{r_0}^{r_f} \frac{1}{v_0+v'(r_0)r} dr}$$
 \end{enumerate}
 
-We repeat this process until the sum of the step burns equals the $\Delta v$ of the total perihelion escape burn. A Python program was written to execute the calculation. To view the program used to perform this calculation, please visit:
+We repeat this process until the sum of the step burns equals the $\Delta v$ of the total perihelion escape burn. To view the Python program used to perform this calculation, please visit:
 
 \url{github.com/timsliu/flybys_foci/flight_time.py}
 
@@ -526,22 +576,59 @@ v-infinity     &  a& km/s\\ \hline
 \end{tabular}
 \end{center}
 
+A 200 km/s escape burn spread over 10 days increases \textit{Einstein}'s velocity to xx. At the end of the burn the spacecraft is xx AU from the sun, or xx the orbit of Mercury.
+
 
 $\Delta$ \textbf{v:} 200 km/s\\
 \textbf{Time:} 10 days\\
 
 \subsection{Coast to focal point}
-After its final burn \textit{Einstein} coasts to the focal point. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total energy at perihelion:
+After its final burn \textit{Einstein} makes an unpowered coast to the focal point. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total energy at the end of its perihelion burn:
 
-$$E_{p} = \frac{1}{2}v_p^2 - \frac{MG}{r_p} = \frac{1}{2}v^2-\frac{MG}{r}$$
-$$\frac{1}{2}v^2 = E_p+\frac{MG}{r}$$
-$$v = \sqrt{2\big(E_p + \frac{MG}{r}\big)}$$
+$$E_{b} = \frac{1}{2}v_b^2 - \frac{MG}{r_b} = \frac{1}{2}v^2-\frac{MG}{r}$$
+$$\frac{1}{2}v^2 = E_b+\frac{MG}{r}$$
+$$\boxed{v = \sqrt{2\big(E_b + \frac{MG}{r}\big)}}$$
+
+Where:
+
+$E_b$ is the specific orbital energy after the perihelion burn\\
+$v_b$ is the spacecraft velocity after the perihelion burn\\
+$r_b$ is the spacecraft distance from the sun after the perihelion burn\\
 
 Figure X plots the velocity of \textit{Einstein} as a function of distance from the sun.
 
-To calculate \textit{Einstein}'s flight time we integrate one over the velocity:
+To calculate \textit{Einstein}'s flight time we again need to solve the integral:
 
 $$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
+
+This is the reverse of the problem we had in the previous section. In the last section we needed to solve for a distance that \textit{Einstein} travels during the step cruise time. Now we are solving for the time it takes\textit{Einstein} to coast to the suns focal point. We will evaluate this integral with:
+
+$r_0 = r_b$ is spacecraft distance from the sun after the perihelion burn\\
+$r_f$ is the focal distance of the sun\\
+$v_r$ is the expression for velocity derived above.
+
+As we saw in the previous section, this integral cannot be solved analytically. Instead, we use Simpson's rule to approximate:
+
+$$\int_a^b f(x) dx \approx \frac{\Delta x}{3} (f(x_0) + 4f(x_1)+ 2f(x_2) + 4f(x_3) + 2 f(x_4) + ... + 4f(x_{n-1}) + f(x_n))$$
+
+The Python program used for numerically evaluating this integral can be found at 
+
+\url{github.com/timsliu/flybys_foci/flight_time.py}
+
+Using a step size $\Delta x$ of x we get a flight time of xx years from $r_b$ to the focal point. Adding the time \textit{Einstein}spent coasting from Jupiter to the perihelion gives us a total estimated flight time of xx years. The figure below plots the distance from the sun \textit{Einstein} reaches as a function of flight time.
+
+\subsection{Additional considerations}
+Several major simplifications were made when calculating \textit{Einstein}'s flight time. A more accurate calculation would include several other considerations that were excluded.
+
+The time and $\Delta v$ for \textit{Einstein} to escape Jupiter's gravity were ignored. We started calculating the flight time for a heliocentric orbit at the same distance from the sun as Jupiter. More accurately, \textit{Einstein} would first perform a burn to escape Callisto's gravity at put it on a course to fly near Jupiter. Close to Jupiter \textit{Einstein} would then perform a second burn to escape Jupiter's gravity and put it on a course to dive close to the sun.
+
+We calculated the time it would take \textit{Einstein} to reach the sun's focal point. However, to actually observe a planet a gravitionally lensing telescope can't fly in any direction - it must reach the sun's focal point \textit{and} be aligned with the sun and the target planet. If the target star is not aligned with the ecliptic - a plane in space defined by the Earth's orbit - then a spacecraft must perform an additional burn. The added burn changes the spacecraft's orbital inclination, the angle between the plane of the orbit and the ecliptic. Changing the orbital inclination sends a spacecraft either above or below the planets orbiting the sun.
+
+Luckily, Trappist-1 sits at an inclination of xx relative to the sun. This is a fairly small orbital inclination and can be adjusted by the flyby of Jupiter. Targeting the flyby to pass over the poles of Jupiter sends \textit{Einstein} on a trajectory either above or below the ecliptic (depending on whether the orbit passes south to north or north to south). Adjusting the flyby is an easy way to send \text{Einstein} on a trajectory with the right orbital inclination without needing much more fuel.
+
+
+
+
 
 
 \end{document}
