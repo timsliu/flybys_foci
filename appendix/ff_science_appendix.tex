@@ -406,40 +406,46 @@ The period of \textit{Einstein}'s elliptical trajectory is about 4 years. The ti
 $\Delta$ \textbf{v:} 0 km/s\\
 \textbf{Time:} 2 years
 
+% Perihelion burn
 \subsection{Perihelion burn}
-The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonable approximation:
+The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonably accurate answer:
 
 \begin{enumerate}
 \item \textit{Einstein}'s trajectory is a straight line that starts at the perihelion and continues perpendicular to a line connecting the perihelion to the sun.
-\item The long, multi day burn is approximated as a series of discrete, instantaneous velocity changes separated by periods when \textit{Einstein} coasts. During the coast phases \textit{Einstein}'s velocity is governed only by the effect of gravity.
+\item The long, multi day burn is approximated as a series of discrete, instantaneous velocity changes (step burns) separated by periods when \textit{Einstein} cruise. During the cruise phases \textit{Einstein}'s velocity is governed only by the effect of gravity.
 \end{enumerate}
 
-In reality, \textit{Einstein} follows a hyperbolic path that constantly changes as the burn continues. The approximation underestimates the final v-infinity because the straight path moves away from the sun more quickly than a hyperbolic path that curves slightly inwards towards the sun. Leaving the sun's gravity well more quickly reduces the Oberth effect, and leads to a lower v-infinity. However, it is still a \textit{fairly} good approximation. Figure X below illustrates how the approximation compares to a more realistic calculation.
+In reality, \textit{Einstein} follows a hyperbolic path that constantly changes as the burn continues. The approximation underestimates the final v-infinity because the straight path moves away from the sun more quickly than a hyperbolic path that curves slightly inwards towards the sun. Leaving the sun's gravity well more quickly reduces the Oberth effect, and leads to a lower v-infinity. However, it is still a \textit{fairly} good approximation. Figure X below illustrates how the approximated trajectory compares to a more \textit{Einstein}'s actual path.
 
 \begin{figure}[H]
-
-\caption{Comparison of \textit{Einstein}'s actual velocity and the approximated trajectory.}
-
+	\makebox[\textwidth][c]{\includegraphics[width=5in]{solar_escape.png}}
+	\caption{Comparison of \textit{Einstein}'s actual trajectory and the approximated trajectory. Figure not drawn to scale.}
 \end{figure}
 
+In our approximation, \textit{Einstein}'s velocity will have a sawtooth pattern as it flies away from the sun. Each burn is equally spaced in time and increases the spacecraft's velocity instantaneously. During the cruise periods \textit{Einstein}'s velocity falls off slightly as it flies away from the sun.
 
-Even with these approximations, it is difficult to directly solve for \textit{Einstein}'s final velocity. Instead, we will use the following steps to approximate the telescope's velocity after it's perihelion burn:
+\begin{figure}[H]
+	\makebox[\textwidth][c]{\includegraphics[width=5in]{einstein_velocity.png}}
+	\caption{Illustration of \textit{Einstein}'s approximated velocity as it flies away from the sun. Instead of constantly accelerating, in our approximation we instantaneously increase the telescope's velocity through a series of step burns. The combined $\Delta v$ of the step burns is equivalent to the $\Delta v$ of the solar escape burn. Between the burns the velocity drops as \textit{Einstein} coasts away from the sun. The time between each step burn is kept constant, resulting in the distance between each step burn increasing as the velocity increases. Graph not drawn to scale.}
+\end{figure}
+
+We will use the following steps to approximate the telescope's velocity after it's perihelion burn:
 
 \begin{enumerate}
-\item Divide the $\Delta v$ of the perihelion burn by the number of steps to get the $\Delta v$ of each step burn.
-\item Divide the how long the perihelion burn is by the number of steps to get the step cruise time. 
+\item Divide the $\Delta v$ of the perihelion burn by the number of steps to get the $\Delta v$ of each \textbf{step burn}.
+\item Divide the how long the perihelion burn is by the number of steps to get the \textbf{step cruise time}. 
 \item Instantaneously increase the velocity by the $\Delta v$ of the step burn.
 \item Use a linear approximation to estimate how far \textit{Einstein} should coast for so that the coast time is equal to the step cruise time.
-\item Update \textit{Einstein}'s position and velocity after the coast phase as it cruises on a straight line.
+\item Update \textit{Einstein}'s position and velocity after the cruise phase as it coasts on a straight line. The time spent during each cruise phase between the step burns should equal the step cruise time.
 \item Repeat steps 2-5 until the burn and the total velocity change is complete. This breaks the continuous, multi-day burn into many small burns.
 \end{enumerate}
 
-The first two steps are straightforward - we're calculating how large each step burn is and how long the cruise step time between each burn is.
+The first three steps are straightforward - we're calculating how large each step burn is and how long the cruise step time between each burn should be to maintain a constant average acceleration.
 
-Step 3 is the most sophisticated step. The sections below will derive in detail the linear approximation and how we solve for the coast distance.
+Step 4 is the most sophisticated step. The goal of this step is to calculate \textit{how far} \textit{Einstein} needs to coast during each cruise period so that the \textit{time it takes to coast that distance} is equal to the step cruise time. Since \textit{Einstein}'s velocity changes as it flies away from the sun, the distance it travels during each cruise phase also changes. Calculating the distance traveled during each cruise phase let's us update \textit{Einstein}'s position and velocity before the next step burn.
 
-\subsubsection{Creating a linear approximation}
-The goal of steps 3 is to find what \textit{Einstein}'s new position and velocity are after it coasts for step cruise time following a step burn.
+\subsubsection{Step 4: Creating a linear approximation}
+The goal of step 4 is to find what \textit{Einstein}'s new position and velocity are after it coasts for the step cruise time following a step burn.
 
 The relation between cruise time and cruise distance is given by: 
 
@@ -453,13 +459,11 @@ $T$: time elapsed - cruise step time\\
 
 The cruise distance is equal to $x_f - x_0$.
 
-If we can solve for this integral analytically, we can rearrange it and get an explicit formula for the cruise distance as a function of time. Updating \textit{Einstein}'s position is then simply plugging in the desired cruise time between burns and calculating its new position. Unfortunately, it's more complicated.
+If we can solve for this integral analytically, we can rearrange it and get an explicit formula for the cruise distance as a function of time. Updating \textit{Einstein}'s position is then simply plugging in the desired cruise time between burns and calculating its new position. However, as we will see this integral cannot be solved analytically.
 
 The equation for velocity as a function of distance from the sun $r$ comes from the equation for specific orbital energy. Since the telescope is coasting, the sum of its kinetic and potential energy is constant:
 
-$$C_3 = \frac{1}{2}v_0^2-\frac{M_sG}{r_0}$$
-$$C_3 = \frac{1}{2}(v_r)^2 - \frac{M_sG}{r_0}$$
-$$v(r) = \sqrt{2  (C_3 + \frac{M_sG}{r})}$$
+$$\frac{1}{2}v_0^2-\frac{M_sG}{r_0} = \frac{1}{2}v(r)^2-\frac{M_sG}{r}$$
 $$v(r) = \sqrt{2  (\frac{1}{2}v_0^2-\frac{M_sG}{r_0} + \frac{M_sG}{r})}$$
 $$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}$$
 
@@ -482,37 +486,52 @@ Substituting the linear approximation into the time integral gives:
 $$\boxed{T = \int_{x_0}^{x_f} \frac{1}{v_0+v'(x_0)x} dx}$$
 
 where:\\
-$v_0$= velocity at the beginning of the cruise phase
+$v_0$= velocity at the beginning of the cruise phase\\
+$x_0$: starting distance traveled from perihelion\\
+$x_f$: ending distance traveled from perihelion\\
+$v(x)$: velocity as a function of distance from perihelion\\
+$T$: time elapsed - cruise step time\\
+
+Going forward, we will solve this integral and use a linear approximation for \textit{Einstein}'s velocity.
 
 \subsubsection{Solving for cruise distance as a function of time}
 
-Now that we have the form of a linear approximation for velocity, we need to create an expression for the cruise distance as a function of time.
+Now that we have the form of a linear approximation for velocity, we need to create an expression for the cruise distance $(x_f-x_0)$ as a function of time ($T$).
 
-Using $m$ for the derivative of velocity at $x_0$, we can solve for the integral using $u$ substitution:
+Using $m$ for the derivative of velocity at $x_0$:
+
+$$m = \frac{dv}{dx}(x_0)$$
+
+we can solve for the integral using $u$ substitution:
 
 $$T = \int_{x_0}^{x_f} \frac{1}{v_0+mx} dx$$
-$$u = v_0+mx\hspace{10mm}du = mdx\hspace{10mm}dr = \frac{1}{m}du$$
+$$u = v_0+mx\hspace{10mm}du = mdx\hspace{10mm}dx = \frac{1}{m}du$$
 $$T = \int \frac{1}{u} \frac{1}{m}dx$$
 $$T = \frac{1}{m} \log{u}$$
 $$T = \frac{1}{m} \log{(v_0+mx)}\bigg]_{x_0}^{x_f}$$
 $$T = \frac{1}{m} \bigg(\log{(v_0+mx_f)} - \log{(v_0+mx_0)}\bigg)$$
 
-We want an expression for the final position for a given coast time so we rearrange the equation:
+We want an expression for the \textbf{final position $(x_f)$} of \textit{Einstein} after it cruises for a given step cruise time  $(T)$ so we rearrange the equation:
 
 $$mT = \log{(v_0+mx_f)} - \log{(v_0+mx_0)}$$
 $$\log{(v_0+mx_f)} = \log{(v_0+mx_0)} + mT$$
-$$v_0 + mx_f = e^{\log{(v_0+mx_0)}{mT}}$$
+$$v_0 + mx_f = e^{\log{(v_0+mx_0)}+mT}$$
 $$v_0 + mx_f = e^{mT}(v_0+mx_0)$$
+$$mx_f = e^{mT}(v_0+mx_0) - v_0$$
 $$\boxed{x_f = \frac{1}{m}\bigg(e^{mT}(v_0+mx_0) - v_0\bigg)}$$
 
 
-The only piece of this equation we're missing is an expression for $m$, the slope of the velocity as a function of distance traveled $d$. 
+The only piece of this equation we're missing is an expression for $m$, the slope of the velocity as a function of distance traveled from the perihelion $x$. 
 
 \subsubsection{Calculating $v'(x_0)$}
 
-For the equation in the above section wee need to solve for $m$, which we've defined as $v'(x_0)$. We can solve for this by taking the derivative of $v(r)$ with respect to $r$ and applying the chain rule:
+For the equation in the above section we need to solve for $m$, which we've defined as $v'(x_0)$. We can solve for this by taking the derivative of $v(r)$ with respect to $r$ and applying the chain rule:
 
 $$\frac{dv}{dx} = \frac{dv}{dr}\times\frac{dr}{dx}$$
+
+From an earlier section we derived the expression for $v(r)$:
+
+$$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}$$
 
 Solving for $\frac{dv}{dr}$:
 
@@ -522,19 +541,31 @@ $$\frac{dv}{dr} = \frac{1}{2} \bigg(v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}\bi
 
 $$\frac{dv}{dr} = \frac{2M_sG \log{r}}{2 \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}}$$
 
+$$\frac{dv}{dr} = \frac{M_sG \log{r}}{ \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}}$$
+
 The expression for $\frac{dv}{dr}$ quickly becomes complicated and we still need to use the chain rule to reach $\frac{dv}{dx}$. Instead of explicitly calculating the derivative, we can approximate the derivative by calculating the velocity at two points and solving for the slope:
 
 $$\frac{dv}{dx} \approx \frac{v(x_0 +\Delta) - v(x_0)}{\Delta}$$
 
-Using this equation and plugging in a small $\Delta$ will give us a good estimate for the slope.
+Using this equation and plugging in a small $\Delta$ will give us a good estimate for the slope. At the beginning of the cruise phase we know the initial velocity, $v(x_0)$. We can calculate the velocity at the second point $v(x_0 + \Delta)$ by using conservation of specific orbital energy, expressed by our equation for $v(r)$:
+
+$$v(r) = \sqrt{v_0^2-\frac{2M_sG}{r_0} + \frac{2M_sG}{r}}$$
+
+and using the relation between $r$, $x$, and $r_p$:
+
+$$r^2 = x^2 + r_p^2$$
 
 
 \subsubsection{Calculating the result}
-To recap, the goal of creating a linear approximation was to estimate the how far \textit{Einstein} coasts for during the step cruise time. Knowing the cruise distance let's us update the spacecraft's position and velocity at the end of each coast phase. To solve for time we used two steps:
+To recap, the goal of creating a linear approximation was to estimate the \textbf{how far \textit{Einstein} coasts} during the set step cruise time. Knowing the cruise distance let's us update the spacecraft's position and velocity at the end of each cruise  phase. To solve for time we used two steps:
 \begin{enumerate}
 \item Calculate the slope of the velocity as a function of distance traveled immediately after the step burn
-\item Plug the time, the slope, the initial velocity, and the initial position into the expression for the final position. We arrived at this solution by rearranging the integral:
-$$\boxed{T = \int_{r_0}^{r_f} \frac{1}{v_0+v'(r_0)r} dr}$$
+\item Plug the time, the slope, the initial velocity, and the initial position into the expression for the final position:
+
+$$\boxed{x_f = \frac{1}{m}\bigg(e^{mT}(v_0+mx_0) - v_0\bigg)}$$
+
+We arrived at this solution by rearranging the integral:
+$$\boxed{T = \int_{x_0}^{x_f} \frac{1}{x_0+v'(x_0)x} dx}$$
 \end{enumerate}
 
 We repeat this process until the sum of the step burns equals the $\Delta v$ of the total perihelion escape burn. To view the Python program used to perform this calculation, please visit:
@@ -542,14 +573,6 @@ We repeat this process until the sum of the step burns equals the $\Delta v$ of 
 \url{github.com/timsliu/flybys_foci/flight_time.py}
 
 Using the following inputs:
-$n$: 1000 steps\\
-$\Delta v$: 200 km/s\\
-$r_p$: 0.1 AU\\
-$v_p$: 
-Total perihelion burn time: 10 days\\
-Step burn $\Delta v$: 200 m/s\\
-Step cruise time: 864 seconds\\
-
 
 \begin{center}
 \begin{tabular}{|m{5 cm}| m{5 cm}| m{5 cm}|} \hline
@@ -576,14 +599,14 @@ v-infinity     &  a& km/s\\ \hline
 \end{tabular}
 \end{center}
 
-A 200 km/s escape burn spread over 10 days increases \textit{Einstein}'s velocity to xx. At the end of the burn the spacecraft is xx AU from the sun, or xx the orbit of Mercury.
+A 200 km/s escape burn spread over 10 days (an average acceleration of $0.23m/s^2$) increases \textit{Einstein}'s velocity to xx. At the end of the burn the spacecraft is xx AU from the sun, or xx the orbit of Mercury.
 
 
 $\Delta$ \textbf{v:} 200 km/s\\
 \textbf{Time:} 10 days\\
 
 \subsection{Coast to focal point}
-After its final burn \textit{Einstein} makes an unpowered coast to the focal point. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total energy at the end of its perihelion burn:
+After its final burn \textit{Einstein} makes an unpowered coast to the focal point. This is the longest leg of the telescope's journey. As the spacecraft flies further from the sun it slows down, exchanging kinetic energy for potential energy. The velocity of \textit{Einstein} as a function of its distance from the sun $r$ is equivalent to its total specific orbital energy at the end of its perihelion burn:
 
 $$E_{b} = \frac{1}{2}v_b^2 - \frac{MG}{r_b} = \frac{1}{2}v^2-\frac{MG}{r}$$
 $$\frac{1}{2}v^2 = E_b+\frac{MG}{r}$$
@@ -601,11 +624,11 @@ To calculate \textit{Einstein}'s flight time we again need to solve the integral
 
 $$T = \int_{r_0}^{r_f} \frac{1}{v(r)} dr$$
 
-This is the reverse of the problem we had in the previous section. In the last section we needed to solve for a distance that \textit{Einstein} travels during the step cruise time. Now we are solving for the time it takes\textit{Einstein} to coast to the suns focal point. We will evaluate this integral with:
+This is the reverse of the problem we had in the previous section. In the last section we needed to solve for a distance that \textit{Einstein} travels during the step cruise time. Now we are solving for the time it takes \textit{Einstein} to coast a certain distance - to the suns focal point. We will evaluate this integral where:
 
-$r_0 = r_b$ is spacecraft distance from the sun after the perihelion burn\\
-$r_f$ is the focal distance of the sun\\
-$v_r$ is the expression for velocity derived above.
+$r_0 = r_b$: spacecraft distance from the sun after the perihelion burn\\
+$r_f$: focal distance of the sun\\
+$v(r)$ the expression for velocity derived above.
 
 As we saw in the previous section, this integral cannot be solved analytically. Instead, we use Simpson's rule to approximate:
 
@@ -615,16 +638,22 @@ The Python program used for numerically evaluating this integral can be found at
 
 \url{github.com/timsliu/flybys_foci/flight_time.py}
 
-Using a step size $\Delta x$ of x we get a flight time of xx years from $r_b$ to the focal point. Adding the time \textit{Einstein}spent coasting from Jupiter to the perihelion gives us a total estimated flight time of xx years. The figure below plots the distance from the sun \textit{Einstein} reaches as a function of flight time.
+Using a step size $\Delta x$ of x we get a flight time of xx years from $r_b$ to the focal point. Adding the time \textit{Einstein} spent coasting from Jupiter to the perihelion gives us a \textbf{total estimated flight time of xx years}. This is the time it takes for \textit{Einstein} to just reach the beginning of the sun's focal point - as it continues to coast it stays on the sun's focal line where the magnification steadily becomes stronger. The figure below plots the distance from the sun \textit{Einstein} reaches as a function of flight time.
+
+\begin{figure}[H]
+
+	\caption{\textit{Einstein}'s distance from the sun as a function of flight time.}
+\end{figure}
 
 \subsection{Additional considerations}
-Several major simplifications were made when calculating \textit{Einstein}'s flight time. A more accurate calculation would include several other considerations that were excluded.
+Several major simplifications were made when calculating \textit{Einstein}'s flight time. One of the most prominent is that orbital inclination was ignored.
 
-The time and $\Delta v$ for \textit{Einstein} to escape Jupiter's gravity were ignored. We started calculating the flight time for a heliocentric orbit at the same distance from the sun as Jupiter. More accurately, \textit{Einstein} would first perform a burn to escape Callisto's gravity at put it on a course to fly near Jupiter. Close to Jupiter \textit{Einstein} would then perform a second burn to escape Jupiter's gravity and put it on a course to dive close to the sun.
 
-We calculated the time it would take \textit{Einstein} to reach the sun's focal point. However, to actually observe a planet a gravitionally lensing telescope can't fly in any direction - it must reach the sun's focal point \textit{and} be aligned with the sun and the target planet. If the target star is not aligned with the ecliptic - a plane in space defined by the Earth's orbit - then a spacecraft must perform an additional burn. The added burn changes the spacecraft's orbital inclination, the angle between the plane of the orbit and the ecliptic. Changing the orbital inclination sends a spacecraft either above or below the planets orbiting the sun.
+We calculated the time it would take \textit{Einstein} to reach the sun's focal point. However, to actually observe a planet a gravitionally lensing telescope can't fly in any direction - it must reach the sun's focal point \textit{and} be aligned with the sun and the target planet. If the target star is not aligned with the ecliptic - a plane in space defined by the Earth's orbit - then a spacecraft must perform an additional burn. The added burn changes the spacecraft's orbital inclination, the angle between the plane of the orbit and the ecliptic. Changing the orbital inclination sends a spacecraft either above or below the plane of planets orbiting the sun.
 
 Luckily, Trappist-1 sits at an inclination of xx relative to the sun. This is a fairly small orbital inclination and can be adjusted by the flyby of Jupiter. Targeting the flyby to pass over the poles of Jupiter sends \textit{Einstein} on a trajectory either above or below the ecliptic (depending on whether the orbit passes south to north or north to south). Adjusting the flyby is an easy way to send \text{Einstein} on a trajectory with the right orbital inclination without needing much more fuel.
+
+\section{References}
 
 
 
