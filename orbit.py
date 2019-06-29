@@ -1,4 +1,4 @@
-# orbital.py
+# orbit.py
 #
 # library of equations for calculating orbital parameters
 #
@@ -8,12 +8,15 @@
 # calc_flight_time - calculates the flight time of Einstein
 #
 # Revision history
-# copied equations from oberth.py
+# 04/??/19    Tim Liu    copied equations from oberth.py
+# 06/26/19    Tim Liu    moved calc_velocity from flight_time.py 
 
 from astro_constants import *
 
 
-
+# TODO - generalize to calc_orbital_height
+# for burns at perihelion OR aphelion to calculate the 
+# next perihelion/aphelion
 def calc_perihelion(dv1, r0, v0):
     '''helper function for calc_vi. Calculates the perihelion
     and velocity at perihelion
@@ -26,6 +29,8 @@ def calc_perihelion(dv1, r0, v0):
 
     return rp, vp                           # return perihelion and velocity
 
+# TODO - generalize to calc_dv() but allow prograde
+# or retrograde burns
 def calc_dv(rp, r0, v0):
     '''calculate delta v to reach a given perihelion
     inputs: rp - desired perihelion
@@ -39,21 +44,9 @@ def calc_dv(rp, r0, v0):
 
     return dv
 
-def calc_v(a, r, m):
-    '''calculates the velocity of an object in orbit based on the
-    semi major axis, the distance from object to parent body, and
-    mass of parent body
-    inputs: a - semimajor axis (m)
-            r - distance from object to parent body (m)
-            m - mass of parent body (kg)
-    outputs: v - object velocity (m/s)'''
 
-    # calculate specific orbital energy
-    soe = -1 * m * G / 2 / a
-    v = (2 * (soe + m * G / r))**0.5
-
-    return v
-
+# TODO update to apply to points other than periapsis - 
+# will need to update documentation
 def calc_dv_escape(v_inf, vp, rp, m):
     '''calculates the delta v necessary to reach a given v_infinity
     based on the periapsis velocity, periapsis radial distance, and
@@ -68,3 +61,48 @@ def calc_dv_escape(v_inf, vp, rp, m):
     dv = (v_inf**2 - 2*pe)**0.5 - vp
 
     return dv
+
+# change to calc_velocity_1 - calculating velocity based on 
+# 3 inputs
+def calc_v_1(a, r, m):
+    '''calculates the velocity of an object in orbit based on the
+    semi major axis, the distance from object to parent body, and
+    mass of parent body
+    inputs: a - semimajor axis (m)
+            r - distance from object to parent body (m)
+            m - mass of parent body (kg)
+    outputs: v - object velocity (m/s)'''
+
+    # calculate specific orbital energy
+    soe = -1 * m * G / 2 / a
+    v = (2 * (soe + m * G / r))**0.5
+
+    return v
+
+# change to calc_velocity_2 - calculating velocity based
+# on different inputs
+# TODO - generalize for different parent bodies
+def calc_v_2(v0, r0, rf):
+    '''calculates the final velocity vf of a spacecraft by
+    conservation of energy
+    inputs: v0 - initial velocity
+            r0 - initial distance from parent body
+            rf - final distance from parent body'''
+            
+    # calculate C3 - kinetic energy plus potential energy per mass
+    C3 = 0.5 * v0 **2 - M_S * G / r0
+    # calculate vf - C3 is unchanged
+    vf = (2 * (C3 + M_S * G /rf)) ** 0.5
+    return
+
+def calc_exhaust_velocity(mass, energy_ev):
+    '''calculates the exhaust velocity of a particle
+    inputs: mass - mass of the particle
+            energy - kinetic energy of the particle in MeV
+    outputs: ve - exhaust velocity in meters per second'''
+
+    energy_ev *= EV_PER_MEV                 # convert MeV to EV
+
+    energy_j = energy_ev * J_PER_EV         # convert energy to joules
+    velocity = math.sqrt(2 * energy_j/mass) # calculate velocity in m/s
+    return velocity

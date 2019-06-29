@@ -3,165 +3,88 @@
 # program for calculating the flight time to the focal point
 #
 # Table of contents
-# calc_exhaust_velocity - calculates the exhausts velocity from a particle's
-#                         energy and mass
-# calc_flight_time - calculates the flight time of Einstein
+# open_flight_profile - opens an xlsx spreadsheet with saved
+#                       flight parameters then calls flight_time
+#
+# flight_time - calculates the approximate flight time of a 
+#               spacecraft from the periapsis to a given distance
+#               in space              
 #
 # Revision history
 # 03/19/19    Tim Liu    created file and wrote calc_exhaust_velocity 
 # 03/20/19    Tim Liu    wrote skeleton of spacecraft class
 # 03/24/19    Tim Liu    rewrote spacecraft class methods to use
 #                        two linear approximations
-#
+# 06/26/19    Tim Liu    wrote flight_time function
+# 06/26/19    Tim Liu    removed spacecraft class; file now only
+#                        contains calculations for flight time
 
-from astro_constants import *
+from astro_constants import *     # astronomical constants
+from orbit import *               # helper functions for orbital calculations
+from spacecraft import *          # spacecraft class
+import math                       # math library
 
-import math
+def open_flight_profile(f_in_name):
+	'''opens a .xlsx file with the initial conditions of a 
+	flight profile. Parses file and calls flight_time() to
+	calculate the flight time to a given point in space'''
 
+	# TODO
 
-def calc_exhaust_velocity(mass, energy_ev):
-    '''calculates the exhaust velocity of a particle
-    inputs: mass - mass of the particle
-            energy - kinetic energy of the particle in MeV
-    outputs: ve - exhaust velocity in meters per second'''
-
-    energy_ev *= EV_PER_MEV                 # convert MeV to EV
-
-    energy_j = energy_ev * J_PER_EV         # convert energy to joules
-    velocity = math.sqrt(2 * energy_j/mass) # calculate velocity in m/s
-    return velocity
-
-
-class spacecraft():
-	'''class for a spacecraft in hyperbolic orbit. Class specifies the spacecraft's
-	velocity and position in a hyperbolic orbit approximated as a straight
-	line perpendicular to and offset from the mass being orbited. Class
-	contains methods for updating the position of the spacecraft
-	and calculating the time elapse'''
-	def __init__(self, v0, r0):
-		self.v = v0                   # spacecraft velocity
-		self.r = r0                   # spacecraft distance from parent body (meters)
-		self.r0 = r0                  # periapsis in meters
-		self.elapse_t = 0             # time elapsed (seconds)
-		self.dis_travel = 0           # distance traveled from periapsis
+	return
 
 
-	def get_v(self):
-		'''returns current velocity in km/s'''
-		return self.v0/1000
+def flight_time(v0, r0, dv, burn_time, burn_steps, parent_m, r_final, name = ""):
+    '''Calculates the time required to fly a given distance from
+    the periapsis using numerical approximation. Creates an
+    instance of the spacecraft class and calls methods to calculate
+    time spent during the burn and during the cruise phase.
 
-	def get_r(self):
-		'''return distance from parent body in AU'''
-		return self.r/AU
+    inputs: v0 - starting velocity (km/s)
+            r0 - periapsis (AU)
+            dv - delta-v of the periapsis burn (km/s)
+            time - length of the periapsis burn (days)
+            steps - number of discrete burns the periapsis burn is
+                    separated into; higher number is more accurate
+                    but requires more computation time
+            parent_m - mass of the parent body (kg)
+            r_final - final distance from the periapsis (AU)
+    outptus: none'''
 
-	def get_r0(self):
-		'''returns periapsis r0 in AU'''
-		return self.r0/AU
+    # print parameters
+    if name != "":
+    	print("Mission name: ", name, "\n")
 
-	def get_elapse_t(self):
-		'''returns the elapsed time in years'''
-		return elapse_t/SEC_PER_YEAR
+    print("***** Flight parameters *****")
+    print("Initial velocity: %.2f km/s" %(v0))
+    print("Periapsis:        %.2f AU" %(r0))
+    print("Delta-v:          %.2f km/s" %(dv))
+    print("Parent mass:      %.0f kg" %(kg))
+    print("Flight distance:  %.0f AU\n" %(AU))
 
-	def get_dis_travel(self):
-		'''returns distance traveled in AU'''
-		return self.dis_travel/AU
+    print("***** Approximation parameters ***** ")
+    print("Burn time:        %.2f days" %(days))
+    print("Burn steps:       %.0f steps\n" %(steps))
 
-	def long_burn(self, dv, time, steps):
-		'''execute a burn that takes a non zero amount of time;
-		the burn is spread out into multiple instantaneous burns. Method
-		alternates calling burn and coast_time
-		inputs: dv - total delta-v (km/s) of the burn
-		        time - length of time (days) of the burn
-		        steps - number of discrete burns to break the long
-		                burn into'''
-        
-        # calculate dv for each burn
-        dv_per_burn = dv/steps
-        # calculate coast time between burns
-        coast_period = time * SEC_PER_DAY / steps
+    # record start time
+    start_time = time.time()
 
-        # loop steps times
-        for step in steps:
-        	# perform instantaneous burn
-        	self.burn(dv_per_burn)
-        	# coast for period of time
-        	self.coast_time()
+    # create instance of spacecraft
+    print("Creating instance of spacecraft class...")
+    ship = spacecraft(v0, r0, parent_m)
+    print(ship, "\n")
 
-		return
+    # call long_burn method and execute approximated continuous burn
+    print("Approximating continuous burn...\n")
+    ship.long_burn(dv, burn_time, steps)
 
-	def burn(self, dv):
-		'''execute an instantaneous burn and update orbital
-		parameters'''
-		self.v += dv
-		
-		return
+    # call coast functions to calculate cruise distance to r_f
+    print("Approximating coast period...\n")
+    ship.coast_distance(coast_steps, r_final)
 
-
-	def coast_time(self, coast_period):
-		'''coast for a period of time. Computes a linear
-		approximation of the velocity and updates dis_travel
-		and elapse_t
-		inputs: coast_period - desired time to coast for'''
-
-		# compute slope of velocity as function of self.dis_travel
-
-		# solve expression for distance traveled in given time
-
-		# update orbital parameters
-        self.v = 
-        self.elapse_t += coast_period
-        self.dis_travel += 
-        self.r = (self.r0**2 + self.dis_travel**2) ** 0.5
-
-		return
-
-
-
-	def coast_distance(self, steps, final_d):
-		'''coast a step distance and update the time and r
-		   inputs - final_d - final distance to coast to (AU)
-                    steps - number of steps to take to get
-                            to final_d
-            outputs: elapse_t - time elapsed to reach final_d (years)'''
-
-        # calculate step size in meters
-        step_size = (final_d * AU) - self.dis_travel
-
-        for step in steps:
-        	# loop through steps and coast a set distance
-
-        	# starting velocity
-        	v_start = self.v
-        	# ending velocity
-        	v_end = 
-
-        	# trapezoid approximation of time elapsed 
-        	t = 0.5 * (1/v_start + 1/v_end) * step_size
-
-        	# update orbital parameters
-        	self.v = v_end
-        	self.elapse_t += t
-        	self.dis_travel += step
-        	self.r = (self.r0**2 + self.dis_travel**2) ** 0.5
-
-		return
-
-
-
-def calc_flight_time():
-    '''calculates the flight time through numerical integration'''
+    # print final results
+    print("Flight time: %.2f years", %(ship.get_elapse_t()))
+    print("Calculation completed in %.3f seconds" %(time.time()-start_time))
 
     return
 
-def calc_velocity(v0, r0, rf):
-	'''calculates the final velocity vf of a spacecraft by
-	conservation of energy
-	inputs: v0 - initial velocity
-	        r0 - initial distance from parent body
-	        rf - final distance from parent body'''
-	        
-    # calculate C3 - kinetic energy plus potential energy per mass
-    C3 = 0.5 * v0 **2 - M_S * G / r0
-    # calculate vf - C3 is unchanged
-    vf = (2 * (C3 + M_S * G /rf)) ** 0.5
-	return
