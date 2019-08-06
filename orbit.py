@@ -10,6 +10,7 @@
 # Revision history
 # 04/??/19    Tim Liu    copied equations from oberth.py
 # 06/26/19    Tim Liu    moved calc_velocity from flight_time.py 
+# 07/02/19    Tim Liu    fixed calc_v2 to return v2
 
 from astro_constants import *
 
@@ -93,7 +94,7 @@ def calc_v_2(v0, r0, rf):
     C3 = 0.5 * v0 **2 - M_S * G / r0
     # calculate vf - C3 is unchanged
     vf = (2 * (C3 + M_S * G /rf)) ** 0.5
-    return
+    return vf
 
 def calc_exhaust_velocity(mass, energy_ev):
     '''calculates the exhaust velocity of a particle

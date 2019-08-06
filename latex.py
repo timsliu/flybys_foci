@@ -1,15 +1,16 @@
 # helper functions for LaTex output
 #
 # Table of contents
-# make_table  - turns a python list into a LaTex formatted table
-# text2tex    - converts plain formatted text string into
-#               LaTex format by handling quotation marks and special
-#               characters
-# excel2pdf   - main function for converting excel spreadsheet to
-#               a pdf
-# parse_sheet - parse a single excel sheet; helper for excel2pdf
-# list2string - convert an excel formatted list to a string
-#               helper function for excel2pdf
+# make_table   - turns a python list into a LaTex formatted table
+# text2tex     - converts plain formatted text string into
+#                LaTex format by handling quotation marks and special
+#                characters
+# excel2pdf    - main function for converting excel spreadsheet to
+#                a pdf
+# parse_sheet  - parse a single excel sheet; helper for excel2pdf
+# list2string  - convert an excel formatted list to a string
+#                helper function for excel2pdf
+# special_char - handle special characters to be LaTeX compatible
 
 
 # Revision history
@@ -17,26 +18,14 @@
 # 06/26/19    Tim Liu    wrote text2tex
 # 06/26/19    Tim Liu    copied make_pdf main and helper functions - 
 #                        TODO make functions generic
+# 06/29/19    Tim Liu    removed global variables from excel2pdf; code
+#                        has not been retested
 
 
 # libraries
 import pandas as pd
 import datetime as dt
 import math
-
-# TODO - remove global variables and make generic
-# global - workbook to open
-# WORKBOOK = "test.xlsx"           # excel workbook to open and parse
-WORKBOOK = "feedback.xlsx"
-
-# global - list of sheets in workbook; MUST match sheets of WORKBOOK
-
-# sheets in the test excel file
-TEST_SHEETS = ["Planes", "Trains"]                 
-# sheets in the actual answer excel
-ANSWER_SHEETS = ["OS and PDK", "Dev kit", "Tools", "Use cases", "Additional"]
-# match sheets to the file being read       
-SHEETS = ANSWER_SHEETS
 
 
 def make_table(c, r, data, title):
@@ -122,18 +111,23 @@ def text2tex(f_in_name, f_out_name):
     return
 
 
+def excel2pdf(workbook, sheets):
+    '''Converts an excel workbook into a LaTex pdf. Each sheet in the
+    workbook becomes a section, the first column of the sheet becomes a
+    subsection, each row of the second column is bolded, and
+    each remaining column for a row is a paragraph with the column header
+    formatted into a header. 
 
+    args:    workbook - name of .xlsx workbook to open
+             sheets - list of sheets to parse; elements in list
+                     must exactly match the name of sheets in 
+                     workbook
+    returns: none
+    outputs: .tex file named with a timestamp'''
 
+    print("Generating LaTeX from: ", workbook)
 
-def excel2pdf():
-    '''main function - opens input spreadsheet and generates LaTex output
-    '''
-
-    print("Generating LaTeX from: ", WORKBOOK)
-
-    output_string = ""                  # output string to write to .tex file
-
-    header = open("header.txt", "r");        # open file with LaTeX header
+    header = open("header.txt", "r");     # open file with LaTeX header
     # format target name to include time
     currentDT = dt.datetime.now()
     timestamp = currentDT.strftime("%m-%d_%H-%M")
@@ -141,13 +135,13 @@ def excel2pdf():
     # open target file to write to
     target = open(target_name, "w", encoding='utf-8');
 
-    # read in the header
+    # read in the header - contains preamble of LaTex output
     header_str = header.read()
     # string to add to the header
     output_string = ""
 
     # parse each sheet
-    for s in SHEETS:
+    for s in sheets:
         output_string += "\n\\newpage"
         output_string += "\n\\section{" + s + "}\n"
         output_string += parse_sheet(s)
@@ -156,6 +150,7 @@ def excel2pdf():
     output_string += "\n\\end{document}"
 
     # handle special characters
+    # TODO - change to generic replace function
     output_string = output_string.replace("#", "\\#")
     output_string = output_string.replace("%", "\\%")
     output_string = output_string.replace("&", "\\&")
@@ -163,7 +158,7 @@ def excel2pdf():
     output_string = output_string.replace(">", "$>$")
     output_string = output_string.replace("<", "$<$")
  
-    # write to file
+    # write to target file
     target.write(header_str + output_string)
 
     # close header file and TeX output
@@ -174,18 +169,21 @@ def excel2pdf():
 
     return
 
-def parse_sheet(s):
-    '''parses the excel in a sheet
-    inputs: s - sheet name to parse
-    outputs: sheet_string - TeX string for the sheet'''
+def parse_sheet(workbook, s):
+    '''parses an excel sheet and converts to a TeX string
+    args:    workbook - name of workbook to open
+             s - sheet name to parse
+    return:  sheet_string - TeX string for the sheet
+    outputs: none'''
 
     print("Parsing sheet: ", s)
 
     # open sheet of excel workbook
-    data_sheet = pd.read_excel(WORKBOOK, sheet_name=s)
+    data_sheet = pd.read_excel(workbook, sheet_name=s)
     response_df = pd.DataFrame(data_sheet)
 
     # map columns to useful labels
+    # TODO - rename variables to not be specific
     type_col = response_df.columns[0]     # column identifying question type
     q_col    = response_df.columns[1]     # column identifying question     
     partners = response_df.columns[2:]    # columns with partner names
@@ -222,10 +220,8 @@ def parse_sheet(s):
 
 def list2string(q_responses):
     '''converts the list of partner responses to a LaTeX string
-    inputs: q_responses - list of partner responses [[partner, response]]
-    outputs: q_string - string representing responses to a question'''
-
-    # TODO - sort the response by persona
+    args:    q_responses - list of partner responses [[partner, response]]
+    returns: q_string - string representing responses to a question'''
 
     # string for each question
     q_string = ""
@@ -239,4 +235,11 @@ def list2string(q_responses):
         q_string += "\n" + str(response[1]) + "\n"
 
     return q_string
+
+
+def special_char():
+	'''converts special characters in a text string to the form that LaTex
+	   can interpret'''
+    # TODO
+	return
 

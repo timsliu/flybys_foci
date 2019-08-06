@@ -83,7 +83,7 @@ def flight_time(v0, r0, dv, burn_time, burn_steps, parent_m, r_final, name = "")
     ship.coast_distance(coast_steps, r_final)
 
     # print final results
-    print("Flight time: %.2f years", %(ship.get_elapse_t()))
+    print("Flight time: %.2f years" %(ship.get_elapse_t()))
     print("Calculation completed in %.3f seconds" %(time.time()-start_time))
 
     return
