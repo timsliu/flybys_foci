@@ -76,13 +76,12 @@ def text2tex(f_in_name, f_out_name):
 
     # convert quotation marks to open and close marks
     for char in input_string:
-        print(ord(char))
         if ord(char) == 8220:
-            print("open")
-            output_string += '"'
-        elif ord(char) == 8221:
-            print("close")
+            # open quote
             output_string += '``'
+        elif ord(char) == 8221:
+            # close quote
+            output_string += "''"
         else:
             # directly copy any non quotation character
             output_string += char
@@ -94,6 +93,8 @@ def text2tex(f_in_name, f_out_name):
     output_string = output_string.replace("$", "\\$")
     output_string = output_string.replace(">", "$>$")
     output_string = output_string.replace("<", "$<$")
+    output_string = output_string.replace("’", "'")
+    output_string = output_string.replace("…", "...")
 
     # open output file
     f_out = open(f_out_name, "w", encoding='utf-8')
