@@ -69,6 +69,16 @@
 %set up end notes
 \let\footnote=\endnote
 
+% Suppress section numbers
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\makeatletter
+\def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
+\let\sectionignore\@gobbletwo
+\let\latex@numberline\numberline
+\def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
+\makeatother
+
 
 
 \title{Flybys and Foci}
@@ -575,13 +585,13 @@ Tess breathed out slowly. ``You say we're hunting for aliens...but what if they'
 
 ``That sounds like what Professor Ballard would say,'' Tess said with a tearful laugh. ``I just...don't know if I believe in this dream anymore. I've been working on this software for all these years, and I don't even know what the Navy is going to do with it, if it's ever going to be used to find aliens.'' Grace moved her lips but no words came out. Tess was saying it all for her.
 
-``All these grand ideas about science and discovery....like it's some, some fairy tale,'' continued Tess in a defeated voice. She was staring at the floor now, practically whispering. She looked up at Grace with tired, wide eyes. ``Have you seen the Lewis paper?'' Grace froze again as she felt an icy chill crawl down her back. She sighed again.
+``All these grand ideas about science and discovery....like it's some, some fairy tale,'' continued Tess in a defeated voice. She was staring at the floor now, practically whispering. She looked up at Grace with tired, wide eyes. ``Have you seen the Pike paper?'' Grace froze again as she felt an icy chill crawl down her back. She sighed again.
 
-``Yeah, I've seen the Lewis paper. I was talking to James about it today,'' Grace replied glumly. ``He's unconvinced,'' she added, though she knew she did not need to.
+``Yeah, I've seen the Pike paper. I was talking to James about it today,'' Grace replied glumly. ``He's unconvinced,'' she added, though she knew she did not need to.
 
 ``Of course he's not convinced,'' said Tess with another sad laugh. Her voice trailed off and she dropped her head, continuing to stare at the carpet. ``They're saying that there is no pattern in the signals, that it's been analyzed wrong the whole time. That there are no aliens.'' 
 
-Grace buried her face in her hands. Since the signal from Trappist 1-e was detected there had been an ongoing debate amongst scientist about its origins. The faint signal, carried delicately across all the empty space between the stars, had faded and returned many times since it was discovered. The Lewis paper was just the latest in a string of publications that argued the signal had natural origins, and that the aliens they were chasing were a mirage. Like wildfire, the paper had been tearing through the \textit{Einstein} team. Some of the scientists were despondent. Others were fiercely defensive.
+Grace buried her face in her hands. Since the signal from Trappist 1-e was detected there had been an ongoing debate amongst scientist about its origins. The faint signal, carried delicately across all the empty space between the stars, had faded and returned many times since it was discovered. The Pike paper was just the latest in a string of publications that argued the signal had natural origins, and that the aliens they were chasing were a mirage. Like wildfire, the paper had been tearing through the \textit{Einstein} team. Some of the scientists were despondent. Others were fiercely defensive.
 
 ``I'm sorry Professor Mercer, I'm really sorry,'' choked out Tess, ``you and Professor Ballard have been amazing mentors and I can't thank you enough for everything. It's just that I feel like I need to work on something...something more...''
 
@@ -635,7 +645,7 @@ Grace snorted to herself. She wondered what would have happened had James not be
 
 ``Looking for aliens that might or might not be there isn't enough. People look around and want to solve the problems in front of them, here on Callisto.'' Grace replied. She continued staring off at \textit{Lakhani} Port and watched the mesmerizing blue glare of an engine throttling down. It looked like a bright glowing star, swooping in to kiss the ground.
 
-James's smile dissipated away. Instead he looked at Grace with worry. ``Grace do you still believe we'll find something? I mean it's....pretty clear the Lewis group had some flaws in their methodology but...sometimes I'm not sure if we'll get back pictures of a dead, brown planet. But that uncertainty is...it's kind of thrilling!'' James blindly tipped his bottle to Grace with a smile and emptied it down his throat.
+James's smile dissipated away. Instead he looked at Grace with worry. ``Grace do you still believe we'll find something? I mean it's....pretty clear the Pike group had some flaws in their methodology but...sometimes I'm not sure if we'll get back pictures of a dead, brown planet. But that uncertainty is...it's kind of thrilling!'' James blindly tipped his bottle to Grace with a smile and emptied it down his throat.
 
 ``I'm not sure anymore if it matters what's there...or not there,'' replied Grace. She kept on staring off at the distance. James's quick smile receded again from his face.
 
@@ -1330,6 +1340,16 @@ Captain Kent exhaled slowly and wearily, barely moving. There was still an infin
 
 \newpage
 \section{Author's notes}
+I came up with the idea for Flybys and Foci in late 2018, while on a project for work near Irvine, California. Throughout the story, I've included several references to history, astronomy, and my own experiences. All characters in the story are named following a common naming scheme. The character first names are the names of spacecraft, either ones that have already launched or that are planned. James is named after the James Webb space telescope and Tess is named after TESS, NASA's Transiting Exoplanet Survey Satellite. Lucy is a planned NASA mission to Jupiter's Trojan asteroids and Grace is named after a joint NASA and German mission to map Earth's gravity field. The last names of all characters are neighborhoods of Seattle or cities in the Seattle Metropolitan Area. For example, Grace Mercer is named after Mercer Island in Lake Washington, to the east of Seattle. James Ballard is named after Ballard, a neighborhood in north Seattle that borders Fremont. SODO is an area south of downtown Seattle, and Kent is a city further south.
+
 \printendnotes
+
+\newpage
+\section{Acknowledgements}
+I'd like to thank all of the wonderful people who helped me write Flybys and Foci and who provided excellent feedback and suggestions: Janice Jeon, Karim Lakhani, Amanda Lin, Rebecca Liu, Anushka Rau, Tom Sheridan, and Richard Zhu. I'd also like to thank countless other friends and family members who encouraged me to keep writing. Special thanks goes to Karim and Tom, who introduced me to the novel idea of chapters and turning what was meant to be a brief story into something much richer and longer. Drafts of this story passed through many hands, so I'd like to thank everyone not named who offered suggestions along the way. Finally, I'd like to thank my coworkers who wondered what I was typing during the rare slow days at work.
+
+\section{About the author}
+Timothy Liu is an electrical engineer who graduated from Caltech in 2018. He formerly worked in management consulting at BCG and lived in Seattle. He is currently pursuing an M.S. in electrical engineering at Stanford.
+
 
 \end{document}
