@@ -9,6 +9,7 @@
 # Revision history
 # 07/02/19    Tim Liu    created file
 # 08/09/19    Tim Liu    wrote test_orbital_height and completed testing
+# 08/10/19    Tim Liu    finished writing test functions for orbit.py
 
 from astro_constants import *     # astronomical constants
 from orbit import *               # helper functions for orbital calculations
@@ -87,6 +88,23 @@ def test_calc_v_1():
         # pass test cases
         v = calc_v_1(case[0], case[1])
         print("Current velocity: ", v, " km/s\n")
+
+    return
+
+def test_calc_v_2():
+    '''passes arguments to calc_v_2 - results must
+    be manually inspected'''
+    # nested list of test cases - each list holds the arguments
+    # to pass to calc_orbital_height
+    test_cases = [[30000, AU, 0.5 * AU], [30000, AU, 2 * AU]]
+
+    for case in test_cases:
+        print("Start r0: ", case[1]/AU, " AU")
+        print("End rf: ", case[2]/AU, " AU")
+        print("Start v0: ", case[0], " m/s")
+        # pass test cases
+        v = calc_v_2(case[0], case[1], case[2])
+        print("Final velocity: ", v, " km/s\n")
 
     return
 

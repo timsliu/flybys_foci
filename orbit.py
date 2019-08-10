@@ -14,6 +14,7 @@
 # 08/09/19    Tim Liu    generalized calc_perihelion to calc_orbital_height
 # 08/09/19    Tim Liu    updated calc_dv_escape to handle starting at 
 # 08/09/19    Tim Liu    tested calc_v_1
+# 08/10/19    Tim Liu    updated calc_v_2 to handle any parent body mass and tested
 
 from astro_constants import *
 import math
@@ -103,20 +104,19 @@ def calc_v_1(a, r, m = M_S):
 
     return v
 
-# change to calc_velocity_2 - calculating velocity based
-# on different inputs
-# TODO - generalize for different parent bodies
-def calc_v_2(v0, r0, rf):
-    '''calculates the final velocity vf of a spacecraft by
-    conservation of energy
+def calc_v_2(v0, r0, rf, m = M_S):
+    '''calculates the velocity vf of a spacecraft by
+    conservation of energy given its current radial distance
+    and velocity. Inputs must be in MKS units.
     inputs: v0 - initial velocity
             r0 - initial distance from parent body
-            rf - final distance from parent body'''
+            rf - final distance from parent body
+            m - mass of parent body'''
             
     # calculate C3 - kinetic energy plus potential energy per mass
-    C3 = 0.5 * v0 **2 - M_S * G / r0
+    C3 = 0.5 * v0 **2 - m * G / r0
     # calculate vf - C3 is unchanged
-    vf = (2 * (C3 + M_S * G /rf)) ** 0.5
+    vf = (2 * (C3 + m * G /rf)) ** 0.5
     return vf
 
 def calc_exhaust_velocity(mass, energy_ev):
