@@ -11,64 +11,87 @@
 # 04/??/19    Tim Liu    copied equations from oberth.py
 # 06/26/19    Tim Liu    moved calc_velocity from flight_time.py 
 # 07/02/19    Tim Liu    fixed calc_v2 to return v2
+# 08/09/19    Tim Liu    generalized calc_perihelion to calc_orbital_height
+# 08/09/19    Tim Liu    updated calc_dv_escape to handle starting at 
+# 08/09/19    Tim Liu    tested calc_v_1
 
 from astro_constants import *
+import math
 
 
-# TODO - generalize to calc_orbital_height
-# for burns at perihelion OR aphelion to calculate the 
-# next perihelion/aphelion
-def calc_perihelion(dv1, r0, v0):
-    '''helper function for calc_vi. Calculates the perihelion
-    and velocity at perihelion
-    inputs: dv1 - delta v from first burn
-            r0 - starting distance from the sun
-            v0 - starting velocity'''
-    a = (2/r0 - ((v0-dv1) ** 2)/G/M_S) ** -1  # calculate semi-major axis
-    rp = 2*a - r0                             # calculate perihelion distance
-    vp = r0 *(v0 - dv1)/rp                    # calculate velocity at perihelion
+def calc_orbital_height(dv1, r0, v0, M  = M_S):
+    '''Calcuates the opposite apsis height and velocity following
+    a burn given the current orbital height (must be at an apsis), the
+    current velocity, and magnitude of burn. All units MUST be passed
+    as MKS. If the body escapes then r_op and v_op will both be returned
+    as zero.
 
-    return rp, vp                           # return perihelion and velocity
+    function tested 08/09/19
 
-# TODO - generalize to calc_dv() but allow prograde
-# or retrograde burns
-def calc_dv(rp, r0, v0):
-    '''calculate delta v to reach a given perihelion
-    inputs: rp - desired perihelion
-            r0 - starting radius
-            v0 - starting velocity'''
+    inputs: dv1 - delta v from burn; positive denotes prograde
+                  burn and negative is retrograde burn
+            r0 - starting distance from the parent body
+            v0 - starting velocity
+            m - parent body mass; default to the sun'''
+    a = (2/r0 - ((v0+dv1) ** 2)/G/M) ** -1    # calculate semi-major axis
+    r_op = 2*a - r0                           # calculate opposite apsis distance
+    v_op = r0 *(v0+dv1)/r_op                  # calculate velocity at perihelion
+
+    if dv1 + v0 > math.sqrt(2 * M * G / r0):  # body exceeds escape velocity
+        v_op = 0
+        r_op = 0
+        print("calc_orbital_height: object escaped")
+
+
+    return r_op, v_op                         # return perihelion and velocity
+
+
+def calc_dv(rf, r0, v0, m = M_S):
+    '''calculate delta v to reach a given orbital height. Must start
+    and end at an apsis. All units MUST be passed as MKS
+
+    # function tested 08/09/19
+
+    inputs: rf - desired final orbital height (apsis)
+            r0 - starting orbital height
+            v0 - starting velocity
+            m -  mass of parent body; defaults to sun'''
 
     # calculate semi-major axis
-    a = (rp + r0)/2   
+    a = (rf + r0)/2   
     # calculate dv; rearrangement of vis-viva equation
-    dv = v0 - math.sqrt(-1* (1/a - 2/r0) * G * M_S)
+    dv = math.sqrt(-1* (1/a - 2/r0) * G * m) - v0
 
     return dv
 
 
-# TODO update to apply to points other than periapsis - 
-# will need to update documentation
-def calc_dv_escape(v_inf, vp, rp, m):
+
+def calc_dv_escape(v_inf, v0, r0, m = M_S):
     '''calculates the delta v necessary to reach a given v_infinity
-    based on the periapsis velocity, periapsis radial distance, and
+    based on the current velocity, radial distance, and
     mass of parent body
+
+    # function tested 08/09/19
+
     inputs: v_inf - desired v_inf (set to 0 to calculate escape velocity)
             vp - velocity at periapsis
             rp - periapsis distance
             m - mass of parent body
     outputs: dv - delta v needed for given v_infinity'''
 
-    pe = -1*m*G/rp             # potential energy
-    dv = (v_inf**2 - 2*pe)**0.5 - vp
+    pe = -1 * m * G/r0                # potential energy
+    dv = (v_inf**2 - 2*pe)**0.5 - v0  # delta-v necessary
 
     return dv
 
-# change to calc_velocity_1 - calculating velocity based on 
-# 3 inputs
-def calc_v_1(a, r, m):
+
+def calc_v_1(a, r, m = M_S):
     '''calculates the velocity of an object in orbit based on the
     semi major axis, the distance from object to parent body, and
     mass of parent body
+
+    # function tested 08/09/19
+
     inputs: a - semimajor axis (m)
             r - distance from object to parent body (m)
             m - mass of parent body (kg)

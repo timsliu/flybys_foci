@@ -8,6 +8,7 @@
 #
 # Revision history
 # 07/02/19    Tim Liu    created file
+# 08/09/19    Tim Liu    wrote test_orbital_height and completed testing
 
 from astro_constants import *     # astronomical constants
 from orbit import *               # helper functions for orbital calculations
@@ -18,7 +19,76 @@ import math                       # math library
 
 # **** TEST ORBIT.PY LIBRARY *** #
 
+def test_orbital_height():
+    '''passes arguments to calc_orbital_height - results must
+    be manually inspected'''
+    # nested list of test cases - each list holds the arguments
+    # to pass to calc_orbital_height
+    test_cases = [[5000, AU, 30000], [10000, AU, 20000],
+                  [-10000, AU, 30000], [20000, AU, 30000]]
 
+    for case in test_cases:
+        print("Starting velocity: ", case[2], " m/s")
+        print("Starting r0: ", case[1]/AU, " AU")
+        print("Delta v: ", case[0], " m/s")
+        # pass test cases
+        r_op, v_op = calc_orbital_height(case[0], case[1], case[2])
+        print("Final rf: ", r_op/AU, " AU")
+        print("Final vf: ", v_op, " m/s\n")
+
+    return
+
+def test_calc_dv():
+    '''passes arguments to calc_dv - results must
+    be manually inspected'''
+    # nested list of test cases - each list holds the arguments
+    # to pass to calc_orbital_height
+    test_cases = [[AU, AU, 20000], [AU, 0.5 * AU, 20000],
+                  [AU, 2 * AU, 10000], [AU, 0.8 * AU, 45000]]
+
+    for case in test_cases:
+        print("Starting velocity: ", case[2], " m/s")
+        print("Starting r0: ", case[1]/AU, " AU")
+        print("Final rf: ", case[0]/AU, " AU")
+        # pass test cases
+        dv = calc_dv(case[0], case[1], case[2])
+        print("Delta-v needed: ", dv/1000, " km/s\n")
+
+    return
+
+def test_calc_dv_escape():
+    '''passes arguments to calc_dv_escape - results must
+    be manually inspected'''
+    # nested list of test cases - each list holds the arguments
+    # to pass to calc_orbital_height
+    test_cases = [[0, 30000, AU], [20000, 30000, AU],
+                  [0, 45000, AU]]
+
+    for case in test_cases:
+        print("Starting velocity: ", case[1], " m/s")
+        print("Starting r0: ", case[2]/AU, " AU")
+        print("Final v_inf: ", case[0], " m/s")
+        # pass test cases
+        dv = calc_dv_escape(case[0], case[1], case[2])
+        print("Delta-v needed: ", dv/1000, " km/s\n")
+
+    return
+
+def test_calc_v_1():
+    '''passes arguments to calc_v_1 - results must
+    be manually inspected'''
+    # nested list of test cases - each list holds the arguments
+    # to pass to calc_orbital_height
+    test_cases = [[AU, AU], [2 * AU, AU], [AU, 0.5 * AU], [AU, 1.5 * AU]]
+
+    for case in test_cases:
+        print("Semi-major axis: ", case[0]/AU, " AU")
+        print("Orbital height: ", case[1]/AU, " AU")
+        # pass test cases
+        v = calc_v_1(case[0], case[1])
+        print("Current velocity: ", v, " km/s\n")
+
+    return
 
 # **** TEST SPACECRAFT.PY CLASS *** #
 
