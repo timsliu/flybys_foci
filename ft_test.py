@@ -10,6 +10,9 @@
 # 07/02/19    Tim Liu    created file
 # 08/09/19    Tim Liu    wrote test_orbital_height and completed testing
 # 08/10/19    Tim Liu    finished writing test functions for orbit.py
+# 08/10/19    Tim Liu    wrote function to test coast_distance method - 
+#                        method working correctly
+# 08/11/19    Tim Liu    wrote and test_long_burn
 
 from astro_constants import *     # astronomical constants
 from orbit import *               # helper functions for orbital calculations
@@ -138,21 +141,95 @@ def test_coast_time():
     multiple times and prints the starting and ending parameters - user
     must manually check values are reasonable'''
 
-    return
+    # parameters approximately New Horizon's Jupiter to Saturn cruise
+    print("Start velocity: ", 23000)
+    print("Start r0: ", 5, " AU")
+    test_craft = Spacecraft(23000, 5 * AU, M_S)
+    test_craft.coast_time(1.25 * SEC_PER_YEAR)
+
+    print("Final r: ", test_craft.get_r(units = "AU"), " AU")
+    print("Dis travel: ", test_craft.get_dis_travel(units = "AU"), " AU\n")
+
+
 
 def test_coast_distance():
     '''creates an instance of Spacecraft class. Calls coast_distance
     method multiple times and prints starting and end parameters - user
     much manually check values are reasonable'''
 
+
+    # parameters approximately New Horizon's earth to Jupiter
+    test_craft = Spacecraft(44000, AU, M_S)
+    test_craft.coast_distance(50, 5)
+    print("Start velocity: ", 4400)
+    print("Start r0: ", AU/AU, " AU")
+    print("Final x: ", 5, " AU")
+    print(test_craft.get_elapse_t(units = "years"), " years\n")
+
+    # parameters approximately New Horizon's Jupiter to Pluto cruise
+    test_craft = Spacecraft(23000, 5 * AU, M_S)
+    test_craft.coast_distance(500, 32.5)
+    print("Start velocity: ", 23000)
+    print("Start r0: ", AU/AU, " AU")
+    print("Final x: ", 1.5, " AU")
+    print(test_craft.get_elapse_t(units = "years"), " years\n")
+
     return
 
-def test_coast_distance2():
-    '''creates instance of Spacecraft class and calls coast_distance
-    method once over a regime where coast time and distance should
-    be linear; compares calculated coast distance with linear
-    approximation'''
+def test_long_burn():
+    '''creates instance of Spacecraft class and calls long_burn
+    method. Results must be manually inspected.'''
 
+    # test long burn w/ same start parameters but different burn patterns
+    print("Test long burn")
+    print("Start velocity: ", 150000)
+    print("Start r0: ", 0.1, " AU")
+
+    # test 1 - long_burn over 10 days w/ 20 km/s delta-v and 10 steps
+    test_craft = Spacecraft(150000, 0.1 * AU, M_S)
+    test_craft.long_burn(20, 10, 10)
+    # compute time needed to coast to 10 AU
+    test_craft.coast_distance(100, 10)
+    print("\n10 days 10 steps")
+    print("Time to coast to 10 AU: ", test_craft.get_elapse_t(units = "years"), " years")
+    print("Final position: ", test_craft.get_dis_travel(units = "AU"), " AU")
+
+    # test 2 - long_burn over 10 days w/ 20 km/s delta-v and 1000 steps
+    test_craft = Spacecraft(150000, 0.1 * AU, M_S)
+    test_craft.long_burn(20, 10, 1000)
+    # compute time needed to coast to 10 AU
+    test_craft.coast_distance(100, 10)
+    print("\n10 days 1000 steps")
+    print("Time to coast to 10 AU: ", test_craft.get_elapse_t(units = "years"), " years")
+    print("Final position: ", test_craft.get_dis_travel(units = "AU"), " AU")
+
+     # test 3 - long_burn over 1 day w/ 20 km/s delta-v and 10 steps
+    test_craft = Spacecraft(150000, 0.1 * AU, M_S)
+    test_craft.long_burn(20, 1, 10)
+    # compute time needed to coast to 10 AU
+    test_craft.coast_distance(100, 10) 
+    print("\n1 days 10 steps")  
+    print("Time to coast to 10 AU: ", test_craft.get_elapse_t(units = "years"), " years")
+    print("Final position: ", test_craft.get_dis_travel(units = "AU"), " AU")
+
+    # test 4 - long_burn over 0.01 days w/ 20 km/s delta-v and 10 steps
+    test_craft = Spacecraft(150000, 0.1 * AU, M_S)
+    test_craft.long_burn(20, 0.01, 10)
+    # compute time needed to coast to 10 AU
+    test_craft.coast_distance(100, 10) 
+    print("\n0.01 days 10 steps")
+    print("Time to coast to 10 AU: ", test_craft.get_elapse_t(units = "years"), " years")
+    print("Final position: ", test_craft.get_dis_travel(units = "AU"), " AU")
+
+
+    # test 5 - instantaneous 20 km/s delta-v
+    test_craft = Spacecraft(170000, 0.1 * AU, M_S)
+    # compute time needed to coast to 10 AU
+    test_craft.coast_distance(100, 10) 
+    print("\nInstantaneous")
+    print("Time to coast to 10 AU: ", test_craft.get_elapse_t(units = "years"), " years")
+    print("Final position: ", test_craft.get_dis_travel(units = "AU"), " AU")
 
     return
+
 

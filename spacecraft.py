@@ -29,7 +29,8 @@ class Spacecraft():
     velocity and position in a hyperbolic orbit approximated as a straight
     line perpendicular to and offset from the mass being orbited. Class
     contains methods for updating the position of the spacecraft
-    and calculating the time elapse'''
+    and calculating the time elapsed. Internally all units are handled
+    in MKS.'''
     def __init__(self, v0, r0, parent_m):
         self.v = v0               # spacecraft velocity (m/s)
         self.r = r0               # spacecraft distance from parent body (m)
@@ -39,25 +40,45 @@ class Spacecraft():
         self.dis_travel = 0       # distance traveled from periapsis (m)
 
     # *** accessor functions *** #
-    def get_v(self):
-        '''returns current velocity in km/s'''
-        return self.v0/1000
+    def get_v(self, units = "m/s"):
+        '''returns current velocity in m/s unless specified in km/s'''
 
-    def get_r(self):
-        '''return distance from parent body in AU'''
-        return self.r/AU
+        if units == "km/s":
+            return self.v0/1000
+        else:
+            return self.v0
 
-    def get_r0(self):
-        '''returns periapsis r0 in AU'''
-        return self.r0/AU
+    def get_r(self, units = "m"):
+        '''return distance from parent body in m unless specified in AU'''
+ 
+        if units == "AU":
+            return self.r/AU
+        else:
+            return self.r
 
-    def get_elapse_t(self):
+    def get_r0(self, units = "m"):
+        '''returns periapsis r0 in m unless specified in AU'''
+
+        if units == "AU":
+            return self.r0/AU
+        else:
+            return self.r0
+
+    def get_elapse_t(self, units = "sec"):
         '''returns the elapsed time in years'''
-        return elapse_t/SEC_PER_YEAR
 
-    def get_dis_travel(self):
-        '''returns distance traveled in AU'''
-        return self.dis_travel/AU
+        if units == "years":
+            return self.elapse_t/SEC_PER_YEAR
+        else:
+            return self.elapse_t
+
+    def get_dis_travel(self, units = "m"):
+        '''returns distance traveled in m unless specified in AU'''
+
+        if units == "AU":
+            return self.dis_travel/AU
+        else:
+            return self.dis_travel
 
     # *** main function for executing a long burn *** #
     def long_burn(self, dv, time, steps):
@@ -71,7 +92,7 @@ class Spacecraft():
         '''
         
         # calculate dv for each burn in m/s
-        dv_per_burn = dv/1000/steps
+        dv_per_burn = dv * 1000/steps
         # calculate coast time between burns in seconds
         coast_period = time * SEC_PER_DAY / steps
 
@@ -92,29 +113,22 @@ class Spacecraft():
         return
 
     # *** helper methods for when spacecraft is coasting *** #
-    def coast_time(self, coast_period, delta = 1e7):
+    def coast_time(self, coast_period, delta = 1e8):
         '''coast for a period of time. Computes a linear
         approximation of the velocity and updates orbital parameters.
 
         inputs: coast_period - desired time to coast for (s)
-                delta - coast distance used as delta; default to 1000 meters
+                delta - coast distance used as delta; default to 10 000 kmeters
         updates: self.v
                  self.elapse_t
                  self.dis_travel
                  self.r'''
-        # TODO some handling to ensure self.r and r_plus_delta aren't equal
         # compute r after spacecraft coasts for delta
         r_plus_delta = math.sqrt((self.dis_travel + delta) ** 2 + self.r0 ** 2)
         # compute slope of velocity as function of self.dis_travel
-        self.get_r()
-        print(r_plus_delta)
-        print(calc_v_2(self.v, self.r, r_plus_delta))
-        print(self.v)
         m = (calc_v_2(self.v, self.r, r_plus_delta) - self.v) / delta
-        # check that slope is always negative - TODO check assertion syntax
+        # check that slope is always negative
         assert(m < 0)
-        print(m)
-
         # solve expression for new distance traveled (xf)
         xf = (math.exp(m * coast_period) * (self.v + m * self.dis_travel) - self.v) / m
 
@@ -126,7 +140,7 @@ class Spacecraft():
         # update elapsed time
         self.elapse_t += coast_period
         # update distance traveled 
-        self.dis_travel = xf   
+        self.dis_travel = xf
         # update distance from parent mass                            
         self.r = new_r
 
@@ -137,7 +151,7 @@ class Spacecraft():
         (self.dis_travel) from the current position. Uses Simpson's rule to
         numerically approximate flight time
 
-        inputs:  n       - number of points to use for Simpson's approximation     
+        inputs:  n       - number of segments to use for Simpson's approximation     
                  x_final - final distance to coast to (max self.dis_travel) (AU)
                  
         updates: self.dis_travel
@@ -146,39 +160,43 @@ class Spacecraft():
                  self.elapse_t'''
 
         # adjust n to be appropriate for Simpson's rule
-        if n % 2 != 1:
-            # n must be odd for Simpson's rule
+        if n % 2 != 0:
+            # n must be even for Simpson's rule
             n += 1
-        n = max(n, 5) # set minimum value for aproximation
+        n = max(n, 6) # set minimum value for aproximation
 
         # calculate step size in meters between points used in approximation
-        step_size = (x_final * AU - self.dis_travel)/ (n - 1)
+        step_size = (x_final * AU - self.dis_travel)/n
         
-        # list of coefficients to multiply f(x_n) by
-        coefs = [2 if x%2 == 0 else 4 for x in range(n)]
+        # list of coefficients to multiply f(x_n) by - last coefficient
+        # corresponds to (n) and coefficients are 0 indexed
+        coefs = [2 if x%2 == 0 else 4 for x in range(n + 1)]
         coefs[0]  = 1
         coefs[-1] = 1
 
         # list of x_values (dis_travel) to use - values extend from
         # current self.dis_travel to r_final
-        x_values = [self.dis_travel + x * step_size for x in range(n)]
-        # TODO - remove assertion
-        assert(x_values[-1] == x_final * AU)
+        x_values = [self.dis_travel + x * step_size for x in range(n + 1)]
 
         # list of r values (distance from parent mass) to evaluate
         # function being approximated at
-        r_values = [math.sqrt(x_values[x] ** 2 + self.r0 ** 2) for x in range(n)]
+        r_values = [math.sqrt(x_values[x] ** 2 + self.r0 ** 2) for x in range(n + 1)]
 
         # list of evaluated values of the function being approximated (1/v(r))
         f_values = [1/calc_v_2(self.v, self.r, r_values[x]) 
-                   for x in range(n)]
+                   for x in range(n + 1)]
 
         # calculate time to coast to x_final
         coast_time = step_size/3 * \
-                     sum([f_values[x] * coefs[x] for x in range(n)])
+                     sum([f_values[x] * coefs[x] for x in range(n+1)])
         
-        # update elapsed times
+        # update elapsed time
         self.elapse_t += coast_time
+        # update position and velocity
+        new_r = r_values[-1]
+        self.v = calc_v_2(self.v, self.r, new_r)
+        self.r = new_r
+        self.dis_travel = x_final * AU
 
         return
 
