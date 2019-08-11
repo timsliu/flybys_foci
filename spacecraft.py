@@ -18,6 +18,9 @@
 # 06/26/19    Tim Liu    rewrote spacecraft.coast_distance() method to use
 #                        Simpson's rule instead of trapezoid rule
 # 07/04/19    Tim Liu    updated default delta in coast_time() to 10 000 km
+# 08/11/19    Tim Liu    wrote repr function
+# 08/11/19    Tim Liu    changed long_burn method to take dv in m/s
+# 08/11/19    Tim Liu    added clone method
 
 from astro_constants import *     # astronomical constants
 from orbit import *               # helper functions for orbital calculations
@@ -39,14 +42,24 @@ class Spacecraft():
         self.elapse_t = 0         # time elapsed (seconds)
         self.dis_travel = 0       # distance traveled from periapsis (m)
 
+    def clone(self):
+        '''clone parameters to another Spacecraft class
+        outputs: new - new spacecraft class w/ identical attributes'''
+        new = Spacecraft(self.get_v(), self.get_r0(), self.parent_m)
+        new.r = self.get_r()
+        new.elapse_t = self.get_elapse_t()
+        new.dis_travel = self.get_dis_travel()
+
+        return new
+
     # *** accessor functions *** #
     def get_v(self, units = "m/s"):
         '''returns current velocity in m/s unless specified in km/s'''
 
         if units == "km/s":
-            return self.v0/1000
+            return self.v/1000
         else:
-            return self.v0
+            return self.v
 
     def get_r(self, units = "m"):
         '''return distance from parent body in m unless specified in AU'''
@@ -85,14 +98,14 @@ class Spacecraft():
         '''execute a burn that takes a non zero amount of time;
         the burn is spread out into multiple instantaneous burns. Method
         alternates calling burn and coast_time
-        inputs: dv - total delta-v (km/s) of the burn
+        inputs: dv - total delta-v (m/s) of the burn
                 time - length of time (days) of the burn
                 steps - number of discrete burns to break the long
                         burn into
         '''
         
         # calculate dv for each burn in m/s
-        dv_per_burn = dv * 1000/steps
+        dv_per_burn = dv / steps
         # calculate coast time between burns in seconds
         coast_period = time * SEC_PER_DAY / steps
 
@@ -128,7 +141,7 @@ class Spacecraft():
         # compute slope of velocity as function of self.dis_travel
         m = (calc_v_2(self.v, self.r, r_plus_delta) - self.v) / delta
         # check that slope is always negative
-        assert(m < 0)
+        assert(m <= 0)
         # solve expression for new distance traveled (xf)
         xf = (math.exp(m * coast_period) * (self.v + m * self.dis_travel) - self.v) / m
 
@@ -200,14 +213,15 @@ class Spacecraft():
 
         return
 
-    def __repr__(self):
-        '''Print basic information about the class when called'''
+    def __str__(self):
+        '''Print basic information about the object when called'''
 
-        # TODO - write repr
-
-        output_string = "This is the spacecraft class. The __repr__\
-                         function hasn't been finished."
-
+        output_string = ""
+        output_string += "Current velocity:     %.2fkm/s\n"  %(self.v/1000)
+        output_string += "Periapsis:            %.2fAU\n"    %(self.r0/AU)
+        output_string += "Distance from parent: %.2fAU\n"    %(self.get_r(units = "AU"))
+        output_string += "Distance travelled:   %.2fAU\n"    %(self.get_dis_travel(units = "AU"))
+        output_string += "Elapsed time:         %.2fyears\n" %(self.get_elapse_t(units = "years"))
 
         return output_string
 

@@ -1,0 +1,9 @@
+***** Flight parameters *****
+Initial velocity: 100000.00 m/s
+Periapsis:        0.50 AU
+Delta-v:          10000.00 m/s
+Parent mass:      1990000000000000042385153196032 kg
+Flight distance:  50 AU
+***** Approximation parameters ***** 
+Burn time:        20.00 days
+Burn steps:       1000 steps
