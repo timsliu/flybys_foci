@@ -73,16 +73,18 @@
 \begin{document}
 
 \maketitle
-
-Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This appendix gives a more thorough explanation of some parts of the story that the reader may find interesting. I have written the appendix assuming the reader has some basic knowledge of physics, to the level that can be found on Wikipedia.
-
-The appendix is organized into four sections. Section 1 explains the flight path through space \textit{Einstein} takes and why it makes an unintuitive flyby of the sun to reach deep space. The second section details the gravitational lensing effect and calculates how far away the sun's focal point is. Section 3 gives a rough estimate of how efficient the \textit{Sheridan} drive is and how it stacks up against current engines. Section 4 is the culmination of the first three sections and calculates how long the flight to the sun's focal point is.
-
 \tableofcontents
 
-\section{Diving Towards the Sun}
+\section{Scientific Appendix}
+Throughout the story I have done my best to keep the plot scientifically accurate and plausible. This appendix gives a more thorough explanation of some parts of the story that the reader may find interesting. I have written the appendix assuming the reader has some basic knowledge of physics, and much of the background information to understand this section can be found on Wikipedia.
 
-In Chapter 8, \textit{Einstein} is put on a trajectory that passes close to the sun before performing its main burn to exit the solar system. This may seem unintuitive - the spacecraft first heads towards the sun to make it to a point very distant to the sun. \textit{Einstein} is taking advantage of the Oberth Effect, where the most efficient place to perform an engine burn is deep in a gravity well.
+The appendix is organized into four sections. \hyperref[subsec:diving]{Section 1} explains the flight path through space \textit{Einstein} takes and why it makes a flyby of the sun first before heading to deep space. The \hyperref[subsec:lensing]{second section} details the gravitational lensing effect and calculates how far away the sun's focal point is. \hyperref[subsec: efficiency]{Section 3} gives a rough estimate of how efficient the \textit{Sheridan} drive is and how it stacks up against current engines. Finally, \hyperref[subsec: flight time]{Section 4} is the culmination of the first three sections and calculates how long the flight to the sun's focal point is.
+
+% Subsection - diving towards the sun
+\subsection{Diving Towards the Sun}
+\label{subsec:diving}
+
+In Chapter 11, \textit{Einstein} is put on a trajectory that passes close to the sun before performing its main burn to exit the solar system. This may seem counterintuitive - the spacecraft first heads towards the sun in the first leg of a journey away from the sun. \textit{Einstein} is taking advantage of the Oberth Effect, where the most efficient place to perform an engine burn is deep in a gravity well.
 
 In rocketry a common unit for describing the effort needed to travel between points in space is delta v, also expressed as $\Delta v$. Delta v is the change in velocity needed to modify a spacecraft's orbit. For example, to go from low earth orbit to a trajectory that escapes from earth's gravity takes a change in velocity (or delta v) of 3.2 km/s. The total velocity change that a spacecraft can perform is called the delta v budget. This section explains how \textit{Einstein}'s trajectory in the story maximizes its delta v budget to reach the focal point as quickly as possible.
 
@@ -94,7 +96,7 @@ Where:
 
 $m$ = spacecraft mass \\
 $v$ = velocity \\
-$M$ = solar mass\\
+$M$ = mass of body being orbited\\
 $G$ = universal gravitational constant\\
 $r$ = distance to the sun\\
 $a$ = semi-major axis\\
@@ -103,7 +105,7 @@ This expression is commonly divided by mass to get the \textit{specific orbital 
 
 $$ = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
 
-For \textit{Einstein} the higher the specific orbital energy the faster it will reach the suns focal point. A more tangible measure is $v_{\infty}$, which is the spacecraft's velocity when it is so far away from the sun that its potential energy is negligible. As a spacecraft climbs out of the sun's gravity well it sheds velocity and the potential energy goes to 0 (in orbital mechanics potential energy is 0 at infinity and increasingly negative closer to the sun).
+For \textit{Einstein}, the higher its specific orbital energy the faster it will reach the suns focal point. A more direct measure of speed is $v_{\infty}$, which is the spacecraft's velocity when it is so far away from the sun that its potential energy is negligible. As a spacecraft climbs out of the sun's gravity well it sheds velocity and the potential energy goes to 0 (in orbital mechanics potential energy is 0 at infinity and increasingly negative closer to the sun).
 
 $$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} v^2 - \frac{MG}{r} = -\frac{MG}{2a}$$
 $$v_{\infty} = \sqrt{v^2-\frac{2MG}{r}}$$
@@ -113,13 +115,12 @@ Where:
 $r$ = spacecraft distance to the sun\\
 $v$ = velocity at the given $r$\\
 
-We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its trajectory that took it close to the sun.
+We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory (straight out of the solar system away from the sun) and compare it to $v_{\infty}$ from its trajectory that took it close to the sun. A higher $v_{\infty}$ corresponds to a faster path and a shorter flight time to the focal point.
 
-We can use this to calculate $v_{\infty}$ for \textit{Einstein} if it had burned directly on a hyperbolic escape trajectory and compare it to $v_{\infty}$ from its actual trajectory that took it close to the sun.
+% Subsubsection - direct escape
+\subsubsection{Scenario 1: Direct escape burn (single burn)}
 
-\subsection{Scenario 1: Direct escape burn}
-
-Assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. In the story \textbf{Einstein} must first escape from Jupiter's gravity well but for simplicity we'll assume this doesn't require much $\Delta$ v.
+Assume that \textit{Einstein} begins in a heliocentric (sun centered), circular orbit the same distance from the sun as Jupiter. In the story \textbf{Einstein} must first escape from Jupiter's gravity well but for simplicity we'll assume this doesn't require much $\Delta$ v. The expression for $v_{\infty}$ is:
 
 $$\frac{1}{2}v_{\infty}^{2} = \frac{1}{2} (v_0 + \Delta v)^2 - \frac{MG}{r_0}$$
 $$v_{\infty} = \sqrt{(v_0 + \Delta v)^2-\frac{2MG}{r_0}}$$
@@ -129,22 +130,22 @@ $v_0$: starting velocity\\
 $\Delta v$: change in velocity supplied by \textit{Sheridan} drive\\
 $r_0$: starting distance from the sun - Jupiter's orbit
 
+% Subsubsection - oberth
+\subsubsection{Scenario 2: Oberth effect (two burns)}
 
-\subsection{Scenario 2: Oberth effect}
+Again we assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. \textit{Einstein} then performs two burns - one retrograde (opposite the direction of orbit) to bring down the perihelion (the point in the orbit nearest the sun) and a second burn near the sun to escape the solar system. In the story this first burn is combined with the maneuver to escape Jupiter, again taking advantage of the Oberth effect!
 
-Again we assume that \textit{Einstein} begins in a heliocentric, circular orbit the same distance from the sun as Jupiter. \textit{Einstein} then performs two burns - one retrograde (opposite the direction of orbit) to bring down the perihelion (the point in the orbit nearest the sun) and a second burn near the sun to escape the solar system. In the story the first burn is combined with the maneuver to escape Jupiter, again is taking advantage of the Oberth effect!
-
-The hyperbolic excess velocity ($\Delta v_{\infty}$) following the second burn is:
+The hyperbolic excess velocity ($ v_{\infty}$) following the second burn is:
 
 $$v_{\infty} = \sqrt{(v_p + \Delta v_2)^2-\frac{2MG}{r_p}}$$
 
 Where:
 
-$v_p$: velocity at perhelion prior to the burn\\
+$v_p$: velocity at perhelion prior to the second burn\\
 $r_p$: perihelion distance\\
 $\Delta v_2$: change in velocity from the second burn\\
 
-The velocity and perihelion of \textit{Einstein} depends on the first burn. To solve for the perihelion:
+The velocity and perihelion of \textit{Einstein} depends on the first burn. To solve for the perihelion as a function of the first burn$r_p$ we use two formulas:
 
 $$r_p + r_0 = 2a$$
 $$a = \bigg(\frac{2}{r_0} - \frac{(v_0-\Delta v_1)^2}{GM}\bigg)^{-1}$$
@@ -155,7 +156,7 @@ $r_0$: starting distance from the sun - Jupiter's orbit\\
 $\Delta v_1$: change in velocity of the first burn\\
 $a$: semi-major axis\\
 
-Note that $\Delta v_1$ subtracts from $v_0$ because the burn is opposite the direction of orbit to lower the perihelion. The second equation is a rearrangement of the equation for specific orbital energy. This equation gives us the perihelion distance. The velocity at the perihelion $v_p$ can be calculated from conservation of angular momentum:
+Note that $\Delta v_1$ subtracts from $v_0$ because the burn is opposite the direction of orbit to lower the perihelion. The second equation is a rearrangement of the equation for specific orbital energy. This equation gives us the perihelion distance. The velocity at the perihelion $v_p$ can then be calculated from conservation of angular momentum:
 
 $$r_p \times v_p = r_0 \times v_0$$
 
@@ -166,52 +167,60 @@ To summarize, $v_{\infty}$ depends on two factors:
 \item How low the perihelion is, which in turn determined by the first burn. 
 \end{enumerate}
 
-Note that there is a limit to how low the perihelion can be - \textit{Einstein} can only fly so close to the sun. Figure 1 plots the hyperbolic excess velocity as a function of these two burns.
+Note that there is a limit to how low the perihelion can be - \textit{Einstein} can only fly so close to the sun. Figure~\ref{fig:TwoBurns} plots the hyperbolic excess velocity as a function of these two burns.
 
 \begin{figure}[H]
-\caption{This plot illustrates v-infinity as a function of the delta-v of the two burns. The first burn is performed while in a circular orbit around the sun near Jupiter and is retrograde, which lowers the perihelion. The second burn is performed at perihelion and puts \textit{Einstein} on an escape trajectory from the solar system. Each straight line represents a constant total delta-v.}
+\makebox[\textwidth][c]{\includegraphics[width=5in]{v_infinity.png}}
+\caption{This plot illustrates $v_{\infty}$ as a function of the $\Delta v$ of the two burns. The first burn is performed while in a circular orbit around the sun near Jupiter and is retrograde, which lowers the perihelion. The second burn is performed at perihelion and puts \textit{Einstein} on an escape trajectory from the solar system. Each straight line represents a constant total $\Delta v$. The greater the first burn (and the lower the perihelion) the higher the final $v_{\infty}$.}
+\label{fig:TwoBurns}
 \end{figure}
 
-\subsection{Comparing the two scenarios}
+\subsubsection{Comparing the two scenarios}
 
-For lower delta-v budgets it is advantageous to perform only one burn out of the solar system. Figure 2 illustrates an example of v-infinity for a single burn and for two burns.
+For lower $\Delta v$ budgets, it is advantageous to perform only one burn directly out of the solar system. Figure~\ref{fig:lowdv} compares the $v_{\infty}$ for the single burn and the two burn scenario for a smaller $\Delta v$ budget of 12km/s.
 
 \begin{figure}[H]
-
-\caption{V-infinity for the single burn and two burn scenarios. Performing two burns results in a lower v-infinity because the energy used to lower the orbit is not made up for by the Oberth effect.}
+\makebox[\textwidth][c]{\includegraphics[width=5in]{compare_12_kms.png}}
+\caption{$v_{\infty}$ for the single burn and two burn scenarios with a $\Delta v$ budget of 12km/s. Performing two burns results in a lower $v_{\infty}$ because the energy used to lower the orbit is not made up for by the Oberth effect. After the first burn, there is not enough $\Delta v$ left to achieve a higher $v_{infty}$.}
+\label{fig:lowdv}
 \end{figure}
 
-However for larger delta-v budgets performing two burns is advantageous. Lowering the perihelion and burning at perihelion - and using the Oberth effect - can significantly increase v-infinity.
+However for larger $\Delta v$ budgets two burn scenario is strongly advantageous. Lowering the perihelion and burning at perihelion - and using the Oberth effect - can significantly increase $v_{\infty}$ compared to the single burn scenario if the $\Delta v$ budget is large enough.
 
 \begin{figure}[H]
-\caption{V-infinity for the single burn and two burn scenarios where the total delta-v budget is X. Performing two burns significantly increases v-infinity}.
+\makebox[\textwidth][c]{\includegraphics[width=5in]{compare_50_kms.png}}
+\caption{$v_{\infty}$ for the single burn and two burn scenarios where the total $\Delta v$ budget is 50km/s. Performing two burns significantly increases $v_{\infty}$, and the gains increase when more $\Delta v$ is spent on the first burn.}
+\label{fig:highdv}
 \end{figure}
 
-In later sections we will see that the delta-v budget provided by the \textit{Sheridan} drive justifies performing two burns.
+In later sections we will see that the $\Delta v$ budget provided by the \textit{Sheridan} drive justifies performing two burns.
 
 
-\section{Gravitational lensing focal distance}
-One of the most challenging aspects of \textit{Einstein} is that it must travel nearly 600 AU (astronomical units - the average distance between the earth and sun) to exploit the gravitational lensing effect. Gravitational lensing was predicted by \textit{Einstein's} theory of general relativity. When light passes by a large object gravity warps its path. This is similar to how a comet will change trajectory as it passes near the sun. Light from a distant star - in the story Trappist 1 - is bent by the sun's gravity and concentrates at a focal point. Figure 5 below illustrates this.
+\subsection{Gravitational lensing focal distance}
+\label{subsec: lensing}
+One of the most challenging aspects of \textit{Einstein} is that it must travel nearly 600 AU (astronomical units - the average distance between the earth and sun) to exploit the gravitational lensing effect. Gravitational lensing was predicted by \textit{Einstein's} theory of general relativity. When light passes by a large object, gravity warps its path. This is similar to how a comet will change trajectory as it passes near the sun. Light from a distant star - in the story Trappist 1e - is bent by the sun's gravity and concentrates at a focal point. Figure ~\ref{fig:lensing} below illustrates this effect.
 
 \begin{figure}[H]
-
+\makebox[\textwidth][c]{\includegraphics[width=5in]{lensing.png}}
 \caption{Illustration of gravitational lensing effect. Light passing by the sun is bent to a focal point. Light that passes further from the sun is bent to a further focal point, creating a focal line extending past the sun.}
+\label{fig:lensing}
 \end{figure}
 
-As light is bent around the sun it converges ar the focal point in a ring shaped pattern called an \textit{Einstein} ring. Figure X below is a real image of an \textit{Einstein} ring. In this case the object that bends starlight is a distant galaxy bending the light of an even more distant galaxy. 
+As light is bent around the sun it converges at the focal point in a ring shaped pattern called an \textit{Einstein} ring. Figure~\ref{fig:reallense} below is an image of an \textit{Einstein} ring taken by the Hubble Space Telescope. In this case the object that bends starlight is a distant galaxy bending the light of an even more distant galaxy. 
 
 \begin{figure}[H]
-\makebox[\textwidth][c]{\includegraphics[width=5in]{image.png}}
-\caption{Image of an Einstein ring LRG 3-757. The light from a distant galaxy is bent into a circle by the gravity of a closer, redder galaxy (center).}
+\makebox[\textwidth][c]{\includegraphics[width=4in]{horseshoe.jpeg}}
+\caption{Image of an Einstein ring LRG 3-757. The light from a distant galaxy is bent into a circle by the gravity of a closer, redder galaxy (center).\\ \url{https://en.wikipedia.org/wiki/Cosmic_Horseshoe}}
+\label{fig:reallense}
 \end{figure}
 
-The equation for the deflection angle caused by the lens is:
+The equation for the deflection angle of light caused by a massive object is:
 
 $$\theta = \frac{4GM}{c^2r}$$
 
 where:
 
-$\theta$ is the angle of deflection\\
+$\theta$ is the angle of deflection relative to a straight path\\
 $G$ is the universal gravitational constant\\
 $M$ is the mass of the lensing object (the sun)\\
 $c$ is the speed of light\\
@@ -228,21 +237,24 @@ The minimum focal distance comes from light passing close to the sun's surface, 
 
 $$f_d =  548AU$$
 
-However, light passing so close to the sun would be difficult to separate from the sun itself. In the story a combination of a starshade and additional filtering is used to block light from the sun. A starshade is a flat, roughly circular plate that separates from \textit{Einstein} and flies nearby to block sunlight. The further the light passing by the sun is - corresponding to a larger $r$ - the further the \textit{Einstein} ring will be from the sun and the easier it is to photograph and interpret. Figure X below illustrates the relation between $r$ and the focal distance. 
+However, at this distance the \textit{Einstein} ring would appear right on the surface of the sun and would be difficult to separate from the sun itself. In the story a combination of a starshade and additional filtering is used to block light from the sun. A starshade is a flat, roughly circular plate that separates from \textit{Einstein} and flies nearby to block sunlight. The further the light passing by the sun is - corresponding to a larger $r$ - the further the \textit{Einstein} ring will be from the sun and the easier it is to photograph and interpret. Figure~\ref{fig:lensingdistance} below illustrates the relation between $r$ and the focal distance. 
 
 \begin{figure}[H]
-	\makebox[\textwidth][c]{\includegraphics[width=5in]{image.png}}
+	\makebox[\textwidth][c]{\includegraphics[width=5in]{lens_distance.png}}
 	\caption{Focal distance as a function of how closely light from Trappist-1e passes to the sun. A greater focal distance takes longer to reach but leads to an \textit{Einstein} ring further from the sun that's easier to separate from the sun's light.}
 \end{figure}
 
-\textit{Einstein} must reach at least 548 AU to photograph an \textit{Einstein} ring of Trappist 1e. In practice, the telescope will need to travel than the minimum focal distance. As the telescope continues to coast through space and travel fruther from the sun the \text{Einstein} ring appears further from the sun. The total amount of light being bent into the ring also increases since the amount of light is proportional to the circumference of a circle around the sun with radius $r$. This means that the quality of images should improve as \textit{Einstein} travels further and further into space.
+As the telescope continues to coast through space and travel further along the focal line, the \text{Einstein} ring appears further from the sun. The total amount of light being bent into the ring also increases since the amount of light is proportional to the circumference of a circle around the sun with radius $r$. As a result, the quality of images should improve as \textit{Einstein} travels further and further along the focal line.
 
-\section{Efficiency of \textit{Sheridan} drive}
+% subsection - Sheridan drive efficiency
+\newpage
+\subsection{Efficiency of \textit{Sheridan} drive}
+\label{subsec:efficiency}
 \textit{Einstein} is powered by the \textit{Sheridan} drive, a closely guarded secret of the Callistan Navy. The drive is described as:
 
 \hspace{2cm} \textit{a long sought after holy grail, a practical nuclear fusion engine}
 
-This section will give some approximate specifications of the \textit{Sheridan} drive. Compared to other sections this section is lighter on detail and more speculative. Rather than attempt to sketch out the design of an actual nuclear fusion engine this section gives a general comparison between the \textit{Sheridan} drive and existing engines.
+This section will give some approximate specifications of the \textit{Sheridan} drive. Compared to other sections this section is lighter on detail and more speculative. Rather than attempt to sketch out the design of an actual nuclear fusion engine, this section gives a estimate of the efficiency of a nuclear fusion engine.
 
 There are several choices of fuels for a nuclear fusion engine. The most likely are a deuterium tritium mix:
 $$^2_1D^+ + ^3_1T^+ \rightarrow ^4_2He^{2+} (3.5 MeV) + n^0 (14.1 MeV)$$
@@ -261,20 +273,20 @@ Our energy units are in electron volts so the expression for velocity is:
 
 $$v = \sqrt{\frac{2 E \frac{joules}{eV}}{m}}$$
 
-for the helium-3 deuterim reaction this yields an exhaust velocity of:
+for the helium-3 deuterium reaction this yields an exhaust velocity of:
 
 $^4_2He^{2+}: 13,176 km/s$ or 0.044 c\\
 $p^{+}: 53,059 km/s$ or 0.177 c\\
 
-The exhuast of the \textit{Sheridan} drive is composed of two streams of particles with different exhaust velocities. The proton has an exhaust veloity of nearly 18\% the speed of light while the heavier alpha particle has a velocity of over 4\% the speed of light. The momentum change from the two exhaust streams is equivalent to the same mass being uniformly ejected at a velocity of:
+The exhaust of the \textit{Sheridan} drive is composed of two streams of particles with different exhaust velocities. The proton has an exhaust velocity of nearly 18\% the speed of light while the heavier alpha particle has a velocity of over 4\% the speed of light. The momentum change from the two exhaust streams is equivalent to the same mass being uniformly ejected at a velocity of:
 
 $$p_{total} = 0.2mv_{p} + 0.8mv_{He} = mv_{combined}$$
 $$v_{combined} = 0.2v_{p} + 0.8v_{He}$$
 $$v_{combined} =  21,153km/s$$
 
-which is equivalent to 7\% the speed of light. A common descriptor for the efficiency of an engine is its specific impulse, defined as the change in momentum per unit of fuel consumed.  When fuel is expressed by mass specific impulse is equivalent to exhaust velocity with units of meters per second. If weight is used then the units are expressed in seconds. The higher the exhaust velocity the greater the efficiency, and as we will see in the following section the faster a spacecraft can travel.
+which is equivalent to 7\% the speed of light. A common descriptor for the efficiency of an engine is its specific impulse, defined as the change in momentum per unit of fuel consumed.  When fuel quantity is expressed by mass, specific impulse is equivalent to exhaust velocity with units of meters per second. If fuel quantity is expressed by weight, then the units are expressed in seconds. The higher the exhaust velocity the greater the efficiency, and as we will see in the following section the faster a spacecraft can travel.
 
-Since the \textit{Sheridan} drive is a first generation nuclear fusion engine we assume that its specific impulse is much less than the theoretical maximum. If we assume the specific impulse (and exhaust velocity) is an order of magnitude lower, then the specific impulse of the Sheridan drive is:
+Since the \textit{Sheridan} drive is a first generation nuclear fusion engine we assume that its specific impulse is much less than the theoretical maximum. If we assume the specific impulse (and exhaust velocity) is an order of magnitude lower than the ideal, then the specific impulse of the Sheridan drive is:
 
 $$I_{sp} \approx 2,100 km/s \approx 214,000 seconds$$
 
@@ -294,7 +306,9 @@ Dawn ion engine   &  3100\\ \hline
 
 The specific impulse of the \textit{Sheridan} drive is nearly two orders of magnitude greater than that of the \textit{Dawn} ion engines. We will see in the next section that the specific impulse is a strong driver of $\Delta v$, which in turn determines how long it takes \textit{Einstein} to reach the sun's focal point.
 
-\section{\textit{Einstein} flight time}
+% Einstein flight time
+\subsection{\textit{Einstein} flight time}
+\label{subsec: flight time}
 In the story \textit{Einstein} takes ``decades" to reach the sun's focal point. This section calculates how long the trip takes based on the specific impulse of the \textit{Sheridan} drive and the distance to the focal point. Section 4 is more technically challenging than the first three sections and includes descriptions of several numerical approximations used to calculate \textit{Einstein}'s flight time.
 
 The $\Delta v$ budget of a spacecraft is determined by the Tsiolkovsky rocket equation:
@@ -348,7 +362,7 @@ The second leg of the trip is to escape from Jupiter's gravity well. After \text
 	\caption{Illustration of \textit{Einstein}'s orbit around Jupiter. When the telescope is at its closest approach the \textit{Sheridan} performs the Jupiter escape burns to send the spacecraft on a trajectory leaving Jupiter and into a heliocentric orbit.}
 \end{figure}
 
-In section 1 of the appendix we calculated that a $\Delta v$ of about 10 km/s is needed to put \textit{Einstein} on a trajectory taking it close to the sun. This is the velocity relative to Jupiter; it means that when \textit{Einstein} is performing the Jupiter escape burn it must have a v-infinity relative to Jupiter of 10km/s. From section 1 we know the expression for v-infinity is:
+In section 1 of the appendix we calculated that a $\Delta v$ of about 10 km/s is needed to put \textit{Einstein} on a trajectory taking it close to the sun. This is the velocity relative to Jupiter; it means that when \textit{Einstein} is performing the Jupiter escape burn it must have a $v_{\infty}$ relative to Jupiter of 10km/s. From section 1 we know the expression for $v_{\infty}$ is:
 
 $$v_{\infty} = \sqrt{(v_p + \Delta v_2)^2-\frac{2MG}{r_p}}$$
 
@@ -372,7 +386,7 @@ substituting gives us \textbf{$v_p = 57.3 km/s$}
 
 Plugging the values for $v_p$, $v_{\infty}$, and $r_p$ into the equation for $v_{\infty}$ above gives us \textbf{$\Delta v = 1.5km/s$}.
 
-It only takes a small $\Delta v$ to escape from Jupiter because \textit{Einstein} starts from a highly eccentric orbit. Burning at perijove (the point closest to Jupiter) takes advantage of the Oberth effect and allows \textit{Einstein} to have a high v-infinity while using little fuel.
+It only takes a small $\Delta v$ to escape from Jupiter because \textit{Einstein} starts from a highly eccentric orbit. Burning at perijove (the point closest to Jupiter) takes advantage of the Oberth effect and allows \textit{Einstein} to have a high $v_{\infty}$ while using little fuel.
 
 Like in the previous section, we will ignore the time it takes \textit{Einstein} to escape from Jupiter's gravity well because the time is relatively short compared to the rest of the flight. 
 
@@ -408,14 +422,14 @@ $\Delta$ \textbf{v:} 0 km/s\\
 
 % Perihelion burn
 \subsection{Perihelion burn}
-The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s v-infinity after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonably accurate answer:
+The burn at perihelion is the \textit{Sheridan} drive's longest and most powerful burn. In the story the engine burns continuously for several days, accelerating \textit{Einstein} out of the solar system. In this section we'll calculate \textit{Einstein}'s $v_{\infty}$ after performing the burn. We're going to make two approximations that will make calculations much easier while giving us a reasonably accurate answer:
 
 \begin{enumerate}
 \item \textit{Einstein}'s trajectory is a straight line that starts at the perihelion and continues perpendicular to a line connecting the perihelion to the sun.
 \item The long, multi day burn is approximated as a series of discrete, instantaneous velocity changes (step burns) separated by periods when \textit{Einstein} cruise. During the cruise phases \textit{Einstein}'s velocity is governed only by the effect of gravity.
 \end{enumerate}
 
-In reality, \textit{Einstein} follows a hyperbolic path that constantly changes as the burn continues. The approximation underestimates the final v-infinity because the straight path moves away from the sun more quickly than a hyperbolic path that curves slightly inwards towards the sun. Leaving the sun's gravity well more quickly reduces the Oberth effect, and leads to a lower v-infinity. However, it is still a \textit{fairly} good approximation. Figure X below illustrates how the approximated trajectory compares to a more \textit{Einstein}'s actual path.
+In reality, \textit{Einstein} follows a hyperbolic path that constantly changes as the burn continues. The approximation underestimates the final $v_{\infty}$ because the straight path moves away from the sun more quickly than a hyperbolic path that curves slightly inwards towards the sun. Leaving the sun's gravity well more quickly reduces the Oberth effect, and leads to a lower $v_{\infty}$. However, it is still a \textit{fairly} good approximation. Figure X below illustrates how the approximated trajectory compares to a more \textit{Einstein}'s actual path.
 
 \begin{figure}[H]
 	\makebox[\textwidth][c]{\includegraphics[width=5in]{solar_escape.png}}
@@ -595,7 +609,7 @@ yields the final orbital parameters for \textit{Einstein} after its perihelion b
 Position (x) & 0.72 & AU from perihelion\\ \hline
 Radial distance (r) & 0.73& AU from the sun\\ \hline
 Velocity      &  174 & km/s\\ \hline
-v-infinity     &  167& km/s\\ \hline
+$v_{\infty}$     &  167& km/s\\ \hline
 \end{tabular}
 \end{center}
 
