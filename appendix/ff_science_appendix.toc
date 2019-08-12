@@ -6,14 +6,15 @@
 \contentsline {subsection}{\numberline {1.2}Gravitational lensing focal distance}{8}{subsection.1.2}
 \contentsline {subsection}{\numberline {1.3}Efficiency of \textit {Sheridan} drive}{12}{subsection.1.3}
 \contentsline {subsection}{\numberline {1.4}\textit {Einstein} flight time}{14}{subsection.1.4}
-\contentsline {subsection}{\numberline {1.5}Jupiter approach burn}{15}{subsection.1.5}
-\contentsline {subsection}{\numberline {1.6}Jupiter escape burn}{16}{subsection.1.6}
-\contentsline {subsection}{\numberline {1.7}Coast to perihelion}{18}{subsection.1.7}
-\contentsline {subsection}{\numberline {1.8}Perihelion burn}{19}{subsection.1.8}
-\contentsline {subsubsection}{\numberline {1.8.1}Step 4: Creating a linear approximation}{22}{subsubsection.1.8.1}
-\contentsline {subsubsection}{\numberline {1.8.2}Solving for cruise distance as a function of time}{24}{subsubsection.1.8.2}
-\contentsline {subsubsection}{\numberline {1.8.3}Calculating $v'(x_0)$}{25}{subsubsection.1.8.3}
-\contentsline {subsubsection}{\numberline {1.8.4}Calculating the result}{26}{subsubsection.1.8.4}
-\contentsline {subsection}{\numberline {1.9}Coast to focal point}{27}{subsection.1.9}
-\contentsline {subsection}{\numberline {1.10}Additional considerations}{29}{subsection.1.10}
-\contentsline {section}{\numberline {2}References}{29}{section.2}
+\contentsline {subsubsection}{\numberline {1.4.1}Jupiter approach burn}{15}{subsubsection.1.4.1}
+\contentsline {subsubsection}{\numberline {1.4.2}Jupiter escape burn}{16}{subsubsection.1.4.2}
+\contentsline {subsubsection}{\numberline {1.4.3}Coast to perihelion}{18}{subsubsection.1.4.3}
+\contentsline {subsubsection}{\numberline {1.4.4}Perihelion burn}{19}{subsubsection.1.4.4}
+\contentsline {subsubsection}{\numberline {1.4.5}Creating a linear approximation for step 4}{22}{subsubsection.1.4.5}
+\contentsline {subsubsection}{\numberline {1.4.6}Solving for cruise distance as a function of time}{24}{subsubsection.1.4.6}
+\contentsline {subsubsection}{\numberline {1.4.7}Calculating $v'(x_0)$}{25}{subsubsection.1.4.7}
+\contentsline {subsubsection}{\numberline {1.4.8}Calculating the result}{26}{subsubsection.1.4.8}
+\contentsline {subsection}{\numberline {1.5}Coast to focal point}{27}{subsection.1.5}
+\contentsline {subsubsection}{\numberline {1.5.1}Additional considerations}{29}{subsubsection.1.5.1}
+\contentsline {subsection}{\numberline {1.6}Code}{29}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}References}{30}{subsection.1.7}
