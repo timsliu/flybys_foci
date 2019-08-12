@@ -1,15 +1,18 @@
-\contentsline {section}{\numberline {1}Diving Towards the Sun}{1}{section.1}
-\contentsline {subsection}{\numberline {1.1}Scenario 1: Direct escape burn}{3}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Scenario 2: Oberth effect}{3}{subsection.1.2}
+\contentsline {section}{\numberline {1}Diving Towards the Sun}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Scenario 1: Direct escape burn}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Scenario 2: Oberth effect}{4}{subsection.1.2}
 \contentsline {subsection}{\numberline {1.3}Comparing the two scenarios}{5}{subsection.1.3}
-\contentsline {section}{\numberline {2}Gravitational lensing focal distance}{5}{section.2}
-\contentsline {section}{\numberline {3}Efficiency of \textit {Sheridan} drive}{8}{section.3}
+\contentsline {section}{\numberline {2}Gravitational lensing focal distance}{6}{section.2}
+\contentsline {section}{\numberline {3}Efficiency of \textit {Sheridan} drive}{9}{section.3}
 \contentsline {section}{\numberline {4}\textit {Einstein} flight time}{11}{section.4}
-\contentsline {subsection}{\numberline {4.1}Jupiter escape burn}{12}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Coast to perihelion}{12}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Perihelion burn}{13}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Creating a linear approximation}{14}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Solving for cruise distance as a function of time}{16}{subsubsection.4.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3}Calculating $v'(x_0)$}{17}{subsubsection.4.3.3}
-\contentsline {subsubsection}{\numberline {4.3.4}Calculating the result}{18}{subsubsection.4.3.4}
-\contentsline {subsection}{\numberline {4.4}Coast to focal point}{19}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.1}Jupiter approach burn}{12}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Jupiter escape burn}{13}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Coast to perihelion}{15}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Perihelion burn}{16}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Step 4: Creating a linear approximation}{19}{subsubsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.2}Solving for cruise distance as a function of time}{21}{subsubsection.4.4.2}
+\contentsline {subsubsection}{\numberline {4.4.3}Calculating $v'(x_0)$}{22}{subsubsection.4.4.3}
+\contentsline {subsubsection}{\numberline {4.4.4}Calculating the result}{23}{subsubsection.4.4.4}
+\contentsline {subsection}{\numberline {4.5}Coast to focal point}{24}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Additional considerations}{26}{subsection.4.6}
+\contentsline {section}{\numberline {5}References}{26}{section.5}

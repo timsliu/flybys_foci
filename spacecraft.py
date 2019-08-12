@@ -221,7 +221,7 @@ class Spacecraft():
         output_string += "Periapsis:            %.2fAU\n"    %(self.r0/AU)
         output_string += "Distance from parent: %.2fAU\n"    %(self.get_r(units = "AU"))
         output_string += "Distance travelled:   %.2fAU\n"    %(self.get_dis_travel(units = "AU"))
-        output_string += "Elapsed time:         %.2fyears\n" %(self.get_elapse_t(units = "years"))
+        output_string += "Elapsed time:         %.3fyears\n" %(self.get_elapse_t(units = "years"))
 
         return output_string
 

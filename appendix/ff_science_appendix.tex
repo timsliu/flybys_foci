@@ -578,11 +578,11 @@ Using the following inputs:
 \begin{tabular}{|m{5 cm}| m{5 cm}| m{5 cm}|} \hline
 \textbf{Parameter} & \textbf{Value} & \textbf{Units}\\ \hline
 n & 1000& steps\\ \hline
-$\Delta v$ & 200& km/s \\ \hline
+$\Delta v$ & 100& km/s \\ \hline
 $r_p$      &  0.1& AU\\ \hline
-$v_p$     &  & km/s\\ \hline
+$v_p$     &  132 & km/s\\ \hline
 Total perihelion burn time & 10 & days \\ \hline
-Step burn $\Delta v$ & 200 & m/s\\ \hline
+Step burn $\Delta v$ & 100 & m/s\\ \hline
 Step cruise time & 864& seconds \\ \hline
 \end{tabular}
 \end{center}
@@ -592,17 +592,17 @@ yields the final orbital parameters for \textit{Einstein} after its perihelion b
 \begin{center}
 \begin{tabular}{|m{5 cm}| m{5 cm}| m{5 cm}|} \hline
 \textbf{Parameter} & \textbf{Value} & \textbf{Units}\\ \hline
-Position (x) & a& km from perihelion\\ \hline
-Radial distance (r) & a& km from the sun\\ \hline
-Velocity      &  a& km/s\\ \hline
-v-infinity     &  a& km/s\\ \hline
+Position (x) & 0.72 & AU from perihelion\\ \hline
+Radial distance (r) & 0.73& AU from the sun\\ \hline
+Velocity      &  174 & km/s\\ \hline
+v-infinity     &  167& km/s\\ \hline
 \end{tabular}
 \end{center}
 
-A 200 km/s escape burn spread over 10 days (an average acceleration of $0.23m/s^2$) increases \textit{Einstein}'s velocity to xx. At the end of the burn the spacecraft is xx AU from the sun, or xx the orbit of Mercury.
+A 100 km/s escape burn spread over 10 days (an average acceleration of $0.12m/s^2$) increases \textit{Einstein}'s velocity to 174km/s. At the end of the burn the spacecraft is 0.73 AU from the sun, or just past the orbit of Venus.
 
 
-$\Delta$ \textbf{v:} 200 km/s\\
+$\Delta$ \textbf{v:} 100 km/s\\
 \textbf{Time:} 10 days\\
 
 \subsection{Coast to focal point}
@@ -638,18 +638,13 @@ The Python program used for numerically evaluating this integral can be found at
 
 \url{github.com/timsliu/flybys_foci/flight_time.py}
 
-Using a step size $\Delta x$ of x we get a flight time of xx years from $r_b$ to the focal point. Adding the time \textit{Einstein} spent coasting from Jupiter to the perihelion gives us a \textbf{total estimated flight time of xx years}. This is the time it takes for \textit{Einstein} to just reach the beginning of the sun's focal point - as it continues to coast it stays on the sun's focal line where the magnification steadily becomes stronger. The figure below plots the distance from the sun \textit{Einstein} reaches as a function of flight time.
-
-\begin{figure}[H]
-
-	\caption{\textit{Einstein}'s distance from the sun as a function of flight time.}
-\end{figure}
+Using a step size $\Delta x$ of 0.55AU we get a flight time of 15.7 years from $r_b$ to the focal point. Adding the time \textit{Einstein} spent coasting from Jupiter to the perihelion gives us a \textbf{total estimated flight time of about \textbf{18 years}}. This is the time it takes for \textit{Einstein} to just reach the beginning of the sun's focal point - as it continues to coast it stays on the sun's focal line where the magnification steadily becomes stronger. For comparison, NASA's New Horizon's probe spent 9 years reaching Pluto (33 AU).
 
 \subsection{Additional considerations}
 Several major simplifications were made when calculating \textit{Einstein}'s flight time. One of the most prominent is that orbital inclination was ignored.
 
 
-We calculated the time it would take \textit{Einstein} to reach the sun's focal point. However, to actually observe a planet a gravitionally lensing telescope can't fly in any direction - it must reach the sun's focal point \textit{and} be aligned with the sun and the target planet. If the target star is not aligned with the ecliptic - a plane in space defined by the Earth's orbit - then a spacecraft must perform an additional burn. The added burn changes the spacecraft's orbital inclination, the angle between the plane of the orbit and the ecliptic. Changing the orbital inclination sends a spacecraft either above or below the plane of planets orbiting the sun.
+We calculated the time it would take \textit{Einstein} to reach the sun's focal point. However, to actually observe a planet a gravitationally lensing telescope can't fly in any direction - it must reach the sun's focal point \textit{and} be aligned with the sun and the target planet. If the target star is not aligned with the ecliptic - a plane in space defined by the Earth's orbit - then a spacecraft must perform an additional burn. The added burn changes the spacecraft's orbital inclination, the angle between the plane of the orbit and the ecliptic. Changing the orbital inclination sends a spacecraft either above or below the plane of planets orbiting the sun.
 
 Luckily, Trappist-1 sits at an inclination of xx relative to the sun. This is a fairly small orbital inclination and can be adjusted by the flyby of Jupiter. Targeting the flyby to pass over the poles of Jupiter sends \textit{Einstein} on a trajectory either above or below the ecliptic (depending on whether the orbit passes south to north or north to south). Adjusting the flyby is an easy way to send \text{Einstein} on a trajectory with the right orbital inclination without needing much more fuel.
 

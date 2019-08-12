@@ -1,0 +1,25 @@
+***** Flight parameters *****
+Initial velocity: 132000.00 m/s
+Periapsis:        0.10 AU
+Delta-v:          100000.00 m/s
+Parent mass:      1990000000000000042385153196032 kg
+Flight distance:  600 AU
+***** Approximation parameters ***** 
+Burn time:        10.00 days
+Burn steps:       10000 steps
+Coast steps:      10000 steps
+Calculation time: 41.334 ms
+
+*** Post burn craft parameters: ***
+Current velocity:     173.85km/s
+Periapsis:            0.10AU
+Distance from parent: 0.73AU
+Distance travelled:   0.72AU
+Elapsed time:         0.027years
+
+*** Final craft parameters: ***
+Current velocity:     166.66km/s
+Periapsis:            0.10AU
+Distance from parent: 600.00AU
+Distance travelled:   600.00AU
+Elapsed time:         17.078years

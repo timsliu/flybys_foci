@@ -69,7 +69,7 @@ def open_flight_profile(f_in_name):
     log_str += "Burn time:        %.2f days\n" %(burn_time)
     log_str += "Burn steps:       %d steps\n" %(burn_steps)
     log_str += "Coast steps:      %d steps\n"   %(coast_steps)
-    log_str += "Calculation time: %0.2f seconds\n" %(calc_time)
+    log_str += "Calculation time: %0.3f ms\n" %(1000*calc_time)
     
     log_str += "\n*** Post burn craft parameters: ***\n"
     log_str += str(post_burn)
