@@ -1,4 +1,4 @@
-\documentclass[12pt]{article} % use larger type; default would be 10pt
+\documentclass[openany, 12pt]{book} % use larger type; default would be 10pt
 
 %packages
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
@@ -66,34 +66,34 @@
     urlcolor=cyan,
 }
 
+\usepackage{tocloft}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
 %set up end notes
 \let\footnote=\endnote
-
-% Suppress section numbers
-\renewcommand{\thesection}{}
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-\makeatletter
-\def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
-\let\sectionignore\@gobbletwo
-\let\latex@numberline\numberline
-\def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
-\makeatother
-
-
 
 \title{Flybys and Foci}
 \author{Timothy Liu}
 
 \begin{document}
 
+\date{August 2019}
 \maketitle
 
 \newpage
-\tableofcontents
+
+\vspace*{6cm}
+\begin{center}
+\textit{To family and friends.}
+\end{center}
 \newpage
+\tableofcontents
+
+
+
 
 % Chapter 1
-\section{Chapter 1: Funding}
+\chapter{Funding}
 James Ballard stared at his screen intently. He tapped the left arrow key repeatedly and the image jiggled a few pixels to the left. Everyone else had gone home but James had long since lost track of the time. Though his office was only a few doors away, he had stayed here in the shared computer lab after helping one of his students with a tricky piece of code. Rolling his chair back, he carefully inspected the slide; now the graphs were out of alignment.
 
 ``No no no no,'' he mumbled to himself as he undid the changes. He pushed his chair back again to study the subtle difference in layout when the door behind him opened, slamming into his chair.
@@ -222,8 +222,7 @@ James shrunk in his seat. He had largely averted politics but could see why peop
 James sat speechless, no response coming to mind. Silently, Senator Fremont lifted her arm and gestured towards the door. Feeling humbled, James nodded his head, thanked the senator for her time, and slipped out of the office. He walked down a flight of stairs, sat down, and buried his head in his hands.
 
 % Chapter 2
-\newpage
-\section{Chapter 2: Flux}
+\chapter{Flux}
 
 Months later James sat at the head of a neatly polished glass table. Two seats down from him sat Grace, her feet resting on one of the curved magnesium table legs. Around the table sat another dozen professors and heads of the beleaguered \textit{Einstein} project, their eyes fixed on the screen behind James.
 
@@ -360,8 +359,7 @@ Later that day James fell into his chair, the exuberance from a moment ago drain
 ``Then for me the choice is clear. Not easy,'' he interjected, ``but clear.'' A small smile was beginning to appear on his face again. Grace looked back at James, knowing that grand thoughts of discovering alien cities were again bubbling through his mind. His smile was always so terribly infectious. After pausing for a moment, she gave a small nod and smiled back.
 
 % Chapter 3
-\newpage
-\section{Chapter 3: James}
+\chapter{James}
 James awoke early in the morning. Like he often did these days, he blinked his eyes a few times and wondered if what had happened over the past few weeks was a dream. Methodically, James walked through the events of the last several fantastic weeks. The meeting with Grace. The meeting with Lucy. A guarantee of funding from the Navy. Once he had reassured himself that it all had really happened James smiled and pushed himself out of bed.
 
 In the low gravity James vaulted up towards the ceiling as his covers swam through the air like an undulating sea monster. Even though he had grown up on Callisto and had never felt the gravity of another planet or moon, James never failed to enjoy the delights of living in low gravity. It must be so dull, he thought to himself, to be chained down by the pull of Earth, where the gravity was eight times stronger than that of his home.
@@ -420,8 +418,7 @@ In his pocket James could feel his phone buzzing - even though it was a weekend 
 ``I won't let it happen to me,'' whispered James. After another brief pause, James fished his phone out of his pocket and got to work\footnote{The chapters ``James", ``Grace", and ``Lucy" are modeled after an episode of Avatar: The Last Airbender. The episode ``Tales of Ba Sing Se" follows each of the main characters as they go about a separate adventure.}.
 
 % Chapter 4
-\newpage
-\section{Chapter 4: Fire}
+\chapter{Fire}
 
 Jupiter continued its march around the sun, bringing its spinning flock of moons with it. As the planet retreated from the sun in its orbit, the Jovian summer gave way to winter. For the inhabitants of the growing cities on Callisto this made little difference; the coming winter brought the temperature outside from lethally cold to even more lethally cold. Just as the temperature fluctuated, tensions between Callisto and the other nations of the solar system waxed and waned. Much of the outer solar system remained unclaimed and was tied into an impenetrable, overlapping web of territorial claims. Any jolt in the web could be felt across the system. But on Callisto the \textit{Einstein} telescope slowly lurched forward, oblivious to the dangerous interplanetary chess match being played.
 
@@ -558,8 +555,7 @@ The doubts about the project began to congeal in Grace's mind into solid thought
 With a relieved smile, Tess sat down and began enumerating all of her recent research triumphs and challenges. Grace pushed her doubts back down a mental black hole.
 
 % Chapter 5
-\newpage
-\section{Chapter 5: Farewell}
+\chapter{Farewell}
 
 More than a year after the accident Grace quietly walked through the halls of an Institute building. It was dark and shadowy, even as the sun was rising once more. Most of the researchers and engineers had already gone for the day but Grace remained, puzzling over an engineering detail. The team was mapping out how the \textit{Sheridan} drive's reactor would power the rest of the spacecraft. But the accident a year ago had unleashed an avalanche of revisions to the drive's design from the Navy that had her team ripping up plans and starting over. 
 
@@ -696,8 +692,7 @@ A bright blue flame arose from the engine on the screen, almost cartoonish in it
 ``Then you better get your scientist friends to move faster,'' he warned, ``or else they're getting the axe.''
 
 % Chapter 6
-\newpage
-\section{Chapter 6: Faster}
+\chapter{Faster}
 
 A few weeks after the \textit{Sheridan} drive's secretive test, Jupiter finally reached the furthest point in its sweeping, elliptical orbit. The gas giant once again started to swing slightly inwards toward the sun, subtly warming its swirling clouds and collection of moons. But elsewhere in the solar system tensions flared up, hot and sudden. A dispute over an asteroid rich with precious metals sent military ships racing through the system in a mad stampede. Before Callistan ships could reach it, a Martian fleet stormed to the asteroid and wrapped it in a menacing web of bristling warships. Mars had been colonized decades before Callisto had been and was home to millions of resource hungry people. But for many on Callisto, the incident was a remote curiosity, a story barely worth a few inches of screen space.
 
@@ -772,8 +767,7 @@ Half an hour later, James stepped out of the meeting and walked down the main pa
 ``You need to finish the telescope,'' Lucy said, staring at James. ``They won't kill \textit{Einstein} if the project is on track and under budget, it'll raise too much suspicion. But you don't know any of this. All you know is you need to finish \textit{Einstein} faster if you want your telescope to get launched.'' James rubbed his eyes, his mind groggy and unresponsive. They were so far behind and he was already pushing his teams. He didn't see how they could be going much faster. And who would be suspicious about their telescope? James felt his legs weaken and sick waves of dread reverberated through his stomach. It all felt too familiar, one of his worst nightmares coming true. Breathing slowly, James braced his arms on his knees and steadied himself. By the time James had opened his eyes again to ask, Lucy had disappeared.
 
 % Chapter 7
-\newpage
-\section{Chapter 7: Grace}
+\chapter{Grace}
 
 ``Grace, you're obviously very qualified for this position. I hope this isn't too upfront, but when can you start?'' the senior engineer asked Grace. Grace couldn't help but smile a little at the offer.
 
@@ -834,8 +828,7 @@ The smile on Grace's face slowly rolled off. When would they find aliens? Would 
 Grace smiled to herself and ran the thoughts through her mind again. Yes, it made sense, it all made sense to her. Grace stood up and started straightening up her apartment. As she cleaned she ran the same logic through again. This wasn't about aliens, it was about Callisto. After an hour of dusting the same places over and over again. Grace plopped back onto her couch. She would still need a few days to decide whether to stay on \textit{Einstein}. But it felt like a tipping point of sorts had been reached, that she had already started to settle on one side of the argument swirling in her head. Grace reached for her phone, opened it, and saw a message from James. Her eyes widened as she read the message. Stopping only to read the message a second time, Grace stood up and ran towards the door.
 
 % Chapter 8
-\newpage
-\section{Chapter 8: Fractures}
+\chapter{Fractures}
 
 ``What exactly did Lucy say?'' pressed Grace. ``Are you sure you didn't mishear her?'' Grace and James sat in James's office as he recounted his conversation with Lucy. Night was starting to fall in the city as the bright lights of the dome were slowly dimmed. James shook his head.
 
@@ -992,8 +985,7 @@ A few of the engineers near Grace turned to her and smiled appreciatively. Grace
 Grace scanned through the crowd and saw a few shaking heads. But they were drowned out by the clapping hands and pumping fists that rose above the cheering crowd. Grace staggered back and looked up at the stage and saw James blasting the crowd with his trademark grin, his arms outstretched as he basked in the applause. Rather than sad resignation, the room was electrified with the sound of hardened resolve and endless enthusiasm.  James caught Grace's eye and smiled even wider.
 
 % Chapter 9
-\newpage
-\section{Chapter 9: Lucy}
+\chapter{Lucy}
 A week later, Lucy sat in a cramped room before a panel of Navy officials, struggling not to look at the clock.
 
 ``Officer Sodo, even with the recent progress it's getting harder to justify continued funding for \textit{Einstein},'' a dark haired woman behind a metal bench said to Lucy. Lucy nodded respectfully from her chair in front of the wall of uniformed officers. She had been to plenty of these hearings but they always felt more like interrogations than meetings.
@@ -1097,8 +1089,7 @@ Lucy's mind fell back to more pedestrian thoughts: her dinner with Grace. She pu
 \textit{Your security clearance has been revoked. Report to headquarters immediately.}
 
 % Chapter 10
-\newpage
-\section{Chapter 10: For Callisto}
+\chapter{For Callisto}
 
 ``She's really coming together, isn't she?'' asked James incredulously a year later. Grace gave a small nod. Before them in a pristine clean room \textit{Einstein} took shape while an army of technicians in gowns and masks worked around her. The task of carrying \textit{Einstein} forward had passed from the scientists and engineers to these men and women delicately assembling her - welders, crane operators, bolt fasteners, electricians, and workers with a whole zoo of other titles. Grace leaned over the railing and stared at a wide cylinder hidden beneath a giant tarp - the \textit{Sheridan} drive's reactor waiting to be added on. She remained silent.
 
@@ -1173,8 +1164,7 @@ Grasping the edge of the table with both hands James swung out from under and va
 ``For Callisto,'' she whispered to herself as the cake was cut, too quietly for anyone to hear. James was happily pulling apart paper plates. She finally knew what these words meant, years after she had first blurted them out. The words kept her madly focused on pushing \textit{Einstein} past the finish line and through all of the bitterness and anger she felt. Grace looked over at James, knowing that he would never understand.
 
 % Chapter 11
-\newpage
-\section{Chapter 11: Flybys and Foci}
+\chapter{Flybys and Foci}
 
 ``Sir, hold still. It's hard to put your helmet on when you're shaking like this,'' the technician said to James. With a deep breath, he commanded his muscles to stop twitching with anticipation. It had been nearly a year since their birthday surprise for Grace, but soon there would be something even bigger to celebrate.
 
@@ -1202,7 +1192,7 @@ Kilometers in the distance was a military spaceport. Even at this distance he co
 
 ``T minus fifteen standby for terminal count.''
 
-Quietly at first then louder and louder James chanted the countdown in his helmet. Beside him Grace gripped the guardrail tighter and she felt her heart almost pause, as if afraid that its miniscule beating would disturb the rocket and its treasured payload.
+Quietly at first then louder and louder James chanted the countdown in his helmet. Beside him Grace gripped the guardrail tighter and she felt her heart almost pause, as if afraid that its minuscule beating would disturb the rocket and its treasured payload.
 
 ``Three...two...one.''
 
@@ -1214,7 +1204,7 @@ A few hours later the rocket that lofted \textit{Einstein} into space ignited on
 
 A dancing blue and ultraviolet flame poured out of the engine bell, creating a dazzling arc of light that the largest telescopes on Callisto could just barely make out. The drive pushed up against \textit{Einstein} and together the engine and telescope surged forward, whipping around the swarming clouds of Jupiter and out of the planet's gravity. But for the drive, it was more of a yawn than a roar. The \textit{Sheridan} drive performed flawlessly but even this fine first test was a mere dress rehearsal for what it was capable of.
 
-\textit{Einstein} slumbered away in hibernation and again fell inwards. But now instead of towards Jupiter, king of the planets, she dove towards the sun, king of the solar system. For two years she coasted alone, occasionally pinging home to say hello to her watchful parents. In those years much changed; Grace and Parker visited Europa while James settled into full time teaching at the Institute. Their work on the cathedral was done and now they could only wait. Across the solar systems tensions continued to wax and wane. The Mariner Valley Alliance caught wind of the miraculous engine that powered \textit{Einstein} through the cosmos. Declaring the telescope a front, they planned to dispatch a ship to chase her down and investigate. Cooler heads and a thick lathering of diplomacy aborted the scheme and \textit{Einstein} was very much on her lonesome when she began her flyby of the sun.
+\textit{Einstein} slumbered away in hibernation and again fell inwards. But now instead of towards Jupiter, king of the planets, she dove towards the sun, king of the solar system. For a year and a half, she coasted alone, occasionally pinging home to say hello to her watchful parents. In those years much changed; Grace and Parker visited Europa while James settled into full time teaching at the Institute. Their work on the cathedral was done and now they could only wait. Across the solar systems tensions continued to wax and wane. The Mariner Valley Alliance caught wind of the miraculous engine that powered \textit{Einstein} through the cosmos. Declaring the telescope a front, they planned to dispatch a ship to chase her down and investigate. Cooler heads and a thick lathering of diplomacy aborted the scheme and \textit{Einstein} was very much on her lonesome when she began her flyby of the sun.
 
 Like a spinning skater, \textit{Einstein} rotated around her axis as she coasted closer and closer to the sun. Finally the time came. It was opening night. The \textit{Sheridan} drive burst to life, first slowly and cautiously then with more confidence it throttled up to a steady roar. Like a symphony the engine crescendoed from a tepid pianissimo to a churning forte as \textit{Einstein} whipped around the sun, her brilliant natural cousin.The drive burned with a steadiness and stamina that seemed to defy its violent raw power. \textit{Einstein}'s signals were eagerly awaited back at mission control. First for an hour then for two she kept up a stream of positive reports and indicators in the green. Finally, ten days later the \textit{Sheridan} drive fell silent. Its task was done and \textit{Einstein} was left barreling through the dark loneliness of space.
 
@@ -1257,8 +1247,8 @@ On a quiet morning, James shuffled around the small garden that he had tended fo
 
 
 % Epilogue
-\newpage
-\section{Epilogue}
+\addcontentsline{toc}{chapter}{Epilogue}
+\chapter*{Epilogue}
 
 \textit{Einstein} continued coasting out further and further in space. She stayed along the focal line of the sun, scooping up more and more pixels of Trappist 1-e to beam back to Callisto. As the years went by supercomputers churned around the clock to process and interpret the images, revealing more details of the alien civilization to a spellbound humanity.
 
@@ -1338,17 +1328,22 @@ Captain Kent exhaled slowly and wearily, barely moving. There was still an infin
 
 ``The lights are going out all over the solar system,'' Captain Kent breathed out heavily. ``We shall not see them lit again in our lifetimes.''\footnote{The final line of the story is adapted from a line by British Foreign Secretary Sir Edward Grey on 3 August 1914, on the eve of the First World War: ``The lamps are going out all over Europe, we shall not see them lit again in our life-time.'' \url{https://en.wikipedia.org/wiki/The_lamps_are_going_out}}
 
-\newpage
-\section{Author's notes}
-I came up with the idea for Flybys and Foci in late 2018, while on a project for work near Irvine, California. Throughout the story, I've included several references to history, astronomy, and my own experiences. All characters in the story are named following a common naming scheme. The character first names are the names of spacecraft, either ones that have already launched or that are planned. James is named after the James Webb space telescope and Tess is named after TESS, NASA's Transiting Exoplanet Survey Satellite. Lucy is a planned NASA mission to Jupiter's Trojan asteroids and Grace is named after a joint NASA and German mission to map Earth's gravity field. The last names of all characters are neighborhoods of Seattle or cities in the Seattle Metropolitan Area. For example, Grace Mercer is named after Mercer Island in Lake Washington, to the east of Seattle. James Ballard is named after Ballard, a neighborhood in north Seattle that borders Fremont. SODO is an area south of downtown Seattle, and Kent is a city further south.
+\addcontentsline{toc}{chapter}{Author's notes}
+\chapter*{Author's notes}
 
+I came up with the idea for Flybys and Foci in late 2018, while on a project for work near Irvine, California. Throughout the story, I've included several references to history, astronomy, and my own experiences. All characters in the story are named following a common naming scheme. The character first names are the names of spacecraft, either ones that have already launched or that are planned. James is named after the James Webb space telescope and Tess is named after TESS, NASA's Transiting Exoplanet Survey Satellite. Lucy is a planned NASA mission to Jupiter's Trojan asteroids and Grace is named after a joint NASA and German mission to map Earth's gravity field. The last names of all characters are neighborhoods of Seattle or cities in the Seattle Metropolitan Area. For example, Grace Mercer is named after Mercer Island in Lake Washington, to the east of Seattle. James Ballard is named after Ballard, a neighborhood in north Seattle that borders Fremont. SODO is an area south of downtown Seattle, and Kent is a city further south.
 \printendnotes
 
-\newpage
-\section{Acknowledgements}
+\addcontentsline{toc}{chapter}{Scientific appendix}
+\chapter*{Scientific appendix}
+As part of Flybys and Foci, I've written a scientific appendix that explains some of the science and physics behind the story. For readers interested in this detail, please visit \url{https://timsliu.org/writing/} and scroll down to the``Short Stories" section.
+
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\chapter*{Acknowledgements}
 I'd like to thank all of the wonderful people who helped me write Flybys and Foci and who provided excellent feedback and suggestions: Janice Jeon, Karim Lakhani, Amanda Lin, Rebecca Liu, Anushka Rau, Tom Sheridan, and Richard Zhu. I'd also like to thank countless other friends and family members who encouraged me to keep writing. Special thanks goes to Karim and Tom, who introduced me to the novel idea of chapters and turning what was meant to be a brief story into something much richer and longer. Drafts of this story passed through many hands, so I'd like to thank everyone not named who offered suggestions along the way. Finally, I'd like to thank my coworkers who wondered what I was typing during the rare slow days at work.
 
-\section{About the author}
+\addcontentsline{toc}{chapter}{About the author}
+\chapter*{About the author}
 Timothy Liu is an electrical engineer who graduated from Caltech in 2018. He formerly worked in management consulting at BCG and lived in Seattle. He is currently pursuing an M.S. in electrical engineering at Stanford.
 
 
