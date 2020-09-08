@@ -36,6 +36,8 @@ def open_flight_profile(f_in_name):
     text file as a log of the mission. Records the ship status both
     after the burn and after the cruise phase in the log'''
 
+    # build path to the config folder
+    f_in = os.path.join("../config/", f_in_name)
     # open .xlsx file with flight profile - MUST follow flight_profile_template.xlsx
     f_profile = pd.read_excel(f_in_name, usecols = "B")
 
@@ -80,7 +82,9 @@ def open_flight_profile(f_in_name):
     print("Printing flight log...")
     # write information to log
     currentDT = dt.datetime.now()
-    f = open("flight_log_%s.txt" %currentDT.strftime("%m-%d_%H-%M"), "w")
+    f_out = "flight_log_%s.txt" %currentDT.strftime("%m-%d_%H-%M")
+    out_file = os.path.join("../output", f_out)
+    f = open(out_file, "w")
     f.write(log_str)
     f.close()
     return
