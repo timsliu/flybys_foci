@@ -61,18 +61,37 @@ scenarios given a starting heliocentric orbit:
 2. Two burns, the first in a retrograde direction bringing the spacecraft
 close to the sun followed by a second prograde burn.
 
-The entry point for this calculation is the function **compare**. Import
+There are two separate functions - the **compare** function compares the
+hyperbolic escape velocity of the one burn and two burn scenario. Import 
 the **oberth.py** library and call compare:
 
 ```
 python3
 >>> import oberth
->>> oberth.compare(100)
+>>> oberth.compare(20000)
 ```
 
 which will generate a plot comparing the hyperbolic excess velocity of the
-two scenarios given a total delta-v budget of 100km/s. The graphs are saved in
+two scenarios given a total delta-v budget of 100km/s. Note that the argument
+to compare is the delta-v budget in meters per second. The graphs are saved in
 the **graphs** directory.
+
+
+![Alt text](graphs/compare_20_kms.png?raw=true "20 km/s burn comparison")
+
+The second function is **two_burns** which plots the hyperbolic escape
+velocity given a delta-v budget. The delta-v budget is split between
+the two burns, and the final hyperbolic escape velocity for all combinations
+is plotted.
+
+```
+python3
+>>> import oberth
+>>> oberth.two_burns(50000)
+```
+
+The argument passed is the total delta-v budget, again in m/s.
+
 
 ### Flight time
 **flight_time.py**
@@ -94,7 +113,7 @@ invoke the script using the commands:
 ```
 python3
 >>> import flight_time
->>> flight_time.open_flight_profile("pluto_flight.xlsx")
+>>> flight_time.open_flight_profile("einstein_550.xlsx")
 ```
 
 **flight_time.py** parses the arguments and creates a new **spacecraft** 

@@ -28,6 +28,7 @@ import math                       # math library
 import time                       # time library
 import pandas as pd               # pandas libray for reading excel
 import datetime as dt             # datetime library
+import os
 
 def open_flight_profile(f_in_name):
     '''opens a .xlsx file with the conditions describing a 
