@@ -38,7 +38,7 @@ HOME = os.getcwd()
 # constants
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
                                       # Parker Solar Probe MIN_R ~0.05 AU
-DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
+DV_STEP = 500                         # delta_v increment between calculated combinations in m/s
 
 
 def compare(max_dv, r0 = JUPITER_R, v0 = JUPITER_V):
@@ -54,10 +54,10 @@ def compare(max_dv, r0 = JUPITER_R, v0 = JUPITER_V):
 
     # calculate maximum allowed delta_v for first burn - required to meet MIN_R
     max_dv1 = calc_dv(MIN_R, JUPITER_R, v0)
-    # array of v1_values (first burn, dropping perihelion)
-    v1_values = np.arange(0.0, min(max_dv1, max_dv), step = DV_STEP)
+    # array of v1_values (first burn, dropping perihelion, retrograde)
+    v1_values = np.arange(0.0, max(max_dv1, -1 * max_dv), step = -1 * DV_STEP)
     # array of v2_values (second burn, heliocentric escape)
-    v2_values = np.array([max_dv - x for x in list(v1_values)])
+    v2_values = np.array([max_dv - abs(x) for x in list(v1_values)])
     # array holding [v1, v2, v_infinity]
     v_infinities = np.zeros((len(v1_values), 3))
     # print number of delta v combinations to calculate
@@ -141,7 +141,7 @@ def calc_vi(dv1, dv2, r0, v0):
     outputs: v_infinity - hyperbolic excess velocity'''
 
     # calculate perihelion and velocity at perihelion
-    rp, vp = calc_perihelion(dv1, r0, v0)
+    rp, vp = calc_orbital_height(dv1, r0, v0)
 
 
     if (vp + dv2)**2 < 2*M_S*G/rp:
@@ -219,7 +219,7 @@ def plot_vi(data, dv_budgets):
     timestamp = currentDT.strftime("%Y-%m-%d %H_%M_%S")
 
     # go to graph directory and save
-    os.chdir(HOME + "/graphs")
+    os.chdir(HOME + "/../graphs")
     plt.savefig("v_infinity_" + timestamp + "_.png", format="png", dpi = 800)
     os.chdir(HOME)
 
@@ -232,7 +232,7 @@ def plot_single_dv(v_infinities, one_burn_vi, max_dv):
     inputs: data - array with all v_i data given all dv combinations'''
 
     # create list of just dv1 (km/s)
-    dv_1 = [x[0]/1000 for x in list(v_infinities)]
+    dv_1 = [-1 * x[0]/1000 for x in list(v_infinities)]
     # create list of just dv2 (km/s)          
     dv_2 = [x[1]/1000 for x in list(v_infinities)]
     # create list of just v_infinities (km/s)       
@@ -247,7 +247,6 @@ def plot_single_dv(v_infinities, one_burn_vi, max_dv):
      %(max_dv/1000))                                   # plot title
     plt.grid(True)
 
-    print(one_burn_vi)
 
     # plot the v-infinity combinations
     # plot v_infinity for two burns
@@ -259,7 +258,7 @@ def plot_single_dv(v_infinities, one_burn_vi, max_dv):
     plt.legend()
 
     # go to graph directory and save
-    os.chdir(HOME + "/graphs")
+    os.chdir(HOME + "/../graphs")
     plt.savefig("compare_%d_kms.png" %(max_dv/1000), format="png", dpi = 800)
     os.chdir(HOME)
 

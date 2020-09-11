@@ -63,6 +63,12 @@ def calc_dv(rf, r0, v0, m = M_S):
     # calculate dv; rearrangement of vis-viva equation
     dv = math.sqrt(-1* (1/a - 2/r0) * G * m) - v0
 
+    print("a:", a)
+    print("rf:", rf)
+    print("r0:", r0)
+    print("v0:", v0)
+    print("dv:", dv)
+
     return dv
 
 

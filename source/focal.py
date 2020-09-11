@@ -49,7 +49,7 @@ def plot_foci(r_max):
     plt.plot(r_array, f_d_array)
 
     # go to graph directory and save
-    os.chdir(HOME + "/graphs")
+    os.chdir(HOME + "/../graphs")
     plt.savefig("fd_" + str(r_max) + "R_S.png", format="png", dpi = 800)
     plt.close()
     os.chdir(HOME)
