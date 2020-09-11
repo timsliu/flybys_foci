@@ -40,7 +40,7 @@ def open_flight_profile(f_in_name):
     # build path to the config folder
     f_in = os.path.join("../config/", f_in_name)
     # open .xlsx file with flight profile - MUST follow flight_profile_template.xlsx
-    f_profile = pd.read_excel(f_in_name, usecols = "B")
+    f_profile = pd.read_excel(f_in, usecols = "B")
 
     # parse arguments
     v0 = f_profile['Value'][0]

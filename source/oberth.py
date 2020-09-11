@@ -38,7 +38,7 @@ HOME = os.getcwd()
 # constants
 MIN_R = 0.1 * AU                      # closest approach to sun allowed
                                       # Parker Solar Probe MIN_R ~0.05 AU
-DV_STEP = 500                         # delta_v increment between calculated combinations in m/s
+DV_STEP = 50                          # delta_v increment between calculated combinations in m/s
 
 
 def compare(max_dv, r0 = JUPITER_R, v0 = JUPITER_V):
@@ -100,8 +100,8 @@ def two_burns(max_dv2, r0 = JUPITER_R, v0 = JUPITER_V):
     # display calculated maximum delta_v
     print("maximum delta_v for first burn: %.2f" %(max_dv1/1e3), " km/s\n")
 
-    # array of possible DV1 values
-    v1_values = np.arange(0.0, max_dv1, step = DV_STEP)
+    # array of possible DV1 values; max_dv1 is negative
+    v1_values = np.arange(0.0, max_dv1, step = -1 * DV_STEP)
     # array of possible DV2 values
     v2_values = np.arange(0.0, max_dv2, step = DV_STEP)
     # array of (dv1, dv2, v_infinity)
@@ -187,6 +187,9 @@ def plot_vi(data, dv_budgets):
             dv_2_trapped.append(data[i][1])
             v_in_trapped.append(data[i][2])
 
+    # get absolute value of the burns
+    dv_1 = [abs(dv) for dv in dv_1]
+    dv_1_trapped = [abs(dv) for dv in dv_1_trapped]
     
     # set up the graph
     plt.xlim(0, max(dv_1))                          # set limit of x axis
