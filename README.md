@@ -9,7 +9,7 @@ to calculate three values:
 3. Flight time to points a specified distance away from the sun
 
 Below is a description of each subdirectory in this repo. The full scientific
-appendix can be found on my [website] (https://timsliu.org/writing://timsliu.org/writing/)
+appendix can be found on my [website](https://timsliu.org/writing://timsliu.org/writing/)
 and the book can be [purchased on Amazon](https://www.amazon.com/Flybys-Foci-Timothy-Liu/dp/1686812647/ref=sxts_sxwds-bia-wc-drs1_0?cv_ct_cx=flybys+and+foci&dchild=1&keywords=flybys+and+foci&pd_rd_i=1686812647&pd_rd_r=165a5c3b-1f94-484f-a4aa-a0d6e574c000&pd_rd_w=btT4J&pd_rd_wg=n0GOG&pf_rd_p=f3f1f1cd-8368-48df-ac69-94019fb84e3f&pf_rd_r=K88PR7YFCQ97A3DJQ9J2&psc=1&qid=1599859131&sr=1-1-f7123c3d-6c2e-4dbe-9d7a-6185fb77bc58).
 
 ## Config
